@@ -921,7 +921,6 @@ const Evolution1: Page = () => (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20, height: '100%' }}>
         <div style={{ flex: 1 }}>
           <div
-            className="lz-sheen"
             style={{
               position: 'relative',
               overflow: 'hidden',
