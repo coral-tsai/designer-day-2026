@@ -1097,6 +1097,177 @@ const Evolution2: Page = () => (
   </LightPage>
 );
 
+// ── 6.5 · Inside the Skill — the resize flow ────────────────────────────────
+const AskRow = ({ children }: { children: ReactNode }) => (
+  <div
+    style={{
+      height: 56,
+      borderRadius: 12,
+      background: '#FFFFFF',
+      border: `2px solid ${line}`,
+      padding: '0 18px',
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: 24,
+      fontWeight: 700,
+      boxSizing: 'border-box',
+    }}
+  >
+    {children}
+  </div>
+);
+
+const LoopRow = ({ n, children }: { n: string; children: ReactNode }) => (
+  <div
+    style={{
+      height: 46,
+      borderRadius: 12,
+      background: 'rgba(255,255,255,0.14)',
+      padding: '0 18px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
+      fontSize: 24,
+      fontWeight: 700,
+    }}
+  >
+    <span
+      style={{
+        width: 32,
+        height: 32,
+        borderRadius: '50%',
+        background: '#FFFFFF',
+        color: 'var(--osd-accent)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 18,
+        fontWeight: 800,
+        flexShrink: 0,
+      }}
+    >
+      {n}
+    </span>
+    {children}
+  </div>
+);
+
+const PhaseHead = ({ n, title, light }: { n: string; title: string; light?: boolean }) => (
+  <div style={{ marginBottom: 16 }}>
+    <div
+      style={{
+        fontSize: 20,
+        fontWeight: 800,
+        letterSpacing: '0.14em',
+        color: light ? 'rgba(255,255,255,0.75)' : 'var(--osd-accent)',
+      }}
+    >
+      STEP {n}
+    </div>
+    <div style={{ fontSize: 30, fontWeight: 800, marginTop: 4 }}>{title}</div>
+  </div>
+);
+
+const phaseCard: CSSProperties = {
+  height: '100%',
+  borderRadius: 'var(--osd-radius)',
+  padding: '30px 28px',
+  boxSizing: 'border-box',
+};
+
+const PhaseArrow = () => (
+  <div style={{ width: 48, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36, color: 'var(--osd-accent)' }}>
+    →
+  </div>
+);
+
+const SkillInside: Page = () => (
+  <LightPage chip="EVOLUTION 2 · Skill 長什麼樣" title={<>Skill 裡面，<Hi>寫的就是我的做法</Hi></>}>
+    <div style={{ display: 'grid', gridTemplateColumns: '360px 328px 1fr 328px', height: 480 }}>
+      <Steps>
+        <R d={160} style={{ height: '100%' }}>
+          <div style={{ ...phaseCard, background: surface }}>
+            <PhaseHead n="1" title="先問清楚" />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <AskRow>要哪些版位？</AskRow>
+              <AskRow>哪份 Sheet、哪個分頁？</AskRow>
+              <AskRow>命名要不要加幣別？</AskRow>
+              <AskRow>Figma 檔在哪？</AskRow>
+            </div>
+          </div>
+        </R>
+        <Step duration={260}>
+          <div style={{ display: 'flex', height: '100%' }}>
+            <PhaseArrow />
+            <div style={{ ...phaseCard, ...card, flex: 1 }}>
+              <PhaseHead n="2" title="自己找 master" />
+              <div style={{ fontSize: 24, lineHeight: 1.55, color: muted }}>
+                依名稱和尺寸找到主圖（例如 CasualTop 750×224），讀出 headline、subtitle、CTA、T&amp;C 各是哪個圖層
+              </div>
+            </div>
+          </div>
+        </Step>
+        <Step duration={260}>
+          <div style={{ display: 'flex', height: '100%' }}>
+            <PhaseArrow />
+            <div
+              style={{
+                ...phaseCard,
+                flex: 1,
+                background: 'var(--osd-accent)',
+                color: '#FFFFFF',
+                boxShadow: '0 28px 56px -32px rgba(8,120,229,0.6)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <PhaseHead n="3" title="每個版位 × 每個語系" light />
+                <span style={{ fontSize: 40, opacity: 0.6, lineHeight: 1 }}>↻</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <R d={120}>
+                  <LoopRow n="1">複製 master（絕不動原檔）</LoopRow>
+                </R>
+                <R d={190}>
+                  <LoopRow n="2">resize 到版位精確尺寸</LoopRow>
+                </R>
+                <R d={260}>
+                  <LoopRow n="3">依新比例重新排版</LoopRow>
+                </R>
+                <R d={330}>
+                  <LoopRow n="4">填入該語系文案＋斷行</LoopRow>
+                </R>
+                <R d={400}>
+                  <LoopRow n="5">命名 CasualTop_TH_THB</LoopRow>
+                </R>
+                <R d={470}>
+                  <LoopRow n="6">截圖檢查：塞得下、沒裁到</LoopRow>
+                </R>
+              </div>
+            </div>
+          </div>
+        </Step>
+        <Step duration={260}>
+          <div style={{ display: 'flex', height: '100%' }}>
+            <PhaseArrow />
+            <div style={{ ...phaseCard, ...card, flex: 1 }}>
+              <PhaseHead n="4" title="回報給我" />
+              <div style={{ fontSize: 24, lineHeight: 1.55, color: muted }}>
+                列出產了哪些圖，標出文案很擠、或不得不省略元素的 banner，告訴我哪裡要看
+              </div>
+            </div>
+          </div>
+        </Step>
+      </Steps>
+    </div>
+    <R d={260}>
+      <div style={{ fontSize: 22, color: muted, marginTop: 28 }}>
+        取自 metamon 的 <b style={{ color: 'var(--osd-text)' }}>resize</b> skill · 只換語系不換尺寸時用{' '}
+        <b style={{ color: 'var(--osd-text)' }}>multi-lang</b>，流程相同、但不 resize 也不重排
+      </div>
+    </R>
+  </LightPage>
+);
+
 // ── 7 · Scenarios — production runs without me ──────────────────────────────
 const sceneGrid: CSSProperties = {
   display: 'grid',
@@ -1892,6 +2063,122 @@ const Next: Page = () => (
   </LightPage>
 );
 
+// ── 15.5 · Take home — Banner Kit ───────────────────────────────────────────
+const mono = '"SF Mono", ui-monospace, Menlo, Consolas, monospace';
+
+const SkillCard = ({
+  name,
+  module,
+  what,
+  say,
+}: {
+  name: string;
+  module: string;
+  what: string;
+  say: string;
+}) => (
+  <div style={{ ...card, height: '100%', padding: '32px 40px', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <span style={{ fontFamily: mono, fontSize: 40, fontWeight: 700, color: 'var(--osd-accent)' }}>{name}</span>
+      <span
+        style={{ fontSize: 20, fontWeight: 800, padding: '6px 14px', borderRadius: 999, background: purpleSoft, color: purple }}
+      >
+        {module}
+      </span>
+    </div>
+    <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.45, marginTop: 18 }}>{what}</div>
+    <div style={{ fontSize: 24, color: muted, marginTop: 'auto' }}>
+      對 AI 說：<b style={{ color: 'var(--osd-text)' }}>{say}</b>
+    </div>
+  </div>
+);
+
+const Cmd = ({ n, children }: { n: string; children: ReactNode }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 20, height: 56 }}>
+    <span
+      style={{
+        width: 36,
+        height: 36,
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,0.12)',
+        color: '#FFFFFF',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 18,
+        fontWeight: 800,
+        flexShrink: 0,
+      }}
+    >
+      {n}
+    </span>
+    <span style={{ fontFamily: mono, fontSize: 24, color: '#E6EDF7', whiteSpace: 'nowrap' }}>{children}</span>
+  </div>
+);
+
+const TakeHome: Page = () => (
+  <LightPage chip="TAKE HOME · 帶回家" title={<>Banner Kit，<Hi>你也能用</Hi></>}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 260 }}>
+      <R d={160} style={{ height: '100%' }}>
+        <SkillCard name="resize" module="模組 B · 多尺寸" what="一張 master → 全部版位 × 全部語系，依比例重新排版" say="「resize」" />
+      </R>
+      <R d={260} style={{ height: '100%' }}>
+        <SkillCard name="multi-lang" module="模組 C · 多語系" what="做好的各版位 → 同尺寸換成每種語系文案，不重排" say="「多語系」" />
+      </R>
+    </div>
+    <R d={380}>
+      <div
+        style={{
+          marginTop: 28,
+          background: '#101216',
+          color: '#FFFFFF',
+          borderRadius: 'var(--osd-radius)',
+          padding: '30px 44px',
+          boxSizing: 'border-box',
+          height: 340,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 12 }}>
+          <span style={{ fontSize: 30, fontWeight: 800 }}>三步安裝</span>
+          <span style={{ fontSize: 22, color: 'rgba(255,255,255,0.6)' }}>在 Claude Code 裡輸入，只要做一次</span>
+        </div>
+        <R d={480}>
+          <Cmd n="1">/plugin marketplace add http://git.coreop.net/coral.tsai16/metamon-skill</Cmd>
+        </R>
+        <R d={560}>
+          <Cmd n="2">/plugin install metamon@metamon-skill</Cmd>
+        </R>
+        <R d={640}>
+          <Cmd n="3">/reload-plugins</Cmd>
+        </R>
+        <div
+          style={{
+            marginTop: 'auto',
+            paddingTop: 18,
+            borderTop: '1px solid rgba(255,255,255,0.14)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: 22,
+            color: 'rgba(255,255,255,0.65)',
+          }}
+        >
+          <a
+            href="http://git.coreop.net/coral.tsai16/metamon-skill"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: '#7CB8F7', textDecoration: 'none', fontWeight: 700 }}
+          >
+            git.coreop.net/coral.tsai16/metamon-skill ↗
+          </a>
+          <span>需要這個 GitLab repo 的讀取權限 · 更新會自動同步</span>
+        </div>
+      </div>
+    </R>
+  </LightPage>
+);
+
 // ── 15 · Closing ────────────────────────────────────────────────────────────
 const LazyStep = ({ n, text }: { n: string; text: string }) => (
   <div
@@ -2007,6 +2294,7 @@ export default [
   EvolutionMap,
   Evolution1,
   Evolution2,
+  SkillInside,
   AIRoles,
   Demo,
   Impact,
@@ -2015,6 +2303,7 @@ export default [
   Modules,
   Rules,
   Next,
+  TakeHome,
   Closing,
 ] satisfies Page[];
 
@@ -2065,6 +2354,15 @@ export const notes: (string | undefined)[] = [
 （按 →）第三步，我去做別的設計：想新主視覺、跟企劃討論。溢字清單直接交給 content writer 給短版文案。
 （按 →）從動手做，變成動口說。
 關鍵不是 AI 有多神，而是我把「我的做法」寫成了 Skill——它記得我的做法，不用每次重新解釋。`,
+
+  // 6.5 · Skill 長什麼樣 1:00
+  `【1:00】
+那 Skill 裡面到底寫了什麼？其實就是我平常的做法，一步一步寫下來。
+第一步，先問清楚：要哪些版位、用哪份 Sheet 哪個分頁、命名要不要加幣別、Figma 檔在哪。
+（按 →）第二步，它自己去找 master，認出 headline、subtitle、CTA、T&C 各是哪個圖層。
+（按 →）第三步是重點：每個版位、每個語系跑一輪——複製、resize、重新排版、填文案、命名，最後截圖檢查有沒有塞不下或被裁到。
+（按 →）第四步，回報給我：哪些圖很擠、哪些不得不省略元素，我只要看那幾張。
+這是 resize 的流程；只換語系不換尺寸的時候用 multi-lang，步驟一樣，只是不 resize。`,
 
   // 7 · 我不在，生產照跑 1:00
   `【1:00】
@@ -2132,6 +2430,13 @@ Skill 是活的：出錯，就補一條規則，下次就不再錯。
 （按 → 出現階梯）用温明輝〈AI 導入的第一步〉的六層階梯來看，我們在第二層「知識封裝」，下一步是第三層「穩定代辦」，讓它定期自己跑。
 （按 →）目前還在調整的有：【橫幅轉直式的重排】、【特定語系溢字】。`,
 
+  // 15.5 · 帶回家 0:45
+  `【0:45】
+最後，這套 Banner Kit 大家都可以直接用。
+兩個 skill：要換尺寸就說「resize」，只換語系就說「多語系」——剛好對應剛剛的模組 B 和 C。
+安裝只要三行指令，在 Claude Code 裡輸入一次就好；之後我更新 skill，大家會自動拿到新版。
+需要 GitLab repo 的讀取權限，沒有的話會後找我。`,
+
   // 15 · 總結 0:30 + Q&A 2:00
   `【0:30】
 最後一句：懶惰不是終點，是持續問一句——這還能不能更自動？
@@ -2142,7 +2447,7 @@ Skill 是活的：出錯，就補一條規則，下次就不再錯。
 ・為什麼不直接寫腳本？腳本要有人寫、要維護；對話式讓設計師自己就能調整。最穩定的步驟正是下一步要固化的部分。
 ・數字怎麼量的？從【起點】到【終點】，翻譯時間另計，檢查時間【有／沒有】包含。
 ・省下的時間做了什麼？【新主視覺／參與的討論】。
-・AI 出錯怎麼辦？用第 14 頁的真實案例：出錯 → 補規則。
+・AI 出錯怎麼辦？用第 15 頁的真實案例：出錯 → 補規則。
 ・用的是哪個 AI agent？【工具名稱】＋【如何連接設計工具】。
 ・急件可以當天上嗎？生產時間縮短了，但校對與確認仍需要時間——避免變成承諾。`,
 ];
