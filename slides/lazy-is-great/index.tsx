@@ -543,8 +543,8 @@ const Manifesto: Page = () => (
     </div>
     <R d={340}>
       <h2 style={{ ...heavy, fontSize: 66, lineHeight: 1.3, margin: '76px 0 0' }}>
-        我不是不想做事，
-        <Hi>是不想做「重複」的事。</Hi>
+        同一件事做三次，
+        <Hi>我就想偷懶了。</Hi>
       </h2>
     </R>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 36, marginTop: 56, height: 260 }}>
@@ -619,9 +619,7 @@ const Handmade: Page = () => (
             color: '#FFFFFF',
             boxShadow: '0 12px 28px -10px rgba(8,120,229,0.7)',
           }}
-        >
-          【活動名稱】的全部 banner · 共 156 張
-        </div>
+        >PP某檔活動的全部 banner · 共 156 張</div>
       </div>
     </R>
     <div style={{ display: 'grid', gridTemplateColumns: '500px 1fr 560px', gap: 32, height: 178, marginTop: 32 }}>
@@ -1134,7 +1132,7 @@ const Evolution2: Page = () => (
     <Steps>
       <Step duration={280}>
         <h3 style={{ ...heavy, fontSize: 72, lineHeight: 1.25, margin: '56px 0 0' }}>
-          從<Hi color={muted}>動手做</Hi>，變成<Hi>動口說</Hi>。
+          從<Hi color={muted}>動手做</Hi>，變成<Hi>只出一張嘴</Hi>。
         </h3>
       </Step>
     </Steps>
@@ -2509,7 +2507,7 @@ export const notes: (string | undefined)[] = [
   // 2 · 懶惰宣言 1:00
   `【1:00】
 先唸兩句話：Larry Wall 說懶惰是程式設計師的三大美德之一；Heinlein 說進步是懶人為了找更簡單的方法帶來的。
-我不是不想做事，是不想做「重複」的事。
+同一件事做三次，我就想偷懶了。
 （按 → 逐張出現）重複的，交給工具；會錯的，交給流程；要判斷的，才交給人。
 這三句話就是今天整場的地圖，後面每一頁都會回到這裡。`,
 
