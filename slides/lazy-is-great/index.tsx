@@ -2179,7 +2179,7 @@ const Stair = ({ n, name, state, badge, d }: { n: number; name: string; state: R
       )}
       <div
         style={{
-          height: 96 + n * 40,
+          height: 80 + n * 32,
           borderRadius: '16px 16px 0 0',
           boxSizing: 'border-box',
           padding: '20px 16px',
@@ -2192,6 +2192,60 @@ const Stair = ({ n, name, state, badge, d }: { n: number; name: string; state: R
     </R>
   );
 };
+
+// Tiny banner wireframe: dark frame, a text block on one side, art on the other.
+const LayoutSketch = ({ text, label }: { text: 'left' | 'right' | 'center'; label: string }) => {
+  const justify = text === 'left' ? 'flex-start' : text === 'right' ? 'flex-end' : 'center';
+  const art = (
+    <span style={{ width: 34, height: 34, borderRadius: '50%', background: 'rgba(124,184,247,0.55)', flexShrink: 0 }} />
+  );
+  const block = (
+    <span style={{ display: 'flex', flexDirection: 'column', gap: 6, width: 92 }}>
+      <span style={{ height: 10, borderRadius: 4, background: '#FFFFFF' }} />
+      <span style={{ height: 6, width: '75%', borderRadius: 3, background: 'rgba(255,255,255,0.6)' }} />
+      <span style={{ height: 12, width: 40, borderRadius: 6, background: '#0878E5', marginTop: 2 }} />
+    </span>
+  );
+  return (
+    <div style={{ flex: 1 }}>
+      <div
+        style={{
+          height: 88,
+          borderRadius: 12,
+          background: '#101216',
+          padding: '0 18px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: text === 'center' ? 'center' : 'space-between',
+          gap: 14,
+        }}
+      >
+        {text === 'right' && art}
+        <span style={{ display: 'flex', justifyContent: justify }}>{block}</span>
+        {text === 'left' && art}
+      </div>
+      <div style={{ fontSize: 22, fontWeight: 700, textAlign: 'center', marginTop: 10 }}>{label}</div>
+    </div>
+  );
+};
+
+const BannerType = ({ name, note }: { name: string; note: string }) => (
+  <div
+    style={{
+      height: 104,
+      borderRadius: 14,
+      background: blueSoft,
+      padding: '0 20px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      boxSizing: 'border-box',
+    }}
+  >
+    <div style={{ fontFamily: mono, fontSize: 22, fontWeight: 700, color: 'var(--osd-accent)', whiteSpace: 'nowrap' }}>{name}</div>
+    <div style={{ fontSize: 20, color: muted, marginTop: 6 }}>{note}</div>
+  </div>
+);
 
 const Next: Page = () => (
   <LightPage chip="NEXT · 下一步" title={<>Skill <Hi>是活的</Hi></>}>
@@ -2237,44 +2291,134 @@ const Next: Page = () => (
           </div>
         </div>
       </R>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <R d={240}>
+          <div style={{ fontSize: 26, fontWeight: 800, color: muted, letterSpacing: '0.08em' }}>還在調整</div>
+        </R>
         <Steps>
-        <Step duration={260}>
-        <div>
-          <div style={{ fontSize: 26, fontWeight: 800, color: muted, letterSpacing: '0.08em' }}>AI 導入六層階梯</div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 360, borderBottom: `2px solid ${line}` }}>
-            <Stair d={60} n={1} name="AI 工具" state="done" />
-            <Stair d={140} n={2} name="知識封裝（Skill）" state="here" badge="我們在這" />
-            <Stair d={220} n={3} name="穩定代辦（Loop）" state="next" badge="下一步" />
-            <Stair d={300} n={4} name="多 AI 接力" state="future" />
-            <Stair d={380} n={5} name="多模型協作" state="future" />
-            <Stair d={460} n={6} name="全流程自動化" state="future" />
-          </div>
-        </div>
-        </Step>
-        <Step duration={260}>
-          <div style={{ fontSize: 24, fontWeight: 800, marginTop: 24 }}>還在調整</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 12, fontSize: 26 }}>
-            <span style={{ color: 'var(--osd-accent)', fontWeight: 800 }}>1</span>
-            <span style={{ whiteSpace: 'nowrap' }}>resize 沒辦法只用一種排版，文字有時</span>
-            <span style={{ background: blueSoft, color: 'var(--osd-text)', borderRadius: 999, padding: '8px 20px', whiteSpace: 'nowrap' }}>
-              靠左
-            </span>
-            <span style={{ background: blueSoft, color: 'var(--osd-text)', borderRadius: 999, padding: '8px 20px', whiteSpace: 'nowrap' }}>
-              靠右
-            </span>
-            <span style={{ background: blueSoft, color: 'var(--osd-text)', borderRadius: 999, padding: '8px 20px', whiteSpace: 'nowrap' }}>
-              置中
-            </span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 14, fontSize: 26 }}>
-            <span style={{ color: 'var(--osd-accent)', fontWeight: 800 }}>2</span>
-            <span style={{ whiteSpace: 'nowrap' }}>Banner 大約有三種，要各自整理出規則</span>
-          </div>
-          <div style={{ fontSize: 20, color: muted, marginTop: 18 }}>階梯概念引自温明輝〈AI 導入的第一步〉</div>
-        </Step>
+          <Step duration={260}>
+            <div style={{ ...card, padding: '26px 36px', height: 250 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+                <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>1</span>
+                <span style={{ fontSize: 30, fontWeight: 800 }}>resize 沒辦法只用一種排版範本</span>
+              </div>
+              <div style={{ fontSize: 22, color: muted, marginTop: 6 }}>每次主視覺不同，文字的位置也跟著不同</div>
+              <div style={{ display: 'flex', gap: 24, marginTop: 22 }}>
+                <LayoutSketch text="left" label="文字靠左" />
+                <LayoutSketch text="right" label="文字靠右" />
+                <LayoutSketch text="center" label="文字置中" />
+              </div>
+            </div>
+          </Step>
+          <Step duration={260}>
+            <div style={{ ...card, padding: '26px 36px', height: 250 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+                <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>2</span>
+                <span style={{ fontSize: 30, fontWeight: 800 }}>Banner 有三種，要各自整理出規則</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.3fr', gap: 16, marginTop: 24 }}>
+                <BannerType name="Provider promo" note="供應商活動" />
+                <BannerType name="Promotion_in-house" note="自家活動" />
+                <BannerType name="Promotion_Network" note="Provider 提供設計" />
+              </div>
+            </div>
+          </Step>
         </Steps>
       </div>
+    </div>
+  </LightPage>
+);
+
+// ── 14.5 · Ladder — from Skill to Loop ─────────────────────────────────────────
+const FlowChip = ({ children, strong }: { children: ReactNode; strong?: boolean }) => (
+  <span
+    style={{
+      fontSize: 24,
+      fontWeight: 700,
+      padding: '10px 18px',
+      borderRadius: 12,
+      background: strong ? 'rgba(255,255,255,0.18)' : '#FFFFFF',
+      border: strong ? '1px solid rgba(255,255,255,0.25)' : `2px solid ${line}`,
+      whiteSpace: 'nowrap',
+    }}
+  >
+    {children}
+  </span>
+);
+
+const ModeCard = ({
+  tag,
+  title,
+  sub,
+  hot,
+  children,
+}: {
+  tag: string;
+  title: string;
+  sub: string;
+  hot?: boolean;
+  children: ReactNode;
+}) => (
+  <div
+    style={{
+      height: '100%',
+      borderRadius: 'var(--osd-radius)',
+      padding: '26px 32px',
+      boxSizing: 'border-box',
+      background: hot ? purple : surface,
+      color: hot ? '#FFFFFF' : 'var(--osd-text)',
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+      <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', opacity: 0.75 }}>{tag}</span>
+      <span style={{ fontSize: 32, fontWeight: 800 }}>{title}</span>
+    </div>
+    <div style={{ fontSize: 22, marginTop: 6, color: hot ? 'rgba(255,255,255,0.85)' : muted }}>{sub}</div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 20, flexWrap: 'nowrap' }}>{children}</div>
+  </div>
+);
+
+const FlowArrowSm = ({ light }: { light?: boolean }) => (
+  <span style={{ fontSize: 24, color: light ? 'rgba(255,255,255,0.8)' : muted }}>→</span>
+);
+
+const Ladder: Page = () => (
+  <LightPage chip="NEXT · 下一步" title={<>從 Skill 到 Loop，<Hi>不用開口也會跑</Hi></>}>
+    <R d={140}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <span style={{ fontSize: 24, fontWeight: 800, color: muted, letterSpacing: '0.08em' }}>AI 導入六層階梯</span>
+        <span style={{ fontSize: 20, color: muted }}>階梯概念引自温明輝〈AI 導入的第一步〉</span>
+      </div>
+    </R>
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, height: 300, marginTop: 8, borderBottom: `2px solid ${line}` }}>
+      <Stair d={200} n={1} name="AI 工具" state="done" />
+      <Stair d={260} n={2} name="知識封裝（Skill）" state="here" badge="我們在這" />
+      <Stair d={320} n={3} name="穩定代辦（Loop）" state="next" badge="下一步" />
+      <Stair d={380} n={4} name="多 AI 接力" state="future" />
+      <Stair d={440} n={5} name="多模型協作" state="future" />
+      <Stair d={500} n={6} name="全流程自動化" state="future" />
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 230, marginTop: 32 }}>
+      <Steps>
+        <Step duration={260}>
+          <ModeCard tag="現在" title="Skill：我開口，AI 照做" sub="做法寫好了，但每次還是要我說一句話">
+            <FlowChip>我說一句話</FlowChip>
+            <FlowArrowSm />
+            <FlowChip>AI 照 Skill 做</FlowChip>
+            <FlowArrowSm />
+            <FlowChip>我檢查</FlowChip>
+          </ModeCard>
+        </Step>
+        <Step duration={260}>
+          <ModeCard tag="下一步" title="Loop：不用開口，定期自己跑" sub="固定的事交給 AI 持續、穩定地處理" hot>
+            <FlowChip strong>Sheet 更新／時間到</FlowChip>
+            <FlowArrowSm light />
+            <FlowChip strong>AI 跑完全套</FlowChip>
+            <FlowArrowSm light />
+            <FlowChip strong>回報給我</FlowChip>
+          </ModeCard>
+        </Step>
+      </Steps>
     </div>
   </LightPage>
 );
@@ -2516,6 +2660,7 @@ export default [
   Modules,
   Rules,
   Next,
+  Ladder,
   TakeHome,
   Closing,
 ] satisfies Page[];
@@ -2634,13 +2779,20 @@ Skill 的核心，其實就是把腦中的規則寫成一張表：版面、文�
 （按 →）最後 content writer 校對，我做最後確認。
 （按 →）所以整條流程的分工就是一句話：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 14 · 下一步 1:00
+  // 14 · Skill 是活的 1:00
   `【1:00】
 Skill 是活的：出錯，就補一條規則，下次就不再錯。
 舉個真實例子：緬甸文在一般 banner 字型下顯示不出來，我就補了一條規則——緬甸文改用 Noto Sans Myanmar，字變高就把標題和副標縮小一點。之後再也沒出過錯。
-（按 → 出現階梯）用温明輝〈AI 導入的第一步〉的六層階梯來看，我們在第二層「知識封裝」，下一步是第三層「穩定代辦」，讓它定期自己跑。
-（按 →）目前還在調整的是 resize：沒辦法只用一種排版範本，每次主視覺不同，文字有時要放左邊、有時放右邊、有時放中間。這部分還在想怎麼寫成規則。
-另外，banner 大約有三種，每一種要各自整理出規則，這也是接下來要做的。`,
+當然，也還有在調整的地方：
+（按 →）第一個是 resize：沒辦法只用一種排版範本。每次主視覺不同，文字有時要放左邊、有時放右邊、有時放中間，這部分還在想怎麼寫成規則。
+（按 →）第二個是 banner 其實有三種：Provider promo、Promotion in-house，還有 Promotion Network——Network 是 Provider 提供設計。三種的做法不一樣，要各自整理出規則。`,
+
+  // 14.5 · 從 Skill 到 Loop 1:00
+  `【1:00】
+那下一步是什麼？用温明輝〈AI 導入的第一步〉的六層階梯來看，我們現在在第二層「知識封裝」，下一步是第三層「穩定代辦」，也就是 Loop。
+（按 →）現在的 Skill：做法已經寫好了，但每次還是要我開口說一句話，AI 才會照著做，做完我再檢查。
+（按 →）Loop 不一樣：不用開口。固定的事交給 AI 持續、穩定地處理——例如 Sheet 一更新、或固定時間到了，AI 自己把整套跑完，再回報給我檢查。
+從「我叫它做」，變成「它自己會做」，這就是下一步。`,
 
   // 15.5 · 帶回家 0:45
   `【0:45】
