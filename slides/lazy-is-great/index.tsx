@@ -1101,8 +1101,8 @@ const Evolution2: Page = () => (
                 </div>
               </div>
               <AIJob n="1" title="聽懂一句話" desc="要哪些版位、哪些語系" />
-              <AIJob n="2" title="照 Skill 執行" desc="帶入文案、延展版位、對位" />
-              <AIJob n="3" title="檢查並回報" desc="列出溢字的語系與版位" />
+              <AIJob n="2" title="照 Skill 執行" desc="帶入斷好行的文案、延展、對位" />
+              <AIJob n="3" title="檢查並回報" desc="截圖確認每張都排好" />
             </div>
           </div>
         </Step>
@@ -1121,7 +1121,7 @@ const Evolution2: Page = () => (
                   fontSize: 24,
                 }}
               >
-                溢字清單 → 交給 <b style={{ color: 'var(--osd-text)' }}>content writer</b> 給短版文案
+                文案和斷行由 <b style={{ color: 'var(--osd-text)' }}>content writer</b> 先準備好
               </span>
             </ActCard>
             </div>
@@ -2392,8 +2392,8 @@ export const notes: (string | undefined)[] = [
   `【1:30】
 第二次偷懶，是把我的做法寫成 Skill。
 （按 →）第一步，我只說一句話：「幫我把這張 banner resize 成全版位，換上 12 種語系」。
-（按 →）第二步，AI agent 照著 Skill 跑完三件事：聽懂這句話要哪些版位、哪些語系；照 Skill 帶入文案、延展版位、對位；最後檢查並回報，列出溢字的語系與版位。
-（按 →）第三步，我去做別的設計：想新主視覺、跟企劃討論。溢字清單直接交給 content writer 給短版文案。
+（按 →）第二步，AI agent 照著 Skill 跑完三件事：聽懂這句話要哪些版位、哪些語系；照 Skill 帶入 content writer 斷好行的文案、延展版位、對位；最後截圖檢查並回報，確認每張都排好。
+（按 →）第三步，我去做別的設計：想新主視覺、跟企劃討論。文案和斷行都由 content writer 先準備好，我不用再一個一個調。
 （按 →）從動手做，變成動口說。
 關鍵不是 AI 有多神，而是我把「我的做法」寫成了 Skill——它記得我的做法，不用每次重新解釋。`,
 
