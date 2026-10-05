@@ -2310,7 +2310,7 @@ const Cmd = ({ n, children }: { n: string; children: ReactNode }) => (
 );
 
 const TakeHome: Page = () => (
-  <LightPage chip="TAKE HOME · 帶回家" title={<>Banner Kit，<Hi>你也能用</Hi></>}>
+  <LightPage chip="TAKE HOME · 帶回家" title={<>Banner Kit，<Hi>團隊一起用</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 260 }}>
       <R d={160} style={{ height: '100%' }}>
         <SkillCard name="resize" module="模組 B · 多尺寸" what="一張 master → 全部版位 × 全部語系，依比例重新排版" say="「resize」" />
