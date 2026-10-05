@@ -1,0 +1,17 @@
+# Build the open-slide site and publish it with GitLab Pages.
+image: node:lts
+
+pages:
+  script:
+    - npm ci
+    # Derive the Pages sub-path from CI_PAGES_URL ('' for a unique domain → '/').
+    - export OPEN_SLIDE_BASE="$(echo "$CI_PAGES_URL" | sed -E 's#^https?://[^/]+##; s#/$##')/"
+    - echo "Building with base $OPEN_SLIDE_BASE"
+    - npx open-slide build --out-dir public
+    # Serve the app for deep links like /s/lazy-is-great as well.
+    - cp public/index.html public/404.html
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
