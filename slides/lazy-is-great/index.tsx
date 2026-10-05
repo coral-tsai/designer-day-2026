@@ -14,6 +14,7 @@ import sheetsSync from './assets/google-sheets-sync.png';
 import larryWall from './assets/larry-wall.png';
 import robertHeinlein from './assets/robert-heinlein.png';
 import casualTop from './assets/casualtop-choice.png';
+import kratosTop from './assets/kratostop-choice.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#FFFFFF', text: '#101216', accent: '#0878E5' },
@@ -1312,14 +1313,16 @@ const SkillInside: Page = () => (
 );
 
 // ── 7.5 · One rule, on a real banner (CasualTop 750×224) ─────────────────────
-// Overlay boxes are in canvas px inside the 1680×600 stage: the banner is drawn at
-// x=648, y=146, 1032×308 (scale 1.376 of the 750×224 source).
-const BANNER = { x: 648, y: 146, w: 1032, h: 308, s: 1032 / 750 };
-const box = (x0: number, y0: number, x1: number, y1: number) => ({
-  left: BANNER.x + x0 * BANNER.s,
-  top: BANNER.y + y0 * BANNER.s,
-  width: (x1 - x0) * BANNER.s,
-  height: (y1 - y0) * BANNER.s,
+// Overlay boxes are in canvas px inside the 1680×600 stage. CasualTop is drawn at
+// x=648, y=70, 1032×308 (×1.376 of 750×224); KratosTop below it at y=470, 1032×88
+// (×0.876 of 1178×100).
+const BANNER = { x: 648, y: 70, w: 1032, h: 308, s: 1032 / 750 };
+const KT = { x: 648, y: 470, w: 1032, h: 1032 * (100 / 1178), s: 1032 / 1178 };
+const box = (x0: number, y0: number, x1: number, y1: number, b = BANNER) => ({
+  left: b.x + x0 * b.s,
+  top: b.y + y0 * b.s,
+  width: (x1 - x0) * b.s,
+  height: (y1 - y0) * b.s,
 });
 
 const Mark = ({ at, label, tag }: { at: CSSProperties; label: string; tag: CSSProperties }) => (
@@ -1355,14 +1358,14 @@ const Mark = ({ at, label, tag }: { at: CSSProperties; label: string; tag: CSSPr
 );
 
 const RuleLine = ({ children }: { children: ReactNode }) => (
-  <div style={{ display: 'flex', gap: 12, fontSize: 24, lineHeight: 1.55, color: '#E6EDF7', margin: '10px 0' }}>
+  <div style={{ display: 'flex', gap: 12, fontSize: 22, lineHeight: 1.5, color: '#E6EDF7', margin: '6px 0' }}>
     <span style={{ color: '#4FA3F7', flexShrink: 0 }}>-</span>
     <span>{children}</span>
   </div>
 );
 
 const MdHead = ({ children }: { children: ReactNode }) => (
-  <div style={{ fontSize: 24, fontWeight: 700, color: '#7CB8F7', margin: '18px 0 4px' }}>{children}</div>
+  <div style={{ fontSize: 22, fontWeight: 700, color: '#7CB8F7', margin: '14px 0 2px' }}>{children}</div>
 );
 
 const RulePage: Page = () => {
@@ -1370,6 +1373,10 @@ const RulePage: Page = () => {
   const sub = box(64, 120, 456, 146);
   const cta = box(64, 150, 196, 202);
   const face = box(566, 14, 636, 104);
+  const ktSafe = box(174.5, 0, 1003.5, 100, KT);
+  const ktSub = box(203, 69, 472, 89, KT);
+  const ktHl = box(203, 36, 517, 69, KT);
+  const ktCta = box(548, 39, 674, 86, KT);
   return (
     <LightPage chip="EVOLUTION 2 · 規則長這樣" title={<>寫下一條規則，<Hi>AI 就照著做</Hi></>}>
       <div style={{ position: 'relative', height: 600 }}>
@@ -1382,10 +1389,10 @@ const RulePage: Page = () => {
         </R>
         {/* Wrapper sits at the stage origin (padding, not margin, so nothing collapses) —
             overlays inside the steps are positioned from here. */}
-        <R d={160} style={{ width: 600, height: 600, paddingTop: 90, boxSizing: 'border-box' }}>
+        <R d={160} style={{ width: 600, height: 600, paddingTop: 20, boxSizing: 'border-box' }}>
           <div
             style={{
-              height: 420,
+              height: 560,
               boxSizing: 'border-box',
               background: '#101216',
               borderRadius: 'var(--osd-radius)',
@@ -1430,7 +1437,7 @@ const RulePage: Page = () => {
                   style={{
                     position: 'absolute',
                     left: BANNER.x,
-                    top: BANNER.y - 58,
+                    top: BANNER.y - 56,
                     width: BANNER.w,
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -1455,7 +1462,7 @@ const RulePage: Page = () => {
               <Step duration={260}>
                 <RuleLine>圖層角色（headline／subtitle／CTA／T&amp;C）以它為準。</RuleLine>
                 <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
-                  <Mark at={hl} label="headline" tag={{ left: hl.left, top: BANNER.y - 52 }} />
+                  <Mark at={hl} label="headline" tag={{ left: hl.left, top: BANNER.y - 50 }} />
                   <Mark at={sub} label="subtitle" tag={{ left: sub.left + sub.width + 12, top: sub.top }} />
                   <Mark at={cta} label="CTA" tag={{ left: cta.left + cta.width + 12, top: cta.top + 18 }} />
                 </div>
@@ -1467,14 +1474,68 @@ const RulePage: Page = () => {
                   <Mark at={face} label="臉要完整" tag={{ left: face.left - 8, top: face.top + face.height + 12 }} />
                 </div>
               </Step>
+              <MdHead>## KratosTop — 1178 × 100</MdHead>
+              <Step duration={260}>
+                <RuleLine>安全區：寬 829 px、水平置中——所有內容都留在這條帶狀範圍內。</RuleLine>
+                <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: KT.x,
+                      top: KT.y - 46,
+                      fontSize: 22,
+                      fontWeight: 800,
+                      color: 'var(--osd-text)',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    同一套圖層 → <Hi>KratosTop 1178 × 100</Hi>
+                  </div>
+                  <img
+                    src={kratosTop}
+                    alt="KratosTop 1178×100 banner"
+                    style={{
+                      position: 'absolute',
+                      left: KT.x,
+                      top: KT.y,
+                      width: KT.w,
+                      height: KT.h,
+                      maxWidth: 'none', // wrapper is 0-wide; don't let a global img max-width squash it
+                      borderRadius: 10,
+                      boxShadow: '0 24px 48px -30px rgba(16,18,22,0.6)',
+                    }}
+                  />
+                  {/* Dim what falls outside the safe area. */}
+                  <div
+                    style={{ position: 'absolute', left: KT.x, top: KT.y, width: ktSafe.left - KT.x, height: KT.h, background: 'rgba(0,0,0,0.5)', borderRadius: '10px 0 0 10px' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: ktSafe.left + ktSafe.width,
+                      top: KT.y,
+                      width: KT.x + KT.w - (ktSafe.left + ktSafe.width),
+                      height: KT.h,
+                      background: 'rgba(0,0,0,0.5)',
+                      borderRadius: '0 10px 10px 0',
+                    }}
+                  />
+                  <Mark
+                    at={ktSafe}
+                    label="安全區 829 px"
+                    tag={{ left: ktSafe.left + ktSafe.width / 2 - 80, top: KT.y + KT.h + 12 }}
+                  />
+                </div>
+              </Step>
+              <Step duration={260}>
+                <RuleLine>保留 subtitle——不要省略，縮小字級塞進 100 px 高度。</RuleLine>
+                <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
+                  <Mark at={ktHl} label="headline" tag={{ left: ktHl.left - 128, top: ktHl.top - 4 }} />
+                  <Mark at={ktSub} label="subtitle 保留" tag={{ left: ktSub.left, top: KT.y + KT.h + 12 }} />
+                  <Mark at={ktCta} label="CTA" tag={{ left: ktCta.left + ktCta.width + 10, top: ktCta.top + 6 }} />
+                </div>
+              </Step>
             </Steps>
-          </div>
-        </R>
-        <R d={360} style={{ position: 'absolute', left: BANNER.x, top: BANNER.y + BANNER.h + 40 }}>
-          <div style={{ fontSize: 24, color: muted, lineHeight: 1.6 }}>
-            AI 每次 resize 前，都先照這幾行讀懂 master，
-            <br />
-            再把同樣的圖層排進每個版位——<b style={{ color: 'var(--osd-text)' }}>不用我每次重新解釋</b>。
           </div>
         </R>
       </div>
@@ -2496,12 +2557,14 @@ export const notes: (string | undefined)[] = [
 這是 resize 的流程；只換語系不換尺寸的時候用 multi-lang，步驟一樣，只是不 resize。
 （口頭補充：我不在，生產照跑）開會時，以前設計停擺，現在開完會只剩檢查；臨時改字，以前全部重貼，現在更新 Sheet、一句話重出；請假時，以前要等我回來，現在同事用同一個 Skill 就能接手。`,
 
-  // 7.5 · 規則長這樣 1:00
-  `【1:00】
+  // 7.5 · 規則長這樣 1:30
+  `【1:30】
 那規則實際寫起來長什麼樣？這是 skill 裡的原文，講的就是右邊這張 CasualTop。
 （按 →）第一條：CasualTop 750×224 是常用的 master——所有版位都從這張長出來。
 （按 →）第二條：圖層角色以它為準——AI 先認出哪個是 headline、哪個是 subtitle、哪個是 CTA，之後每個版位都照這個對應去排。
 （按 →）第三條是所有版位通用的：角色的臉必須完整可見。縮放、裁切的時候，AI 會檢查臉有沒有被切到。
+（按 →）同一套圖層放到 KratosTop——1178×100 的細長條。這個版位的規則是：安全區寬 829 px、水平置中，左右兩邊不能放內容。
+（按 →）還有：subtitle 一定要保留，只能縮小字級塞進 100 px 高度。所以你看，headline、subtitle、CTA 全都還在，只是排成一條。
 就是這樣幾行字，AI 每次都會照做，我不用每次重新解釋。`,
 
   // 8 · Demo 3:00
