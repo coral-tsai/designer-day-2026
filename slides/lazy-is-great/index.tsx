@@ -459,22 +459,37 @@ const Cover: Page = () => (
 );
 
 // ── 2 · Manifesto ───────────────────────────────────────────────────────────
-const Quote = ({ text, who, photo, focus }: { text: string; who: string; photo: string; focus: string }) => (
+// `focus` is where the face sits in the photo; `zoom` crops in so the head fills the frame.
+const Quote = ({
+  text,
+  who,
+  photo,
+  focus,
+  zoom,
+}: {
+  text: string;
+  who: string;
+  photo: string;
+  focus: string;
+  zoom: number;
+}) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
-    <img
-      src={photo}
-      alt={who.replace(/^— /, '')}
+    <div
       style={{
-        width: 128,
-        height: 160,
+        width: 150,
+        height: 180,
         flexShrink: 0,
-        borderRadius: 16,
-        objectFit: 'cover',
-        objectPosition: focus,
-        filter: 'grayscale(1) contrast(1.05)',
+        borderRadius: 18,
+        overflow: 'hidden',
         boxShadow: '0 16px 32px -18px rgba(16,18,22,0.5)',
       }}
-    />
+    >
+      <img
+        src={photo}
+        alt={who.replace(/^— /, '')}
+        style={{ width: '100%', height: '100%', display: 'block', objectFit: 'contain', objectPosition: '50% 50%', transform: `scale(${zoom})`, transformOrigin: focus }}
+      />
+    </div>
     <div style={{ borderLeft: '5px solid var(--osd-accent)', paddingLeft: 28 }}>
       <p style={{ fontSize: 32, lineHeight: 1.5, margin: 0, fontWeight: 600, color: ink2 }}>{text}</p>
       <p style={{ fontSize: 22, lineHeight: 1.4, margin: '14px 0 0', color: muted }}>{who}</p>
@@ -509,7 +524,8 @@ const Manifesto: Page = () => (
           text="「懶惰，是程式設計師的三大美德之一。」"
           who="— Larry Wall（Perl 語言作者）"
           photo={larryWall}
-          focus="50% 22%"
+          focus="54% 4%"
+          zoom={1.75}
         />
       </R>
       <R d={220}>
@@ -517,7 +533,8 @@ const Manifesto: Page = () => (
           text="「進步不是早起的人帶來的，而是懶人為了找更簡單的方法而帶來的。」"
           who="— Robert A. Heinlein，《Time Enough for Love》"
           photo={robertHeinlein}
-          focus="62% 28%"
+          focus="84% 10%"
+          zoom={2.2}
         />
       </R>
     </div>
