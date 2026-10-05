@@ -2167,7 +2167,7 @@ const Stair = ({ n, name, state, badge, d }: { n: number; name: string; state: R
       )}
       <div
         style={{
-          height: 120 + n * 46,
+          height: 96 + n * 40,
           borderRadius: '16px 16px 0 0',
           boxSizing: 'border-box',
           padding: '20px 16px',
@@ -2230,7 +2230,7 @@ const Next: Page = () => (
         <Step duration={260}>
         <div>
           <div style={{ fontSize: 26, fontWeight: 800, color: muted, letterSpacing: '0.08em' }}>AI 導入六層階梯</div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 400, borderBottom: `2px solid ${line}` }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 360, borderBottom: `2px solid ${line}` }}>
             <Stair d={60} n={1} name="AI 工具" state="done" />
             <Stair d={140} n={2} name="知識封裝（Skill）" state="here" badge="我們在這" />
             <Stair d={220} n={3} name="穩定代辦（Loop）" state="next" badge="下一步" />
@@ -2241,8 +2241,9 @@ const Next: Page = () => (
         </div>
         </Step>
         <Step duration={260}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 28, fontSize: 26 }}>
-            <span style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>還在調整：</span>
+          <div style={{ fontSize: 24, fontWeight: 800, marginTop: 24 }}>還在調整</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 12, fontSize: 26 }}>
+            <span style={{ color: 'var(--osd-accent)', fontWeight: 800 }}>1</span>
             <span style={{ whiteSpace: 'nowrap' }}>resize 沒辦法只用一種排版，文字有時</span>
             <span style={{ background: blueSoft, color: 'var(--osd-text)', borderRadius: 999, padding: '8px 20px', whiteSpace: 'nowrap' }}>
               靠左
@@ -2254,7 +2255,11 @@ const Next: Page = () => (
               置中
             </span>
           </div>
-          <div style={{ fontSize: 20, color: muted, marginTop: 22 }}>階梯概念引自温明輝〈AI 導入的第一步〉</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 14, fontSize: 26 }}>
+            <span style={{ color: 'var(--osd-accent)', fontWeight: 800 }}>2</span>
+            <span style={{ whiteSpace: 'nowrap' }}>Banner 大約有三種，要各自整理出規則</span>
+          </div>
+          <div style={{ fontSize: 20, color: muted, marginTop: 18 }}>階梯概念引自温明輝〈AI 導入的第一步〉</div>
         </Step>
         </Steps>
       </div>
@@ -2622,7 +2627,8 @@ Skill 的核心，其實就是把腦中的規則寫成一張表：版面、文�
 Skill 是活的：出錯，就補一條規則，下次就不再錯。
 舉個真實例子：緬甸文在一般 banner 字型下顯示不出來，我就補了一條規則——緬甸文改用 Noto Sans Myanmar，字變高就把標題和副標縮小一點。之後再也沒出過錯。
 （按 → 出現階梯）用温明輝〈AI 導入的第一步〉的六層階梯來看，我們在第二層「知識封裝」，下一步是第三層「穩定代辦」，讓它定期自己跑。
-（按 →）目前還在調整的是 resize：沒辦法只用一種排版範本，每次主視覺不同，文字有時要放左邊、有時放右邊、有時放中間。這部分還在想怎麼寫成規則。`,
+（按 →）目前還在調整的是 resize：沒辦法只用一種排版範本，每次主視覺不同，文字有時要放左邊、有時放右邊、有時放中間。這部分還在想怎麼寫成規則。
+另外，banner 大約有三種，每一種要各自整理出規則，這也是接下來要做的。`,
 
   // 15.5 · 帶回家 0:45
   `【0:45】
