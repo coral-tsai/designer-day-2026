@@ -8,7 +8,7 @@ import {
   useIsActivePage,
   useSlidePageNumber,
 } from '@open-slide/core';
-import type { CSSProperties, ReactNode } from 'react';
+import { type CSSProperties, type ReactNode, useEffect, useState } from 'react';
 import campaignBanners from './assets/campaign-banners.webp';
 import sheetsSync from './assets/google-sheets-sync.png';
 
@@ -55,6 +55,8 @@ const CSS = `
 @keyframes lzKen { from { transform: scale(1); } to { transform: scale(1.07); } }
 @keyframes lzBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 .lz-grow { transform-origin: 50% 100%; }
+/* A revealed <Step> rises in like the rest of the page. */
+[data-lz-active="true"] [data-osd-step="revealed"] > * { animation: lzRise 620ms ${EXPO} both; }
 [data-lz-active="true"] .lz-rise { animation: lzRise 760ms ${EXPO} both; animation-delay: calc(var(--d, 0) * 1ms); }
 [data-lz-active="true"] .lz-pop { animation: lzPop 700ms ${EXPO} both; animation-delay: calc(var(--d, 0) * 1ms); }
 [data-lz-active="true"] .lz-grow { animation: lzGrow 1200ms ${EXPO} both; animation-delay: calc(var(--d, 0) * 1ms); }
@@ -67,8 +69,11 @@ const CSS = `
 [data-lz-active="true"] .lz-sheen::after { content: ''; position: absolute; top: -20%; left: 0; width: 30%; height: 140%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent); animation: lzSheen 3.2s ease-out 800ms infinite; pointer-events: none; }
 [data-lz-active="true"] .lz-ken { animation: lzKen 14s cubic-bezier(0.23, 1, 0.32, 1) 400ms both; transform-origin: 30% 30%; }
 [data-lz-active="true"] .lz-blink { animation: lzBlink 1.6s ease-in-out infinite; }
+/* Nothing inside a hidden step animates until it is revealed (no spent or spoiled motion). */
+[data-osd-step="pending"] *, [data-osd-step="pending"] *::after { animation: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  [data-lz-active="true"] [class*="lz-"], [data-lz-active="true"] [class*="lz-"]::after { animation: none !important; }
+  [data-lz-active="true"] [class*="lz-"], [data-lz-active="true"] [class*="lz-"]::after,
+  [data-lz-active="true"] [data-osd-step] > * { animation: none !important; }
 }
 `;
 if (typeof document !== 'undefined') {
@@ -129,7 +134,21 @@ const darkVars = {
   '--lz-strong': '#FFFFFF',
 } as CSSProperties;
 
-const useActive = () => (useIsActivePage() ? 'true' : 'false');
+// Stay "active" for a moment after leaving, so looping/entrance animations on the
+// outgoing page don't snap back while the next page fades in over it.
+const useActive = () => {
+  const active = useIsActivePage();
+  const [linger, setLinger] = useState(active);
+  useEffect(() => {
+    if (active) {
+      setLinger(true);
+      return;
+    }
+    const t = setTimeout(() => setLinger(false), 450);
+    return () => clearTimeout(t);
+  }, [active]);
+  return active || linger ? 'true' : 'false';
+};
 
 // Wrapper that plays an entrance animation when the page becomes active.
 const R = ({
@@ -836,7 +855,8 @@ const Evolution1: Page = () => (
     </div>
     <div style={{ display: 'grid', gridTemplateColumns: '981px 1fr', gap: 40, height: 327, marginTop: 36 }}>
       {/* The plugin we used: Google Sheets Sync (Figma Community page). 1504×500 */}
-      <R k="lz-pop" d={320}>
+      <Steps>
+      <Step duration={280}>
         <div
           style={{
             position: 'relative',
@@ -853,9 +873,10 @@ const Evolution1: Page = () => (
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         </div>
-      </R>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-        <R d={440} style={{ flex: 1 }}>
+      </Step>
+      <Step duration={280}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20, height: '100%' }}>
+        <div style={{ flex: 1 }}>
           <div
             className="lz-sheen"
             style={{
@@ -875,15 +896,17 @@ const Evolution1: Page = () => (
             <span style={{ fontSize: 28, fontWeight: 700 }}>多語系貼字時間</span>
             <span style={{ ...heavy, fontSize: 72, color: 'var(--osd-accent)', lineHeight: 1.15, marginTop: 6 }}>↓ 約 【60%】</span>
           </div>
-        </R>
-        <R d={520}>
+        </div>
+        <div>
           <div style={{ fontSize: 26, color: muted, lineHeight: 1.5 }}>
             用的是現成的 Figma 外掛 <b style={{ color: 'var(--osd-text)' }}>Google Sheets Sync</b>
             <br />
             不重造輪子，也是一種懶。
           </div>
-        </R>
+        </div>
       </div>
+      </Step>
+      </Steps>
     </div>
   </LightPage>
 );
@@ -1064,11 +1087,13 @@ const Evolution2: Page = () => (
         </Step>
       </Steps>
     </div>
-    <R d={200}>
-      <h3 style={{ ...heavy, fontSize: 72, lineHeight: 1.25, margin: '56px 0 0' }}>
-        從<Hi color={muted}>動手做</Hi>，變成<Hi>動口說</Hi>。
-      </h3>
-    </R>
+    <Steps>
+      <Step duration={280}>
+        <h3 style={{ ...heavy, fontSize: 72, lineHeight: 1.25, margin: '56px 0 0' }}>
+          從<Hi color={muted}>動手做</Hi>，變成<Hi>動口說</Hi>。
+        </h3>
+      </Step>
+    </Steps>
   </LightPage>
 );
 
@@ -1111,13 +1136,12 @@ const AIRoles: Page = () => (
         </Step>
       </Steps>
     </div>
-    <R d={240}>
+    <Steps>
+    <Step duration={280}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 20, fontSize: 24, color: muted }}>
         <Icon name="user" size={30} color="#0878E5" />
         背景完成後，仍由 content writer 校對把關。
       </div>
-    </R>
-    <R d={320}>
       <div
         style={{
           marginTop: 32,
@@ -1132,7 +1156,8 @@ const AIRoles: Page = () => (
       >
         文案交給<Hi>專業的人</Hi>，設計留給<Hi>自己</Hi>，生產交給<Hi color={purple}>AI</Hi>。
       </div>
-    </R>
+    </Step>
+    </Steps>
   </LightPage>
 );
 
@@ -1454,12 +1479,14 @@ const CrossTeam: Page = () => (
       <R d={180} style={{ height: '100%' }}>
         <FindingCard n="01" title="大家的痛點其實一模一樣" desc="resize、多語系、改字重來" />
       </R>
-      <R d={300} style={{ height: '100%' }}>
-        <FindingCard n="02" title="各有各的小聰明" desc="有人用範本、有人訂命名規則，但都停在「靠人自律」" />
-      </R>
-      <R k="lz-pop" d={460} style={{ height: '100%' }}>
-        <FindingCard n="03" title="缺的是「可複製」的方法" hot />
-      </R>
+      <Steps>
+        <Step duration={280}>
+          <FindingCard n="02" title="各有各的小聰明" desc="有人用範本、有人訂命名規則，但都停在「靠人自律」" />
+        </Step>
+        <Step duration={280}>
+          <FindingCard n="03" title="缺的是「可複製」的方法" hot />
+        </Step>
+      </Steps>
     </div>
   </LightPage>
 );
@@ -1581,32 +1608,36 @@ const Modules: Page = () => (
         </R>
       </div>
     </div>
+    <Steps>
+    <Step duration={280}>
     <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr 1fr 1fr', alignItems: 'center', gap: 24, marginTop: 36 }}>
-      <R d={760}>
+      <div>
         <div style={{ fontSize: 22, color: muted, fontWeight: 800, letterSpacing: '0.08em' }}>組合範例</div>
-      </R>
-      <R d={800}>
+      </div>
+      <div>
         <Combo name="週期活動">
           <Letter l="D" small />
           <Letter l="E" small />
         </Combo>
-      </R>
-      <R d={880}>
+      </div>
+      <div>
         <Combo name="新活動單語系">
           <Letter l="A" small />
           <Letter l="B" small />
           <Letter l="E" small />
         </Combo>
-      </R>
-      <R d={960}>
+      </div>
+      <div>
         <Combo name="大型跨國活動">
           <Letter l="A" small />
           <Letter l="B" small />
           <Letter l="C" small />
           <Letter l="E" small />
         </Combo>
-      </R>
+      </div>
     </div>
+    </Step>
+    </Steps>
   </LightPage>
 );
 
@@ -1691,25 +1722,29 @@ const Rules: Page = () => (
         <R d={300}>
           <div style={{ fontSize: 28, fontWeight: 800, height: 40 }}>溢字時，照這個順序處理</div>
         </R>
-        <R d={380}>
-          <FixStep n="1" text="縮小字級（到最小字級為止）" who="規則" />
-        </R>
-        <R d={460}>
-          <FixStep n="2" text="自動換行（在行數上限內）" who="規則" />
-        </R>
-        <R d={540}>
-          <FixStep n="3" text="AI 列出超出的語系與版位" who="AI 回報" />
-        </R>
-        <R d={620}>
-          <FixStep n="4" text="Content writer 提供短版文案" who="人" human />
-        </R>
+        <Steps>
+          <Step duration={260}>
+            <FixStep n="1" text="縮小字級（到最小字級為止）" who="規則" />
+          </Step>
+          <Step duration={260}>
+            <FixStep n="2" text="自動換行（在行數上限內）" who="規則" />
+          </Step>
+          <Step duration={260}>
+            <FixStep n="3" text="AI 列出超出的語系與版位" who="AI 回報" />
+          </Step>
+          <Step duration={260}>
+            <FixStep n="4" text="Content writer 提供短版文案" who="人" human />
+          </Step>
+        </Steps>
       </div>
     </div>
-    <R d={760}>
-      <h3 style={{ ...heavy, fontSize: 56, lineHeight: 1.3, margin: '56px 0 0' }}>
-        先用規則解決，<Hi>真的不行才往上交。</Hi>
-      </h3>
-    </R>
+    <Steps>
+      <Step duration={280}>
+        <h3 style={{ ...heavy, fontSize: 56, lineHeight: 1.3, margin: '56px 0 0' }}>
+          先用規則解決，<Hi>真的不行才往上交。</Hi>
+        </h3>
+      </Step>
+    </Steps>
   </LightPage>
 );
 
@@ -1825,18 +1860,21 @@ const Next: Page = () => (
         </div>
       </R>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <R d={240}>
+        <Steps>
+        <Step duration={260}>
+        <div>
           <div style={{ fontSize: 26, fontWeight: 800, color: muted, letterSpacing: '0.08em' }}>AI 導入六層階梯</div>
-        </R>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 400, borderBottom: `2px solid ${line}` }}>
-          <Stair d={300} n={1} name="AI 工具" state="done" />
-          <Stair d={380} n={2} name="知識封裝（Skill）" state="here" badge="我們在這" />
-          <Stair d={460} n={3} name="穩定代辦（Loop）" state="next" badge="下一步" />
-          <Stair d={540} n={4} name="多 AI 接力" state="future" />
-          <Stair d={620} n={5} name="多模型協作" state="future" />
-          <Stair d={700} n={6} name="全流程自動化" state="future" />
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 400, borderBottom: `2px solid ${line}` }}>
+            <Stair d={60} n={1} name="AI 工具" state="done" />
+            <Stair d={140} n={2} name="知識封裝（Skill）" state="here" badge="我們在這" />
+            <Stair d={220} n={3} name="穩定代辦（Loop）" state="next" badge="下一步" />
+            <Stair d={300} n={4} name="多 AI 接力" state="future" />
+            <Stair d={380} n={5} name="多模型協作" state="future" />
+            <Stair d={460} n={6} name="全流程自動化" state="future" />
+          </div>
         </div>
-        <R d={820}>
+        </Step>
+        <Step duration={260}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 28, fontSize: 26 }}>
             <span style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>還在調整：</span>
             <span style={{ background: blueSoft, color: 'var(--osd-text)', borderRadius: 999, padding: '8px 22px' }}>
@@ -1847,7 +1885,8 @@ const Next: Page = () => (
             </span>
           </div>
           <div style={{ fontSize: 20, color: muted, marginTop: 22 }}>階梯概念引自温明輝〈AI 導入的第一步〉</div>
-        </R>
+        </Step>
+        </Steps>
       </div>
     </div>
   </LightPage>
@@ -2014,8 +2053,8 @@ export const notes: (string | undefined)[] = [
 第一次偷懶，是善用現成工具。
 以前：打開文案表逐格複製、切回 Figma 貼上對位、多一種語言就多一輪、改一個字就全部重貼。
 （按 → 出現 AFTER）現在文案集中在一張 Sheet，Plugin 依語系自動填入，改字只改一個地方，貼錯幾乎歸零。
-多語系貼字時間大約少了【60%】。
-（指向截圖）用的是 Figma 社群現成的外掛 Google Sheets Sync——不重造輪子，也是一種懶。
+（按 → 出現截圖）用的是 Figma 社群現成的外掛 Google Sheets Sync——不重造輪子，也是一種懶。
+（按 → 出現數字）多語系貼字時間大約少了【60%】。
 （補一句）這一步後來也交給 AI 了，現在已經不用 Plugin，下一頁會看到。`,
 
   // 6 · 第二次偷懶 1:30
@@ -2024,7 +2063,7 @@ export const notes: (string | undefined)[] = [
 （按 →）第一步，我只說一句話：「幫我把這張 banner resize 成全版位，換上 12 種語系」。
 （按 →）第二步，AI agent 照著 Skill 跑完三件事：聽懂這句話要哪些版位、哪些語系；照 Skill 帶入文案、延展版位、對位；最後檢查並回報，列出溢字的語系與版位。
 （按 →）第三步，我去做別的設計：想新主視覺、跟企劃討論。溢字清單直接交給 content writer 給短版文案。
-從動手做，變成動口說。
+（按 →）從動手做，變成動口說。
 關鍵不是 AI 有多神，而是我把「我的做法」寫成了 Skill——它記得我的做法，不用每次重新解釋。`,
 
   // 7 · 我不在，生產照跑 1:00
@@ -2033,7 +2072,7 @@ export const notes: (string | undefined)[] = [
 （按 →）開會時，以前設計停擺，現在開完會只剩檢查。
 （按 →）臨時改字，以前全部重貼，現在更新 Sheet、一句話重出。
 （按 →）請假時，以前要等我回來，現在同事用同一個 Skill 就能接手。
-當然，背景跑完之後，還是由 content writer 校對把關。
+（按 →）當然，背景跑完之後，還是由 content writer 校對把關。
 所以整條流程的分工就是一句話：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
   // 8 · Demo 3:00
@@ -2061,8 +2100,8 @@ Promotion：只產出 MKT 需要的尺寸，不做全版位——這就是在「
   `【1:00】
 後來我跟其他部門聊，發現三件事：
 一、大家的痛點其實一模一樣——resize、多語系、改字重來。
-二、每個人都有自己的小聰明，有人用範本、有人訂命名規則，但都停在「靠人自律」。
-三、所以缺的不是工具，是「可複製」的方法。`,
+（按 →）二、每個人都有自己的小聰明，有人用範本、有人訂命名規則，但都停在「靠人自律」。
+（按 →）三、所以缺的不是工具，是「可複製」的方法。`,
 
   // 12 · 模組化 2:00
   `【2:00】
@@ -2073,22 +2112,25 @@ B 多尺寸——AI 依 Skill 延展，人抽查。
 C 多語系——content writer 翻譯，AI 從 Sheet 帶入並套用。
 D 固定範本——AI 換字、換圖、換日期，門檻最低。
 E 校對交付——AI 檢查、回報、命名打包，再由 content writer 校對。
-組合起來：週期活動是 D＋E；新活動單語系是 A＋B＋E；大型跨國活動是 A＋B＋C＋E。
+（按 →）組合起來：週期活動是 D＋E；新活動單語系是 A＋B＋E；大型跨國活動是 A＋B＋C＋E。
 固定範本最適合其他部門先帶回去試。`,
 
   // 13 · 把規則寫進 Skill 1:30
   `【1:30】
 Skill 的核心，其實就是把腦中的規則寫成一張表：版面、文字寬度、字級、字型。
 溢字是最常見的問題，處理順序是：
-先縮小字級，到最小字級為止；再自動換行，在行數上限內；還是不行，AI 列出超出的語系與版位；最後才請 content writer 提供短版文案。
-先用規則解決，真的不行才往上交。`,
+（按 →）先縮小字級，到最小字級為止；
+（按 →）再自動換行，在行數上限內；
+（按 →）還是不行，AI 列出超出的語系與版位；
+（按 →）最後才請 content writer 提供短版文案。
+（按 →）先用規則解決，真的不行才往上交。`,
 
   // 14 · 下一步 1:00
   `【1:00】
 Skill 是活的：出錯，就補一條規則，下次就不再錯。
 舉個真實例子：【某次溢字後補上的規則】。
-目前還在調整的有：【橫幅轉直式的重排】、【特定語系溢字】。
-用温明輝〈AI 導入的第一步〉的六層階梯來看，我們在第二層「知識封裝」，下一步是第三層「穩定代辦」，讓它定期自己跑。`,
+（按 → 出現階梯）用温明輝〈AI 導入的第一步〉的六層階梯來看，我們在第二層「知識封裝」，下一步是第三層「穩定代辦」，讓它定期自己跑。
+（按 →）目前還在調整的有：【橫幅轉直式的重排】、【特定語系溢字】。`,
 
   // 15 · 總結 0:30 + Q&A 2:00
   `【0:30】
