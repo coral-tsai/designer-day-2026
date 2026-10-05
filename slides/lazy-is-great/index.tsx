@@ -1727,9 +1727,9 @@ const Impact: Page = () => (
             borderBottom: `2px solid ${line}`,
           }}
         >
-          <Bar value="【120】" h={320} color="#B8BFCC" d={200} />
-          <Bar value="【45】" h={120} color={purple} d={360} />
-          <Bar value="【10】" h={27} color="#0878E5" d={520} />
+          <Bar value="120" h={320} color="#B8BFCC" d={200} />
+          <Bar value="45" h={120} color={purple} d={360} />
+          <Bar value="10" h={27} color="#0878E5" d={520} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: 20 }}>
           <BarLabel>手貼</BarLabel>
@@ -2577,7 +2577,7 @@ export const notes: (string | undefined)[] = [
 
   // 9 · 成效 1:00
   `【1:00】
-三次進化的數字：手貼每套【120】分鐘、Sheet 帶入【45】分鐘、交給 AI【10】分鐘。
+三次進化的數字：手貼每套約 120 分鐘、Sheet 帶入約 45 分鐘、交給 AI 約 10 分鐘。
 每套製作時間少了【92%】，校稿錯誤大幅減少，而且多出時間做真正需要設計的工作。
 補充一下：這是目前階段的數據，截至【X 月】，翻譯時間另計。`,
 
