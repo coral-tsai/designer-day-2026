@@ -1676,9 +1676,13 @@ const Demo: Page = () => (
 // Bar heights are proportional to 120 / 45 / 10 minutes (max = 320px).
 // Update `h` together with the value when the real numbers come in.
 const Bar = ({ value, h, color, d }: { value: string; h: number; color: string; d: number }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 200 }}>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 240 }}>
     <R d={d + 500}>
-      <div style={{ ...heavy, fontSize: 44, lineHeight: 1.2, marginBottom: 12, color }}>{value}</div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 12, color, whiteSpace: 'nowrap' }}>
+        <span style={{ fontSize: 22, fontWeight: 700 }}>約</span>
+        <span style={{ ...heavy, fontSize: 44, lineHeight: 1.2 }}>{value}</span>
+        <span style={{ fontSize: 22, fontWeight: 700 }}>分鐘</span>
+      </div>
     </R>
     <div
       className="lz-grow"
@@ -1688,7 +1692,7 @@ const Bar = ({ value, h, color, d }: { value: string; h: number; color: string; 
 );
 
 const BarLabel = ({ children }: { children: ReactNode }) => (
-  <div style={{ width: 200, textAlign: 'center', fontSize: 28, fontWeight: 800 }}>{children}</div>
+  <div style={{ width: 240, textAlign: 'center', fontSize: 28, fontWeight: 800 }}>{children}</div>
 );
 
 const StatCard = ({ label, big, color }: { label: string; big: string; color: string }) => (
@@ -1714,7 +1718,6 @@ const Impact: Page = () => (
   <LightPage chip="IMPACT · 成效總結" title={<>從 2 小時到 10 分鐘：<Hi>三次進化</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 560px', gap: 48, height: 560 }}>
       <div style={{ ...card, padding: '36px 56px 32px', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ fontSize: 22, color: muted, fontWeight: 600 }}>單位：分鐘／套</div>
         <div
           style={{
             flex: 1,
@@ -2423,9 +2426,9 @@ const Closing: Page = () => (
       </R>
       <R d={100}>
         <h2 style={{ ...heavy, fontSize: 88, lineHeight: 1.25, margin: '40px 0 0', letterSpacing: '-0.03em' }}>
-          懶惰不是終點，
+          偷懶不是終點，
           <br />
-          <Hi>是持續問一句：這還能不能更自動？</Hi>
+          <Hi>是每次都問：還能更懶嗎？</Hi>
         </h2>
       </R>
       <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 64 }}>
@@ -2627,7 +2630,7 @@ Skill 是活的：出錯，就補一條規則，下次就不再錯。
 
   // 15 · 總結 0:30 + Q&A 2:00
   `【0:30】
-最後一句：懶惰不是終點，是持續問一句——這還能不能更自動？
+最後一句：偷懶不是終點，是每次都問自己——還能更懶嗎？
 三步驟：找出重複的、寫成你的做法、交給 AI。
 歡迎大家一起試用、一起調整、一起偷懶。謝謝大家，接下來開放 Q&A。
 
