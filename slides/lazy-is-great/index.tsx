@@ -1059,9 +1059,8 @@ const Evolution2: Page = () => (
                 borderRadius: 14,
                 padding: '16px 20px',
               }}
-            >
-              「幫我把這張 banner resize 成全版位，換上 12 種語系」
-            </span>
+            >「resize」
+「多語系」</span>
           </ActCard>
         </Step>
         <Step duration={260}>
@@ -1276,7 +1275,7 @@ const SkillInside: Page = () => (
                   <LoopRow n="3">依新比例重新排版</LoopRow>
                 </R>
                 <R d={330}>
-                  <LoopRow n="4">填入該語系文案＋斷行</LoopRow>
+                  <LoopRow n="4">填入 writer 斷好行的文案</LoopRow>
                 </R>
                 <R d={400}>
                   <LoopRow n="5">命名 CasualTop_TH_THB</LoopRow>
@@ -1294,7 +1293,7 @@ const SkillInside: Page = () => (
             <div style={{ ...phaseCard, ...card, flex: 1 }}>
               <PhaseHead n="4" title="回報給我" />
               <div style={{ fontSize: 24, lineHeight: 1.55, color: muted }}>
-                列出產了哪些圖，標出文案很擠、或不得不省略元素的 banner，告訴我哪裡要看
+                列出產了哪些圖，告訴我哪裡要看
               </div>
             </div>
           </div>
@@ -1307,70 +1306,6 @@ const SkillInside: Page = () => (
         <b style={{ color: 'var(--osd-text)' }}>multi-lang</b>，流程相同、但不 resize 也不重排
       </div>
     </R>
-  </LightPage>
-);
-
-// ── 7 · Scenarios — production runs without me ──────────────────────────────
-const sceneGrid: CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: '240px 1fr 64px 1.3fr',
-  alignItems: 'center',
-};
-
-const SceneRow = ({ scene, before, after }: { scene: string; before: string; after: string }) => (
-  <div style={{ ...card, ...sceneGrid, height: 108, padding: '0 44px' }}>
-    <div style={{ ...heavy, fontSize: 36 }}>{scene}</div>
-    <div style={{ fontSize: 30, color: muted, textDecoration: 'line-through', textDecorationColor: '#B8BFCC' }}>{before}</div>
-    <Arrow color="var(--osd-accent)" />
-    <div style={{ fontSize: 32, fontWeight: 800, whiteSpace: 'nowrap' }}>{after}</div>
-  </div>
-);
-
-const AIRoles: Page = () => (
-  <LightPage chip="SCENARIO · 使用情境" title={<>我不在，<Hi>生產照跑</Hi></>}>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <R d={140}>
-        <div style={{ ...sceneGrid, padding: '0 44px', fontSize: 22, fontWeight: 800, letterSpacing: '0.12em', color: muted }}>
-          <span>情境</span>
-          <span>以前</span>
-          <span />
-          <span style={{ color: 'var(--osd-accent)' }}>現在</span>
-        </div>
-      </R>
-      <Steps>
-        <Step duration={260}>
-          <SceneRow scene="開會時" before="設計停擺" after="開完會只剩檢查" />
-        </Step>
-        <Step duration={260}>
-          <SceneRow scene="臨時改字" before="全部重貼" after="更新 Sheet，一句話重出" />
-        </Step>
-        <Step duration={260}>
-          <SceneRow scene="請假時" before="等我回來" after="同事用同一個 Skill 接手" />
-        </Step>
-      </Steps>
-    </div>
-    <Steps>
-    <Step duration={280}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 20, fontSize: 24, color: muted }}>
-        <Icon name="user" size={30} color="#0878E5" />
-        背景完成後，仍由 content writer 校對把關。
-      </div>
-      <div
-        style={{
-          marginTop: 32,
-          padding: '28px 48px',
-          background: surface,
-          borderRadius: 'var(--osd-radius)',
-          ...heavy,
-          fontSize: 48,
-          lineHeight: 1.3,
-          textAlign: 'center',
-        }}
-      >
-        文案交給<Hi>專業的人</Hi>，設計留給<Hi>自己</Hi>，生產交給<Hi color={purple}>AI</Hi>。
-      </div>
-    </Step>
-    </Steps>
   </LightPage>
 );
 
@@ -1490,7 +1425,7 @@ const Demo: Page = () => (
             <DemoBeat n="2" title="AI 執行中" time="快轉＋計時器" desc="中間切到 Skill 檔內容" />
           </R>
           <R d={520}>
-            <DemoBeat n="3" title="成品拼貼" time="約 1 分鐘" desc="所有版位成品＋溢字回報清單" />
+            <DemoBeat n="3" title="成品拼貼" time="約 1 分鐘" desc="所有版位成品＋產出清單" />
           </R>
         </div>
         <R d={620}>
@@ -1933,28 +1868,28 @@ const Rules: Page = () => (
       </R>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <R d={300}>
-          <div style={{ fontSize: 28, fontWeight: 800, height: 40 }}>溢字時，照這個順序處理</div>
+          <div style={{ fontSize: 28, fontWeight: 800, height: 40 }}>從文案到成品，照這個順序</div>
         </R>
         <Steps>
           <Step duration={260}>
-            <FixStep n="1" text="縮小字級（到最小字級為止）" who="規則" />
+            <FixStep n="1" text="Content writer 提供斷好行的文案" who="人" human />
           </Step>
           <Step duration={260}>
-            <FixStep n="2" text="自動換行（在行數上限內）" who="規則" />
+            <FixStep n="2" text="AI 依版位規格排版（安全區、字級）" who="規則" />
           </Step>
           <Step duration={260}>
-            <FixStep n="3" text="AI 列出超出的語系與版位" who="AI 回報" />
+            <FixStep n="3" text="AI 截圖檢查每一張" who="AI" />
           </Step>
           <Step duration={260}>
-            <FixStep n="4" text="Content writer 提供短版文案" who="人" human />
+            <FixStep n="4" text="Content writer 校對、我最後確認" who="人" human />
           </Step>
         </Steps>
       </div>
     </div>
     <Steps>
       <Step duration={280}>
-        <h3 style={{ ...heavy, fontSize: 56, lineHeight: 1.3, margin: '56px 0 0' }}>
-          先用規則解決，<Hi>真的不行才往上交。</Hi>
+        <h3 style={{ ...heavy, fontSize: 52, lineHeight: 1.3, margin: '56px 0 0' }}>
+          文案交給<Hi>專業的人</Hi>，設計留給<Hi>自己</Hi>，生產交給<Hi color={purple}>AI</Hi>。
         </h3>
       </Step>
     </Steps>
@@ -2337,7 +2272,6 @@ export default [
   Evolution1,
   Evolution2,
   SkillInside,
-  AIRoles,
   Demo,
   Impact,
   Departments,
@@ -2397,29 +2331,21 @@ export const notes: (string | undefined)[] = [
 （按 →）從動手做，變成動口說。
 關鍵不是 AI 有多神，而是我把「我的做法」寫成了 Skill——它記得我的做法，不用每次重新解釋。`,
 
-  // 6.5 · Skill 長什麼樣 1:00
-  `【1:00】
+  // 6.5 · Skill 長什麼樣＋口頭補充情境 1:30
+  `【1:30】
 那 Skill 裡面到底寫了什麼？其實就是我平常的做法，一步一步寫下來。
 第一步，先問清楚：要哪些版位、用哪份 Sheet 哪個分頁、命名要不要加幣別、Figma 檔在哪。
 （按 →）第二步，它自己去找 master，認出 headline、subtitle、CTA、T&C 各是哪個圖層。
-（按 →）第三步是重點：每個版位、每個語系跑一輪——複製、resize、重新排版、填文案、命名，最後截圖檢查有沒有塞不下或被裁到。
-（按 →）第四步，回報給我：哪些圖很擠、哪些不得不省略元素，我只要看那幾張。
-這是 resize 的流程；只換語系不換尺寸的時候用 multi-lang，步驟一樣，只是不 resize。`,
-
-  // 7 · 我不在，生產照跑 1:00
-  `【1:00】
-更重要的是：我不在，生產照跑。
-（按 →）開會時，以前設計停擺，現在開完會只剩檢查。
-（按 →）臨時改字，以前全部重貼，現在更新 Sheet、一句話重出。
-（按 →）請假時，以前要等我回來，現在同事用同一個 Skill 就能接手。
-（按 →）當然，背景跑完之後，還是由 content writer 校對把關。
-所以整條流程的分工就是一句話：文案交給專業的人，設計留給自己，生產交給 AI。`,
+（按 →）第三步是重點：每個版位、每個語系跑一輪——複製、resize、重新排版、填入 content writer 斷好行的文案、命名，最後截圖檢查有沒有塞不下或被裁到。
+（按 →）第四步，回報給我：產了哪些圖、哪裡要看，我只要看那幾張。
+這是 resize 的流程；只換語系不換尺寸的時候用 multi-lang，步驟一樣，只是不 resize。
+（口頭補充：我不在，生產照跑）開會時，以前設計停擺，現在開完會只剩檢查；臨時改字，以前全部重貼，現在更新 Sheet、一句話重出；請假時，以前要等我回來，現在同事用同一個 Skill 就能接手。`,
 
   // 8 · Demo 3:00
   `【3:00】影片約 2.5 分鐘，靜音，現場口述。
 ① 先看我說一句話（約 20 秒）。
 ② AI 執行中——這段有快轉，看角落計時器，實際耗時【X 分鐘】。中間會切到 Skill 檔，讓大家看我寫了哪些規則。
-③ 最後是成品拼貼和溢字回報清單（約 1 分鐘）。
+③ 最後是成品拼貼和產出清單（約 1 分鐘）。
 錄製日期：【YYYY/MM/DD】。影片若無法播放，改用本機備份檔。`,
 
   // 9 · 成效 1:00
@@ -2458,12 +2384,12 @@ E 校對交付——AI 檢查、回報、命名打包，再由 content writer �
   // 13 · 把規則寫進 Skill 1:30
   `【1:30】
 Skill 的核心，其實就是把腦中的規則寫成一張表：版面、文字寬度、字級、字型。
-溢字是最常見的問題，處理順序是：
-（按 →）先縮小字級，到最小字級為止；
-（按 →）再自動換行，在行數上限內；
-（按 →）還是不行，AI 列出超出的語系與版位；
-（按 →）最後才請 content writer 提供短版文案。
-（按 →）先用規則解決，真的不行才往上交。`,
+有了這張表，從文案到成品就是固定的順序：
+（按 →）先由 content writer 提供斷好行的文案；
+（按 →）AI 照版位規格排版——安全區、字級層級都寫在表裡，不用猜；
+（按 →）AI 截圖檢查每一張；
+（按 →）最後 content writer 校對，我做最後確認。
+（按 →）所以整條流程的分工就是一句話：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
   // 14 · 下一步 1:00
   `【1:00】
@@ -2489,7 +2415,7 @@ Skill 是活的：出錯，就補一條規則，下次就不再錯。
 ・為什麼不直接寫腳本？腳本要有人寫、要維護；對話式讓設計師自己就能調整。最穩定的步驟正是下一步要固化的部分。
 ・數字怎麼量的？從【起點】到【終點】，翻譯時間另計，檢查時間【有／沒有】包含。
 ・省下的時間做了什麼？【新主視覺／參與的討論】。
-・AI 出錯怎麼辦？用第 15 頁的真實案例：出錯 → 補規則。
+・AI 出錯怎麼辦？用第 14 頁的真實案例：出錯 → 補規則。
 ・用的是哪個 AI agent？【工具名稱】＋【如何連接設計工具】。
 ・急件可以當天上嗎？生產時間縮短了，但校對與確認仍需要時間——避免變成承諾。`,
 ];
