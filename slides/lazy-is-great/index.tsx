@@ -2115,11 +2115,23 @@ const Rules: Page = () => (
 );
 
 // ── 14 · Next ───────────────────────────────────────────────────────────────
-const LoopNode = ({ children, bg, fg = '#FFFFFF' }: { children: ReactNode; bg: string; fg?: string }) => (
+const LoopNode = ({
+  children,
+  bg,
+  fg = '#FFFFFF',
+  outline,
+}: {
+  children: ReactNode;
+  bg: string;
+  fg?: string;
+  outline?: string;
+}) => (
   <div
     style={{
       height: 72,
+      boxSizing: 'border-box',
       borderRadius: 999,
+      border: outline ? `3px solid ${outline}` : 'none',
       background: bg,
       color: fg,
       display: 'flex',
@@ -2188,8 +2200,8 @@ const Next: Page = () => (
         <div style={{ height: '100%', background: surface, borderRadius: 'var(--osd-radius)', padding: '40px 44px', boxSizing: 'border-box', position: 'relative' }}>
           <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 28 }}>越用越聰明</div>
           <div style={{ position: 'relative', paddingRight: 64 }}>
-            <LoopNode bg="#FFFFFF" fg={red}>
-              <span style={{ border: `2px solid ${red}`, borderRadius: 999, padding: '6px 28px' }}>出錯</span>
+            <LoopNode bg={redSoft} fg={red} outline={red}>
+              出錯
             </LoopNode>
             <DownArrow />
             <LoopNode bg="var(--osd-accent)">補一條規則</LoopNode>
