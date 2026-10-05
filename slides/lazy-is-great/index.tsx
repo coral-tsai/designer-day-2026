@@ -11,6 +11,8 @@ import {
 import { type CSSProperties, type ReactNode, useEffect, useState } from 'react';
 import campaignBanners from './assets/campaign-banners.webp';
 import sheetsSync from './assets/google-sheets-sync.png';
+import larryWall from './assets/larry-wall.png';
+import robertHeinlein from './assets/robert-heinlein.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#FFFFFF', text: '#101216', accent: '#0878E5' },
@@ -457,10 +459,26 @@ const Cover: Page = () => (
 );
 
 // ── 2 · Manifesto ───────────────────────────────────────────────────────────
-const Quote = ({ text, who }: { text: string; who: string }) => (
-  <div style={{ borderLeft: '5px solid var(--osd-accent)', paddingLeft: 32 }}>
-    <p style={{ fontSize: 32, lineHeight: 1.5, margin: 0, fontWeight: 600, color: ink2 }}>{text}</p>
-    <p style={{ fontSize: 22, lineHeight: 1.4, margin: '14px 0 0', color: muted }}>{who}</p>
+const Quote = ({ text, who, photo, focus }: { text: string; who: string; photo: string; focus: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+    <img
+      src={photo}
+      alt={who.replace(/^— /, '')}
+      style={{
+        width: 128,
+        height: 160,
+        flexShrink: 0,
+        borderRadius: 16,
+        objectFit: 'cover',
+        objectPosition: focus,
+        filter: 'grayscale(1) contrast(1.05)',
+        boxShadow: '0 16px 32px -18px rgba(16,18,22,0.5)',
+      }}
+    />
+    <div style={{ borderLeft: '5px solid var(--osd-accent)', paddingLeft: 28 }}>
+      <p style={{ fontSize: 32, lineHeight: 1.5, margin: 0, fontWeight: 600, color: ink2 }}>{text}</p>
+      <p style={{ fontSize: 22, lineHeight: 1.4, margin: '14px 0 0', color: muted }}>{who}</p>
+    </div>
   </div>
 );
 
@@ -487,12 +505,19 @@ const Manifesto: Page = () => (
   <LightPage chip="MANIFESTO · 懶惰宣言">
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginTop: -8 }}>
       <R d={140}>
-        <Quote text="「懶惰，是程式設計師的三大美德之一。」" who="— Larry Wall（Perl 語言作者）" />
+        <Quote
+          text="「懶惰，是程式設計師的三大美德之一。」"
+          who="— Larry Wall（Perl 語言作者）"
+          photo={larryWall}
+          focus="50% 22%"
+        />
       </R>
       <R d={220}>
         <Quote
           text="「進步不是早起的人帶來的，而是懶人為了找更簡單的方法而帶來的。」"
           who="— Robert A. Heinlein，《Time Enough for Love》"
+          photo={robertHeinlein}
+          focus="62% 28%"
         />
       </R>
     </div>
