@@ -1958,13 +1958,13 @@ const Modules: Page = () => (
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <R d={400}>
-          <ModuleRow l="A" name="主視覺" who="設計師（AI 輔助發想）" />
+          <ModuleRow l="A" name="主視覺" who="設計師" />
         </R>
         <R d={460}>
           <ModuleRow l="B" name="多尺寸" who="AI 依 Skill 延展，人抽查" />
         </R>
         <R d={520}>
-          <ModuleRow l="C" name="多語系" who="Content writer 翻譯 → AI 從 Sheet 帶入並套用" />
+          <ModuleRow l="C" name="多語系" who="Content writer 翻譯提供 Google Sheet → AI 從 Sheet 帶入並套用" />
         </R>
         <R d={580}>
           <ModuleRow l="D" name="固定範本" who="AI 換字、換圖、換日期" tag="門檻最低" />
@@ -2221,7 +2221,7 @@ const Next: Page = () => (
               color: muted,
             }}
           >
-            真實例子：【某次溢字後補上的規則】
+            例：緬甸文缺字 → 補規則：改用 Noto Sans Myanmar
           </div>
         </div>
       </R>
@@ -2244,10 +2244,10 @@ const Next: Page = () => (
           <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 28, fontSize: 26 }}>
             <span style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>還在調整：</span>
             <span style={{ background: blueSoft, color: 'var(--osd-text)', borderRadius: 999, padding: '8px 22px' }}>
-              【橫幅轉直式的重排】
+              Hero 1920×500 版面規格
             </span>
             <span style={{ background: blueSoft, color: 'var(--osd-text)', borderRadius: 999, padding: '8px 22px' }}>
-              【特定語系溢字】
+              SalesKit 1040×1040 版面規格
             </span>
           </div>
           <div style={{ fontSize: 20, color: muted, marginTop: 22 }}>階梯概念引自温明輝〈AI 導入的第一步〉</div>
@@ -2595,9 +2595,9 @@ Promotion：只產出 MKT 需要的尺寸，不做全版位——這就是在「
   `【2:00】
 所以我把流程拆成模組。收到需求先問三個問題：要新主視覺嗎？要幾種尺寸？要幾種語言？
 答案決定要用哪些模組：
-A 主視覺——設計師做，AI 輔助發想。
+A 主視覺——設計師自己做。
 B 多尺寸——AI 依 Skill 延展，人抽查。
-C 多語系——content writer 翻譯，AI 從 Sheet 帶入並套用。
+C 多語系——content writer 翻譯好放進 Google Sheet，AI 從 Sheet 帶入並套用。
 D 固定範本——AI 換字、換圖、換日期，門檻最低。
 E 校對交付——AI 檢查、回報、命名打包，再由 content writer 校對。
 （按 →）組合起來：週期活動是 D＋E；新活動單語系是 A＋B＋E；大型跨國活動是 A＋B＋C＋E。
@@ -2616,9 +2616,9 @@ Skill 的核心，其實就是把腦中的規則寫成一張表：版面、文�
   // 14 · 下一步 1:00
   `【1:00】
 Skill 是活的：出錯，就補一條規則，下次就不再錯。
-舉個真實例子：【某次溢字後補上的規則】。
+舉個真實例子：緬甸文在一般 banner 字型下顯示不出來，我就補了一條規則——緬甸文改用 Noto Sans Myanmar，字變高就把標題和副標縮小一點。之後再也沒出過錯。
 （按 → 出現階梯）用温明輝〈AI 導入的第一步〉的六層階梯來看，我們在第二層「知識封裝」，下一步是第三層「穩定代辦」，讓它定期自己跑。
-（按 →）目前還在調整的有：【橫幅轉直式的重排】、【特定語系溢字】。`,
+（按 →）目前還在調整的有：Hero 1920×500 和 SalesKit 1040×1040 這兩個版位，版面規格還沒定，AI 現在是先自己判斷，之後會補成規則。`,
 
   // 15.5 · 帶回家 0:45
   `【0:45】
