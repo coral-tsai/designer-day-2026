@@ -13,6 +13,7 @@ import campaignBanners from './assets/campaign-banners.webp';
 import sheetsSync from './assets/google-sheets-sync.png';
 import larryWall from './assets/larry-wall.png';
 import robertHeinlein from './assets/robert-heinlein.png';
+import casualTop from './assets/casualtop-choice.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#FFFFFF', text: '#101216', accent: '#0878E5' },
@@ -38,6 +39,7 @@ const red = '#C8463A';
 const redSoft = '#FDEEEB';
 
 const EXPO = 'cubic-bezier(0.16, 1, 0.3, 1)';
+const mono = '"SF Mono", ui-monospace, Menlo, Consolas, monospace';
 
 // ── In-page motion (module-level, slide-keyed) ──────────────────────────────
 // Every animation is gated on [data-lz-active="true"], which only the page
@@ -1309,6 +1311,177 @@ const SkillInside: Page = () => (
   </LightPage>
 );
 
+// ── 7.5 · One rule, on a real banner (CasualTop 750×224) ─────────────────────
+// Overlay boxes are in canvas px inside the 1680×600 stage: the banner is drawn at
+// x=648, y=146, 1032×308 (scale 1.376 of the 750×224 source).
+const BANNER = { x: 648, y: 146, w: 1032, h: 308, s: 1032 / 750 };
+const box = (x0: number, y0: number, x1: number, y1: number) => ({
+  left: BANNER.x + x0 * BANNER.s,
+  top: BANNER.y + y0 * BANNER.s,
+  width: (x1 - x0) * BANNER.s,
+  height: (y1 - y0) * BANNER.s,
+});
+
+const Mark = ({ at, label, tag }: { at: CSSProperties; label: string; tag: CSSProperties }) => (
+  <>
+    <div
+      style={{
+        position: 'absolute',
+        ...at,
+        border: '3px solid #4FA3F7',
+        borderRadius: 10,
+        background: 'rgba(79,163,247,0.14)',
+        boxShadow: '0 0 0 4px rgba(79,163,247,0.18)',
+        boxSizing: 'border-box',
+        pointerEvents: 'none',
+      }}
+    />
+    <div
+      style={{
+        position: 'absolute',
+        ...tag,
+        fontSize: 20,
+        fontWeight: 800,
+        padding: '5px 12px',
+        borderRadius: 8,
+        background: 'var(--osd-accent)',
+        color: '#FFFFFF',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {label}
+    </div>
+  </>
+);
+
+const RuleLine = ({ children }: { children: ReactNode }) => (
+  <div style={{ display: 'flex', gap: 12, fontSize: 24, lineHeight: 1.55, color: '#E6EDF7', margin: '10px 0' }}>
+    <span style={{ color: '#4FA3F7', flexShrink: 0 }}>-</span>
+    <span>{children}</span>
+  </div>
+);
+
+const MdHead = ({ children }: { children: ReactNode }) => (
+  <div style={{ fontSize: 24, fontWeight: 700, color: '#7CB8F7', margin: '18px 0 4px' }}>{children}</div>
+);
+
+const RulePage: Page = () => {
+  const hl = box(64, 22, 416, 120);
+  const sub = box(64, 120, 456, 146);
+  const cta = box(64, 150, 196, 202);
+  const face = box(566, 14, 636, 104);
+  return (
+    <LightPage chip="EVOLUTION 2 · 規則長這樣" title={<>寫下一條規則，<Hi>AI 就照著做</Hi></>}>
+      <div style={{ position: 'relative', height: 600 }}>
+        <R k="lz-pop" d={260} style={{ position: 'absolute', left: BANNER.x, top: BANNER.y }}>
+          <img
+            src={casualTop}
+            alt="CasualTop 750×224 master banner"
+            style={{ width: BANNER.w, height: BANNER.h, display: 'block', borderRadius: 14, boxShadow: '0 32px 64px -36px rgba(16,18,22,0.6)' }}
+          />
+        </R>
+        {/* Wrapper sits at the stage origin (padding, not margin, so nothing collapses) —
+            overlays inside the steps are positioned from here. */}
+        <R d={160} style={{ width: 600, height: 600, paddingTop: 90, boxSizing: 'border-box' }}>
+          <div
+            style={{
+              height: 420,
+              boxSizing: 'border-box',
+              background: '#101216',
+              borderRadius: 'var(--osd-radius)',
+              padding: '0 32px 28px',
+              fontFamily: mono,
+            }}
+          >
+            <div
+              style={{
+                height: 56,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                borderBottom: '1px solid rgba(255,255,255,0.12)',
+                fontSize: 20,
+                color: 'rgba(255,255,255,0.6)',
+              }}
+            >
+              <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FF5F57' }} />
+              <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FEBC2E' }} />
+              <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C840' }} />
+              <span style={{ marginLeft: 12 }}>resize/reference/placements.md</span>
+            </div>
+            <Steps>
+              <MdHead>## CasualTop — 750 × 224</MdHead>
+              <Step duration={260}>
+                <RuleLine>常用的 master。</RuleLine>
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: BANNER.x - 8,
+                    top: BANNER.y - 8,
+                    width: BANNER.w + 16,
+                    height: BANNER.h + 16,
+                    border: '3px dashed #0878E5',
+                    borderRadius: 18,
+                    boxSizing: 'border-box',
+                    pointerEvents: 'none',
+                  }}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: BANNER.x,
+                    top: BANNER.y - 58,
+                    width: BANNER.w,
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    fontFamily: 'var(--osd-font-body)',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 800,
+                      padding: '6px 14px',
+                      borderRadius: 8,
+                      background: 'var(--osd-accent)',
+                      color: '#FFFFFF',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    master · CasualTop 750 × 224
+                  </span>
+                </div>
+              </Step>
+              <Step duration={260}>
+                <RuleLine>圖層角色（headline／subtitle／CTA／T&amp;C）以它為準。</RuleLine>
+                <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
+                  <Mark at={hl} label="headline" tag={{ left: hl.left, top: BANNER.y - 52 }} />
+                  <Mark at={sub} label="subtitle" tag={{ left: sub.left + sub.width + 12, top: sub.top }} />
+                  <Mark at={cta} label="CTA" tag={{ left: cta.left + cta.width + 12, top: cta.top + 18 }} />
+                </div>
+              </Step>
+              <MdHead>## 通用（所有版位）</MdHead>
+              <Step duration={260}>
+                <RuleLine>角色的臉必須完整可見——至少整張臉要露出。</RuleLine>
+                <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
+                  <Mark at={face} label="臉要完整" tag={{ left: face.left - 8, top: face.top + face.height + 12 }} />
+                </div>
+              </Step>
+            </Steps>
+          </div>
+        </R>
+        <R d={360} style={{ position: 'absolute', left: BANNER.x, top: BANNER.y + BANNER.h + 40 }}>
+          <div style={{ fontSize: 24, color: muted, lineHeight: 1.6 }}>
+            AI 每次 resize 前，都先照這幾行讀懂 master，
+            <br />
+            再把同樣的圖層排進每個版位——<b style={{ color: 'var(--osd-text)' }}>不用我每次重新解釋</b>。
+          </div>
+        </R>
+      </div>
+    </LightPage>
+  );
+};
+
 // ── 8 · Demo ────────────────────────────────────────────────────────────────
 const DemoBeat = ({ n, title, time, desc }: { n: string; title: string; time: string; desc: string }) => (
   <div style={{ display: 'flex', gap: 24 }}>
@@ -1522,7 +1695,7 @@ const Impact: Page = () => (
   </LightPage>
 );
 
-// ── 10 · Other departments ──────────────────────────────────────────────────
+// ── 10 · Other departments + what I found ──────────────────────────────────
 const DeptCard = ({
   icon,
   name,
@@ -1536,66 +1709,35 @@ const DeptCard = ({
   blocker: string;
   module: string;
 }) => (
-  <div style={{ ...card, height: '100%', padding: '44px 48px', display: 'flex', flexDirection: 'column' }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-      <IconTile name={icon} size={80} />
-      <div style={{ ...heavy, fontSize: 52 }}>{name}</div>
+  <div style={{ ...card, height: '100%', padding: '26px 36px', display: 'flex', flexDirection: 'column', gap: 18 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+      <IconTile name={icon} size={56} />
+      <div style={{ ...heavy, fontSize: 40, flex: 1 }}>{name}</div>
+      <span
+        style={{ fontSize: 20, fontWeight: 800, padding: '6px 14px', borderRadius: 999, background: blueSoft, color: 'var(--osd-accent)' }}
+      >
+        {module}
+      </span>
     </div>
-    <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '0.12em', color: 'var(--osd-accent)', marginTop: 44 }}>
-      他們的做法
-    </div>
-    <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1.45, marginTop: 12 }}>{approach}</div>
-    <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '0.12em', color: red, marginTop: 36 }}>卡在哪</div>
-    <div style={{ fontSize: 30, lineHeight: 1.5, color: muted, marginTop: 12 }}>{blocker}</div>
-    <div
-      style={{
-        marginTop: 'auto',
-        alignSelf: 'flex-start',
-        fontSize: 22,
-        fontWeight: 800,
-        padding: '8px 18px',
-        borderRadius: 999,
-        background: blueSoft,
-        color: 'var(--osd-accent)',
-      }}
-    >
-      {module}
+    <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: 28 }}>
+      <div>
+        <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', color: 'var(--osd-accent)' }}>他們的做法</div>
+        <div style={{ fontSize: 26, fontWeight: 700, lineHeight: 1.45, marginTop: 8 }}>{approach}</div>
+      </div>
+      <div>
+        <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', color: red }}>卡在哪</div>
+        <div style={{ fontSize: 26, lineHeight: 1.45, color: muted, marginTop: 8 }}>{blocker}</div>
+      </div>
     </div>
   </div>
 );
 
-const Departments: Page = () => (
-  <LightPage chip="BONUS · 跨部門交流" title={<>其他部門，<Hi>怎麼處理同樣的問題？</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, height: 560 }}>
-      <R d={180} style={{ height: '100%' }}>
-        <DeptCard
-          icon="doc"
-          name="Games"
-          approach="設計有固定範本，每次只換背景圖和前景圖"
-          blocker="【待填】"
-          module="接近之後的模組 D · 固定範本"
-        />
-      </R>
-      <R d={300} style={{ height: '100%' }}>
-        <DeptCard
-          icon="sheet"
-          name="Promotion"
-          approach="只產出 MKT 需要的尺寸，不做全版位"
-          blocker="【待填】"
-          module="接近之後的模組 B · 多尺寸"
-        />
-      </R>
-    </div>
-  </LightPage>
-);
-
-// ── 11 · Cross-team ─────────────────────────────────────────────────────────
 const FindingCard = ({ n, title, desc, hot }: { n: string; title: string; desc?: string; hot?: boolean }) => (
   <div
     style={{
       ...card,
       height: '100%',
-      padding: '48px 48px',
+      padding: '30px 36px',
       background: hot ? 'var(--osd-accent)' : '#FFFFFF',
       border: hot ? '2px solid transparent' : `2px solid ${line}`,
       color: hot ? '#FFFFFF' : 'var(--osd-text)',
@@ -1604,32 +1746,47 @@ const FindingCard = ({ n, title, desc, hot }: { n: string; title: string; desc?:
     }}
   >
     {hot && (
-      <>
-        <div
-          style={{ position: 'absolute', right: -140, bottom: -160, width: 420, height: 420, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.2)' }}
-        />
-        <div
-          style={{ position: 'absolute', right: -60, bottom: -80, width: 260, height: 260, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.14)' }}
-        />
-      </>
+      <div
+        style={{ position: 'absolute', right: -120, bottom: -150, width: 360, height: 360, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.2)' }}
+      />
     )}
     <div style={{ position: 'relative' }}>
-      <div style={{ ...heavy, fontSize: 96, lineHeight: 1, color: hot ? 'rgba(255,255,255,0.55)' : blueLine }}>{n}</div>
-      <div style={{ fontSize: 38, fontWeight: 800, lineHeight: 1.35, margin: '40px 0 20px' }}>{title}</div>
-      {desc && <div style={{ fontSize: 30, lineHeight: 1.6, color: hot ? 'rgba(255,255,255,0.85)' : muted }}>{desc}</div>}
+      <div style={{ ...heavy, fontSize: 56, lineHeight: 1, color: hot ? 'rgba(255,255,255,0.55)' : blueLine }}>{n}</div>
+      <div style={{ fontSize: 32, fontWeight: 800, lineHeight: 1.35, margin: '22px 0 12px' }}>{title}</div>
+      {desc && <div style={{ fontSize: 24, lineHeight: 1.55, color: hot ? 'rgba(255,255,255,0.85)' : muted }}>{desc}</div>}
     </div>
   </div>
 );
 
 const CrossTeam: Page = () => (
   <LightPage chip="BONUS · 跨部門交流" title={<>跟別的部門聊完，<Hi>我發現一件事</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 36, height: 520 }}>
-      <R d={180} style={{ height: '100%' }}>
-        <FindingCard n="01" title="大家的痛點其實一模一樣" desc="resize、多語系、改字重來" />
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 236 }}>
+      <R d={160} style={{ height: '100%' }}>
+        <DeptCard
+          icon="doc"
+          name="Games"
+          approach="設計有固定範本，每次只換背景圖和前景圖"
+          blocker="【待填】"
+          module="≈ 模組 D 固定範本"
+        />
       </R>
+      <R d={260} style={{ height: '100%' }}>
+        <DeptCard
+          icon="sheet"
+          name="Promotion"
+          approach="只產出 MKT 需要的尺寸，不做全版位"
+          blocker="【待填】"
+          module="≈ 模組 B 多尺寸"
+        />
+      </R>
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, height: 330, marginTop: 32 }}>
       <Steps>
         <Step duration={280}>
-          <FindingCard n="02" title="各有各的小聰明" desc="有人用範本、有人訂命名規則，但都停在「靠人自律」" />
+          <FindingCard n="01" title="大家的痛點其實一模一樣" desc="resize、多語系、改字重來" />
+        </Step>
+        <Step duration={280}>
+          <FindingCard n="02" title="各有各的小聰明" desc="有人用範本、有人只做需要的尺寸，但都停在「靠人自律」" />
         </Step>
         <Step duration={280}>
           <FindingCard n="03" title="缺的是「可複製」的方法" hot />
@@ -2041,8 +2198,6 @@ const Next: Page = () => (
 );
 
 // ── 15.5 · Take home — Banner Kit ───────────────────────────────────────────
-const mono = '"SF Mono", ui-monospace, Menlo, Consolas, monospace';
-
 const SkillCard = ({
   name,
   module,
@@ -2272,9 +2427,9 @@ export default [
   Evolution1,
   Evolution2,
   SkillInside,
+  RulePage,
   Demo,
   Impact,
-  Departments,
   CrossTeam,
   Modules,
   Rules,
@@ -2341,6 +2496,14 @@ export const notes: (string | undefined)[] = [
 這是 resize 的流程；只換語系不換尺寸的時候用 multi-lang，步驟一樣，只是不 resize。
 （口頭補充：我不在，生產照跑）開會時，以前設計停擺，現在開完會只剩檢查；臨時改字，以前全部重貼，現在更新 Sheet、一句話重出；請假時，以前要等我回來，現在同事用同一個 Skill 就能接手。`,
 
+  // 7.5 · 規則長這樣 1:00
+  `【1:00】
+那規則實際寫起來長什麼樣？這是 skill 裡的原文，講的就是右邊這張 CasualTop。
+（按 →）第一條：CasualTop 750×224 是常用的 master——所有版位都從這張長出來。
+（按 →）第二條：圖層角色以它為準——AI 先認出哪個是 headline、哪個是 subtitle、哪個是 CTA，之後每個版位都照這個對應去排。
+（按 →）第三條是所有版位通用的：角色的臉必須完整可見。縮放、裁切的時候，AI 會檢查臉有沒有被切到。
+就是這樣幾行字，AI 每次都會照做，我不用每次重新解釋。`,
+
   // 8 · Demo 3:00
   `【3:00】影片約 2.5 分鐘，靜音，現場口述。
 ① 先看我說一句話（約 20 秒）。
@@ -2354,19 +2517,15 @@ export const notes: (string | undefined)[] = [
 每套製作時間少了【92%】，校稿錯誤大幅減少，而且多出時間做真正需要設計的工作。
 補充一下：這是目前階段的數據，截至【X 月】，翻譯時間另計。`,
 
-  // 10 · 其他部門的做法 1:00
-  `【1:00】
+  // 10 · 其他部門的做法＋我的發現 1:30
+  `【1:30】
 我也去看了其他部門怎麼做 banner。
 Games：設計有固定範本，每次只換背景圖和前景圖——這其實就是後面會講的「固定範本」模組。
 Promotion：只產出 MKT 需要的尺寸，不做全版位——這就是在「多尺寸」上做取捨。
 他們卡在哪：【待填】。
-大家其實都在偷懶，只是方法還停在各自的習慣裡。`,
-
-  // 11 · 跨部門發現 1:00
-  `【1:00】
-後來我跟其他部門聊，發現三件事：
-一、大家的痛點其實一模一樣——resize、多語系、改字重來。
-（按 →）二、每個人都有自己的小聰明，有人用範本、有人訂命名規則，但都停在「靠人自律」。
+聊完之後，我發現三件事：
+（按 →）一、大家的痛點其實一模一樣——resize、多語系、改字重來。
+（按 →）二、每個人都有自己的小聰明，有人用範本、有人只做需要的尺寸，但都停在「靠人自律」。
 （按 →）三、所以缺的不是工具，是「可複製」的方法。`,
 
   // 12 · 模組化 2:00
