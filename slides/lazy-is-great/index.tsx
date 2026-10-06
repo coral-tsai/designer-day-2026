@@ -1761,13 +1761,11 @@ const DeptCard = ({
   icon,
   name,
   approach,
-  blocker,
   module,
 }: {
   icon: IconName;
   name: string;
   approach: string;
-  blocker: string;
   module: string;
 }) => (
   <div style={{ ...card, height: '100%', padding: '26px 36px', display: 'flex', flexDirection: 'column', gap: 18 }}>
@@ -1780,15 +1778,9 @@ const DeptCard = ({
         {module}
       </span>
     </div>
-    <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: 28 }}>
-      <div>
-        <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', color: 'var(--osd-accent)' }}>他們的做法</div>
-        <div style={{ fontSize: 26, fontWeight: 700, lineHeight: 1.45, marginTop: 8 }}>{approach}</div>
-      </div>
-      <div>
-        <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', color: red }}>卡在哪</div>
-        <div style={{ fontSize: 26, lineHeight: 1.45, color: muted, marginTop: 8 }}>{blocker}</div>
-      </div>
+    <div>
+      <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', color: 'var(--osd-accent)' }}>他們的做法</div>
+      <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.45, marginTop: 8 }}>{approach}</div>
     </div>
   </div>
 );
@@ -1827,7 +1819,6 @@ const CrossTeam: Page = () => (
           icon="doc"
           name="Games"
           approach="設計有固定範本，每次只換背景圖和前景圖"
-          blocker="【待填】"
           module="≈ 模組 D 固定範本"
         />
       </R>
@@ -1836,7 +1827,6 @@ const CrossTeam: Page = () => (
           icon="sheet"
           name="Promotion"
           approach="只產出 MKT 需要的尺寸，不做全版位"
-          blocker="【待填】"
           module="≈ 模組 B 多尺寸"
         />
       </R>
@@ -2751,7 +2741,6 @@ export const notes: (string | undefined)[] = [
 我也去看了其他部門怎麼做 banner。
 Games：設計有固定範本，每次只換背景圖和前景圖——這其實就是後面會講的「固定範本」模組。
 Promotion：只產出 MKT 需要的尺寸，不做全版位——這就是在「多尺寸」上做取捨。
-他們卡在哪：【待填】。
 聊完之後，我發現三件事：
 （按 →）一、大家的痛點其實一模一樣——resize、多語系、改字重來。
 （按 →）二、每個人都有自己的小聰明，有人用範本、有人只做需要的尺寸，但都停在「靠人自律」。
