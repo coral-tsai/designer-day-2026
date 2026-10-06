@@ -1810,7 +1810,7 @@ const FindingCard = ({ n, title, desc, hot }: { n: string; title: string; desc?:
 );
 
 const CrossTeam: Page = () => (
-  <LightPage chip="BONUS · 跨部門交流" title={<>跟別的部門聊完，<Hi>我發現一件事</Hi></>}>
+  <LightPage chip="BONUS · 跨部門交流" title={<>跟別的部門聊完，<Hi>大家都有好做法</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 236 }}>
       <R d={160} style={{ height: '100%' }}>
         <DeptCard
@@ -1832,13 +1832,13 @@ const CrossTeam: Page = () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, height: 330, marginTop: 32 }}>
       <Steps>
         <Step duration={280}>
-          <FindingCard n="01" title="大家的痛點其實一模一樣" desc="resize、多語系、改字重來" />
+          <FindingCard n="01" title="大家的痛點其實很像" desc="resize、多語系、改字重來" />
         </Step>
         <Step duration={280}>
-          <FindingCard n="02" title="各有各的小聰明" desc="方法都不錯，只是還沒變成大家都能用的規則" />
+          <FindingCard n="02" title="但每個部門的需求不一樣" desc="各自找到適合自己的做法，都很聰明" />
         </Step>
         <Step duration={280}>
-          <FindingCard n="03" title="好做法，要寫下來才帶得走" desc="把做法寫下來，換誰做、交給 AI 都能照著跑" hot />
+          <FindingCard n="03" title="好做法可以互相分享" desc="拆成模組，大家依需求挑著用" hot />
         </Step>
       </Steps>
     </div>
@@ -2599,10 +2599,10 @@ export const notes: (string | undefined)[] = [
 我也去看了其他部門怎麼做 banner。
 Games：設計有固定範本，每次只換背景圖和前景圖——這其實就是後面會講的「固定範本」模組。
 Promotion：只產出 MKT 需要的尺寸，不做全版位——這就是在「多尺寸」上做取捨。
-聊完之後，我發現三件事：
-（按 →）一、大家的痛點其實一模一樣——resize、多語系、改字重來。
-（按 →）二、每個人都有自己的小聰明，像 Games 用範本、Promotion 只做需要的尺寸——方法都不錯，只是還沒變成大家都能用的規則。
-（按 →）三、好做法要寫下來才帶得走——把做法寫下來，換誰做、交給 AI 都能照著跑。`,
+聊完之後，我發現：
+（按 →）一、大家的痛點其實很像——resize、多語系、改字重來。
+（按 →）二、但每個部門的需求不一樣：Games 要的是固定範本，Promotion 只要 MKT 需要的尺寸。大家都找到了適合自己的做法，都很聰明。
+（按 →）三、所以這些好做法其實可以互相分享。我把它們拆成模組，大家依自己的需求挑著用——下一頁就是這套模組。`,
 
   // 12 · 模組化 2:00
   `【2:00】
