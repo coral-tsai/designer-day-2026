@@ -586,7 +586,7 @@ const PainTag = ({ children }: { children: ReactNode }) => (
 
 const Handmade: Page = () => (
   <LightPage chip="CHAPTER 1 · 起點" title={<>一張主視覺，<Hi>換來一整個下午</Hi></>}>
-    {/* Hero screenshot: every banner one past campaign needed (2000×547). */}
+    {/* Hero screenshot: every banner one past campaign needed (2000×684). */}
     <R k="lz-pop" d={160}>
       <div
         style={{
@@ -602,7 +602,8 @@ const Handmade: Page = () => (
           className="lz-ken"
           src={campaignBanners}
           alt="過去一檔活動的全部 banner：所有版位 × 所有語系"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          // 2000×684 shown whole; the band's #1E1E1E matches the Figma canvas behind it.
+          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
         />
         <div
           style={{
@@ -623,13 +624,13 @@ const Handmade: Page = () => (
     <div style={{ display: 'grid', gridTemplateColumns: '500px 1fr 560px', gap: 32, height: 178, marginTop: 32 }}>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <R d={360}>
-          <NumStep n="1" text="畫好一張主視覺" />
+          <NumStep n="1" text="有了主視覺設計" />
         </R>
         <R d={420}>
           <NumStep n="2" text="手動 resize 成每個版位" />
         </R>
         <R d={480}>
-          <NumStep n="3" text="多語系文案一個一個貼" />
+          <NumStep n="3" text="多語系、幣別一個一個貼上" />
         </R>
       </div>
       <R d={560} style={{ height: '100%' }}>
@@ -2529,7 +2530,7 @@ export const notes: (string | undefined)[] = [
 
   // 3 · 純手工時代 1:00
   `【1:00】
-先回到起點。以前做一套 banner：畫好主視覺、手動 resize 成每個版位、再把多語系文案一個一個貼進去。
+先回到起點。以前做一套 banner：有了主視覺設計之後，要手動 resize 成每個版位，再把多語系文案和幣別一個一個貼上去。
 （指向上方截圖）這是 Pragmatic Play 一檔活動要的全部 banner——13 個版位乘上 12 個語系，就是 156 張圖。
 痛點有三個：重複勞動、容易出錯、時間錯置。
 這三件事都不需要創意，那就不該讓人來做。`,
