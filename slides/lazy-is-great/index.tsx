@@ -2153,7 +2153,7 @@ const LayoutSketch = ({ text, label }: { text: 'left' | 'right' | 'center'; labe
     <div style={{ flex: 1 }}>
       <div
         style={{
-          height: 88,
+          height: 80,
           borderRadius: 12,
           background: '#101216',
           padding: '0 18px',
@@ -2240,13 +2240,13 @@ const Next: Page = () => (
         </R>
         <Steps>
           <Step duration={260}>
-            <div style={{ ...card, padding: '26px 36px', height: 250 }}>
+            <div style={{ ...card, padding: '24px 36px', height: 294 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>1</span>
                 <span style={{ fontSize: 30, fontWeight: 800 }}>resize 沒辦法只用一種排版範本</span>
               </div>
               <div style={{ fontSize: 22, color: muted, marginTop: 6 }}>每次主視覺不同，文字的位置也跟著不同</div>
-              <div style={{ display: 'flex', gap: 24, marginTop: 22 }}>
+              <div style={{ display: 'flex', gap: 24, marginTop: 18 }}>
                 <LayoutSketch text="left" label="文字靠左" />
                 <LayoutSketch text="right" label="文字靠右" />
                 <LayoutSketch text="center" label="文字置中" />
@@ -2254,7 +2254,7 @@ const Next: Page = () => (
             </div>
           </Step>
           <Step duration={260}>
-            <div style={{ ...card, padding: '26px 36px', height: 250 }}>
+            <div style={{ ...card, padding: '24px 36px', height: 226 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>2</span>
                 <span style={{ fontSize: 30, fontWeight: 800 }}>Banner 有三種，要各自整理出規則</span>
