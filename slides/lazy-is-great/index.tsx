@@ -585,7 +585,7 @@ const PainTag = ({ children }: { children: ReactNode }) => (
 );
 
 const Handmade: Page = () => (
-  <LightPage chip="CHAPTER 1 · 起點" title={<>一張主視覺，<Hi>換來一整個下午</Hi></>}>
+  <LightPage chip="CHAPTER 1 · 起點" title={<>設計結束的地方，<Hi>就是重複的開始</Hi></>}>
     {/* Hero screenshot: every banner one past campaign needed (2000×684). */}
     <R k="lz-pop" d={160}>
       <div
