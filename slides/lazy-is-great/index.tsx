@@ -605,20 +605,6 @@ const Handmade: Page = () => (
           // 2000×684 shown whole; the band's #1E1E1E matches the Figma canvas behind it.
           style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
         />
-        <div
-          style={{
-            position: 'absolute',
-            right: 24,
-            bottom: 24,
-            fontSize: 24,
-            fontWeight: 800,
-            padding: '10px 22px',
-            borderRadius: 999,
-            background: 'var(--osd-accent)',
-            color: '#FFFFFF',
-            boxShadow: '0 12px 28px -10px rgba(8,120,229,0.7)',
-          }}
-        >PP某檔活動的全部 banner · 共 156 張</div>
       </div>
     </R>
     <div style={{ display: 'grid', gridTemplateColumns: '500px 1fr 560px', gap: 32, height: 178, marginTop: 32 }}>
