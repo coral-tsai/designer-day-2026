@@ -1890,8 +1890,8 @@ const Question = ({ q, to }: { q: string; to: string }) => (
       justifyContent: 'center',
     }}
   >
-    <div style={{ fontSize: 36, fontWeight: 800 }}>{q}</div>
-    <div style={{ fontSize: 24, color: 'var(--osd-accent)', marginTop: 8, fontWeight: 700 }}>→ 模組 {to}</div>
+    <div style={{ fontSize: 34, fontWeight: 800 }}>{q}</div>
+    <div style={{ fontSize: 22, color: 'var(--osd-accent)', marginTop: 4, fontWeight: 700 }}>→ 模組 {to}</div>
   </div>
 );
 
@@ -1922,7 +1922,7 @@ const ModuleRow = ({ l, name, who, tag }: { l: string; name: string; who: string
       height: 80,
       padding: '0 28px',
       display: 'grid',
-      gridTemplateColumns: '56px 190px 1fr',
+      gridTemplateColumns: '56px 230px 1fr',
       gap: 24,
       alignItems: 'center',
     }}
@@ -1961,9 +1961,9 @@ const Combo = ({ name, children }: { name: string; children: ReactNode }) => (
 );
 
 const Modules: Page = () => (
-  <LightPage chip="METHOD · 設計模組" title={<>收到需求，<Hi>先問三個問題</Hi></>}>
+  <LightPage chip="METHOD · 設計模組" title={<>收到需求，<Hi>先問四個問題</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '440px 1fr', gap: 48, height: 456 }}>
-      <div style={{ display: 'grid', gridTemplateRows: 'repeat(3, 1fr)', gap: 18 }}>
+      <div style={{ display: 'grid', gridTemplateRows: 'repeat(4, 1fr)', gap: 14 }}>
         <R d={160} style={{ height: '100%' }}>
           <Question q="要新主視覺嗎？" to="A" />
         </R>
@@ -1972,6 +1972,9 @@ const Modules: Page = () => (
         </R>
         <R d={320} style={{ height: '100%' }}>
           <Question q="要幾種語言？" to="C" />
+        </R>
+        <R d={360} style={{ height: '100%' }}>
+          <Question q="要幾種幣別？" to="C" />
         </R>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -1982,7 +1985,7 @@ const Modules: Page = () => (
           <ModuleRow l="B" name="多尺寸" who="設計師做各版位母版（AI resize 開發中）" />
         </R>
         <R d={520}>
-          <ModuleRow l="C" name="多語系" who="Content writer 翻譯提供 Google Sheet → AI 從 Sheet 帶入並套用" />
+          <ModuleRow l="C" name="多語系＋幣別" who="Content writer 翻譯提供 Google Sheet → AI 帶入文案與幣別" />
         </R>
         <R d={580}>
           <ModuleRow l="D" name="固定範本" who="AI 換字、換圖、換日期" tag="門檻最低" />
@@ -2517,8 +2520,8 @@ Games 版面固定、只換圖，規則不用判斷，很適合寫成 Figma plug
 
   // 12 · 模組化 1:15
   `【1:15】
-我把流程拆成五個模組。收到需求先問三題：要新主視覺嗎？幾種尺寸？幾種語言？
-A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
+我把流程拆成五個模組。收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
+A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
