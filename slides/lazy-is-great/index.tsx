@@ -1827,7 +1827,7 @@ const CrossTeam: Page = () => (
           </TeamCard>
         </Step>
         <Step duration={280}>
-          <TeamCard icon="spark" name="我們" tag="模組 A–E" hot>
+          <TeamCard icon="spark" name="Casino" tag="模組 A–E" hot>
             <CompareRow label="做法" light>把做法寫成 Skill，一句話交給 AI</CompareRow>
             <CompareRow label="靠什麼省力" light>版位多、排版會變，AI 能照 Skill 幫忙判斷</CompareRow>
             <CompareRow label="優點" light>規則用文字寫就好，設計師、content writer 都能一起補</CompareRow>
