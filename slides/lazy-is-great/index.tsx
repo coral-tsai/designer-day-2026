@@ -519,7 +519,7 @@ const Mantra = ({ n, from, to, color }: { n: string; from: string; to: string; c
 );
 
 const Manifesto: Page = () => (
-  <LightPage chip="MANIFESTO · 懶惰宣言">
+  <LightPage chip="WHY · 懶惰宣言">
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginTop: -8 }}>
       <R d={140}>
         <Quote
@@ -586,7 +586,7 @@ const PainTag = ({ children }: { children: ReactNode }) => (
 );
 
 const Handmade: Page = () => (
-  <LightPage chip="CHAPTER 1 · 起點" title={<>設計結束的地方，<Hi>就是重複的開始</Hi></>}>
+  <LightPage chip="WHY · 起點" title={<>設計結束的地方，<Hi>就是重複的開始</Hi></>}>
     {/* Hero screenshot: every banner one past campaign needed (2000×684). */}
     <R k="lz-pop" d={160}>
       <div
@@ -673,144 +673,6 @@ const Handmade: Page = () => (
   </LightPage>
 );
 
-// ── 3.5 · Evolution map ─────────────────────────────────────────────────────
-type Doer = 'human' | 'tool' | 'ai';
-const doerStyle: Record<Doer, { bg: string; fg: string }> = {
-  human: { bg: 'var(--osd-text)', fg: '#FFFFFF' },
-  tool: { bg: purple, fg: '#FFFFFF' },
-  ai: { bg: 'var(--osd-accent)', fg: '#FFFFFF' },
-};
-
-const TaskLine = ({ task, who, doer }: { task: string; who: string; doer: Doer }) => (
-  <div
-    style={{
-      height: 76,
-      background: '#FFFFFF',
-      border: `2px solid ${line}`,
-      borderRadius: 14,
-      padding: '0 18px 0 24px',
-      boxSizing: 'border-box',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: 12,
-    }}
-  >
-    <span style={{ fontSize: 26, fontWeight: 700, whiteSpace: 'nowrap' }}>{task}</span>
-    <span
-      style={{
-        fontSize: 20,
-        fontWeight: 800,
-        padding: '6px 14px',
-        borderRadius: 999,
-        whiteSpace: 'nowrap',
-        background: doerStyle[doer].bg,
-        color: doerStyle[doer].fg,
-      }}
-    >
-      {who}
-    </span>
-  </div>
-);
-
-const StageCard = ({
-  n,
-  name,
-  tagline,
-  badge,
-  color,
-  hot,
-  children,
-}: {
-  n: string;
-  name: string;
-  tagline: string;
-  badge?: string;
-  color: string;
-  hot?: boolean;
-  children: ReactNode;
-}) => (
-  <div
-    style={{
-      width: 500,
-      height: 510,
-      flexShrink: 0,
-      background: hot ? '#FFFFFF' : surface,
-      border: hot ? '3px solid var(--osd-accent)' : `2px solid ${line}`,
-      boxShadow: hot ? '0 28px 56px -32px rgba(8,120,229,0.5)' : 'none',
-      borderTop: `6px solid ${color}`,
-      borderRadius: 'var(--osd-radius)',
-      padding: '32px 36px',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-    }}
-  >
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 34 }}>
-      <span style={{ fontSize: 22, fontWeight: 800, letterSpacing: '0.16em', color }}>STAGE {n}</span>
-      {badge && (
-        <span
-          style={{ fontSize: 20, fontWeight: 800, padding: '4px 14px', borderRadius: 999, background: color, color: '#FFFFFF' }}
-        >
-          {badge}
-        </span>
-      )}
-    </div>
-    <div style={{ ...heavy, fontSize: 52, lineHeight: 1.2, marginTop: 14 }}>{name}</div>
-    <div style={{ fontSize: 26, color: muted, marginTop: 8 }}>{tagline}</div>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 30 }}>{children}</div>
-  </div>
-);
-
-const StageArrow = ({ color }: { color: string }) => (
-  <div style={{ width: 72, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 40, color }}>
-    →
-  </div>
-);
-
-const EvolutionMap: Page = () => (
-  <LightPage chip="CHAPTER 2 · 進化路線" title={<>同一套流程，<Hi>偷懶了兩次</Hi></>}>
-    <div style={{ display: 'flex', alignItems: 'stretch' }}>
-      <Steps>
-        <R d={160}>
-          <StageCard n="1" name="純手工" tagline="一張一張自己來" color="#8A919C">
-            <TaskLine task="畫主視覺" who="設計師" doer="human" />
-            <TaskLine task="貼多語系文案" who="設計師" doer="human" />
-            <TaskLine task="resize 版位" who="設計師" doer="human" />
-          </StageCard>
-        </R>
-        <Step duration={280}>
-          <div style={{ display: 'flex', height: '100%' }}>
-            <StageArrow color={purple} />
-            <StageCard n="2" name="借力工具" tagline="文案交給 Sheet" badge="第一次偷懶" color={purple}>
-              <TaskLine task="畫主視覺" who="設計師" doer="human" />
-              <TaskLine task="貼多語系文案" who="Sheet Plugin" doer="tool" />
-              <TaskLine task="resize 版位" who="設計師" doer="human" />
-            </StageCard>
-          </div>
-        </Step>
-        <Step duration={280}>
-          <div style={{ display: 'flex', height: '100%' }}>
-            <StageArrow color="var(--osd-accent)" />
-            <StageCard
-              n="3"
-              name="交給 AI"
-              tagline="一句話換好所有語系"
-              badge="第二次偷懶"
-              color="#0878E5"
-              hot
-            >
-              <TaskLine task="畫主視覺" who="設計師" doer="human" />
-              <TaskLine task="帶入多語系文案" who="AI agent" doer="ai" />
-              <TaskLine task="resize 版位" who="設計師" doer="human" />
-            </StageCard>
-          </div>
-        </Step>
-      </Steps>
-    </div>
-  </LightPage>
-);
-
 // ── 5 · Evolution 1 ─────────────────────────────────────────────────────────
 const CheckItem = ({ text, good }: { text: string; good?: boolean }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 28, lineHeight: 1.4 }}>
@@ -860,7 +722,7 @@ const BeforeAfterCard = ({ tag, label, good, children }: { tag: string; label: s
 );
 
 const Evolution1: Page = () => (
-  <LightPage chip="EVOLUTION 1 · 第一次偷懶" title={<>把 Google Sheet 接進流程，<Hi>文案不再手貼</Hi></>}>
+  <LightPage chip="HOW · 第一次偷懶" title={<>把 Google Sheet 接進流程，<Hi>文案不再手貼</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 72px 1fr', height: 300, alignItems: 'stretch' }}>
       <Steps>
         <R d={180} style={{ height: '100%' }}>
@@ -1054,7 +916,7 @@ const FlowArrow = () => (
 );
 
 const Evolution2: Page = () => (
-  <LightPage chip="EVOLUTION 2 · 第二次偷懶" title={<>寫成 Skill，然後<Hi>一句話交給 AI</Hi></>}>
+  <LightPage chip="HOW · 第二次偷懶" title={<>寫成 Skill，然後<Hi>一句話交給 AI</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '420px 1fr 484px', height: 432 }}>
       <Steps>
         <Step duration={260}>
@@ -1230,7 +1092,7 @@ const PhaseArrow = () => (
 );
 
 const SkillInside: Page = () => (
-  <LightPage chip="EVOLUTION 2 · Skill 長什麼樣" title={<>Skill 裡面，<Hi>寫的就是我的做法</Hi></>}>
+  <LightPage chip="HOW · Skill 長什麼樣" title={<>Skill 裡面，<Hi>寫的就是我的做法</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '360px 328px 1fr 328px', height: 480 }}>
       <Steps>
         <R d={160} style={{ height: '100%' }}>
@@ -1379,7 +1241,7 @@ const RulePage: Page = () => {
   const ktHl = box(203, 36, 517, 69, KT);
   const ktCta = box(548, 39, 674, 86, KT);
   return (
-    <LightPage chip="EVOLUTION 2 · 規則長這樣" title={<>寫下一條規則，<Hi>AI 就照著做</Hi></>}>
+    <LightPage chip="NEXT · 規則先寫好" title={<>寫下一條規則，<Hi>AI 就照著做</Hi></>}>
       <div style={{ position: 'relative', height: 600 }}>
         <R k="lz-pop" d={260} style={{ position: 'absolute', left: BANNER.x, top: BANNER.y }}>
           <img
@@ -1603,7 +1465,7 @@ const DemoVideo = () => {
 };
 
 const Demo: Page = () => (
-  <LightPage dark chip="DEMO · 實際操作" title={<>一句話，<Hi>看 AI 換好所有語系</Hi></>}>
+  <LightPage dark chip="PROOF · 實際操作" title={<>一句話，<Hi>看 AI 換好所有語系</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1040px 1fr', gap: 64 }}>
       <R k="lz-pop" d={180}>
         <div
@@ -1704,7 +1566,7 @@ const StatCard = ({ label, big, color }: { label: string; big: string; color: st
 );
 
 const Impact: Page = () => (
-  <LightPage chip="IMPACT · 成效總結" title={<>從 2 小時到 10 分鐘：<Hi>三次進化</Hi></>}>
+  <LightPage chip="PROOF · 成效總結" title={<>從 2 小時到 10 分鐘：<Hi>三次進化</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 560px', gap: 48, height: 560 }}>
       <div style={{ ...card, padding: '36px 56px 32px', display: 'flex', flexDirection: 'column' }}>
         <div
@@ -1746,150 +1608,102 @@ const Impact: Page = () => (
   </LightPage>
 );
 
-// ── 9.5 · End-to-end flow — where AI helps ───────────────────────────────────
-type Owner = 'human' | 'ai' | 'both' | 'wip';
-const ownerLook: Record<Owner, { bg: string; fg: string; border: string; chipBg: string; chipFg: string }> = {
-  human: { bg: '#FFFFFF', fg: 'var(--osd-text)', border: `2px solid ${line}`, chipBg: 'var(--osd-text)', chipFg: '#FFFFFF' },
-  ai: { bg: 'var(--osd-accent)', fg: '#FFFFFF', border: '2px solid transparent', chipBg: '#FFFFFF', chipFg: 'var(--osd-accent)' },
-  both: { bg: purpleSoft, fg: 'var(--osd-text)', border: `2px solid ${purple}`, chipBg: purple, chipFg: '#FFFFFF' },
-  wip: { bg: '#FFFFFF', fg: muted, border: `2px dashed ${blueLine}`, chipBg: blueSoft, chipFg: 'var(--osd-accent)' },
-};
+// ── 4 · End-to-end flow — where AI helps ─────────────────────────────────────
+// 11-column grid: 6 stages with 5 arrow gutters, so the brackets below line up.
+const flowCols = '1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr';
 
-const FlowStage = ({ n, name, who, owner, d }: { n: string; name: string; who: string; owner: Owner; d: number }) => {
-  const k = ownerLook[owner];
-  return (
-    <R d={d} style={{ flex: 1 }}>
-      <div
+const FlowStage = ({ n, name, who, ai, note, d }: { n: string; name: string; who: string; ai?: boolean; note?: string; d: number }) => (
+  <R d={d} style={{ height: '100%' }}>
+    <div
+      style={{
+        height: '100%',
+        boxSizing: 'border-box',
+        borderRadius: 'var(--osd-radius)',
+        background: ai ? 'var(--osd-accent)' : '#FFFFFF',
+        color: ai ? '#FFFFFF' : 'var(--osd-text)',
+        border: ai ? '2px solid transparent' : `2px solid ${line}`,
+        boxShadow: ai ? '0 24px 48px -28px rgba(8,120,229,0.6)' : 'none',
+        padding: '28px 12px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        textAlign: 'center',
+      }}
+    >
+      <span style={{ fontSize: 22, fontWeight: 800, opacity: 0.55 }}>{n}</span>
+      <span style={{ fontSize: 34, fontWeight: 800, lineHeight: 1.25 }}>{name}</span>
+      <span style={{ fontSize: 22, fontWeight: 700, opacity: ai ? 0.9 : 0.7 }}>{who}</span>
+      <span
         style={{
-          height: 220,
-          boxSizing: 'border-box',
-          borderRadius: 'var(--osd-radius)',
-          background: k.bg,
-          color: k.fg,
-          border: k.border,
-          padding: '22px 12px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          textAlign: 'center',
+          fontSize: 18,
+          fontWeight: 800,
+          padding: '4px 12px',
+          borderRadius: 999,
+          border: `2px dashed ${blueLine}`,
+          color: 'var(--osd-accent)',
+          visibility: note ? 'visible' : 'hidden',
+          whiteSpace: 'nowrap',
         }}
       >
-        <span style={{ fontSize: 20, fontWeight: 800, opacity: 0.6 }}>{n}</span>
-        <span style={{ fontSize: 28, fontWeight: 800, lineHeight: 1.25 }}>{name}</span>
-        <span
-          style={{
-            fontSize: 18,
-            fontWeight: 800,
-            padding: '6px 12px',
-            borderRadius: 999,
-            background: k.chipBg,
-            color: k.chipFg,
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {who}
-        </span>
-      </div>
-    </R>
-  );
-};
+        {note ?? '·'}
+      </span>
+    </div>
+  </R>
+);
 
-const FlowStep = () => <div style={{ width: 22, flexShrink: 0, textAlign: 'center', fontSize: 24, color: muted }}>→</div>;
+const FlowGap = () => <div style={{ textAlign: 'center', fontSize: 28, color: muted }}>→</div>;
 
-const OwnerKey = ({ owner, label }: { owner: Owner; label: string }) => {
-  const k = ownerLook[owner];
-  return (
-    <span style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 22, color: muted, fontWeight: 600 }}>
-      <span style={{ width: 22, height: 22, borderRadius: 6, background: k.bg, border: k.border, boxSizing: 'border-box' }} />
+const Bracket = ({ col, label, ai, d }: { col: string; label: ReactNode; ai?: boolean; d: number }) => (
+  <R d={d} style={{ gridColumn: col }}>
+    <div
+      style={{
+        height: 22,
+        borderBottom: `3px solid ${ai ? 'var(--osd-accent)' : 'var(--osd-text)'}`,
+        borderLeft: `3px solid ${ai ? 'var(--osd-accent)' : 'var(--osd-text)'}`,
+        borderRight: `3px solid ${ai ? 'var(--osd-accent)' : 'var(--osd-text)'}`,
+        borderRadius: '0 0 10px 10px',
+      }}
+    />
+    <div style={{ marginTop: 18, textAlign: 'center', fontSize: 32, fontWeight: 800, color: ai ? 'var(--osd-accent)' : 'var(--osd-text)' }}>
       {label}
-    </span>
-  );
-};
-
-const Gain = ({ title, value, note }: { title: string; value: string; note: string }) => (
-  <div style={{ flex: 1, padding: '0 28px', borderLeft: `3px solid var(--osd-accent)` }}>
-    <div style={{ fontSize: 22, fontWeight: 800 }}>{title}</div>
-    <div style={{ ...heavy, fontSize: 40, color: 'var(--osd-accent)', lineHeight: 1.2, marginTop: 6 }}>{value}</div>
-    <div style={{ fontSize: 20, color: muted, marginTop: 4 }}>{note}</div>
-  </div>
+    </div>
+  </R>
 );
 
 const FullFlow: Page = () => (
-  <LightPage chip="OVERVIEW · 全流程" title={<>從需求到交付，<Hi>AI 幫到哪一段</Hi></>}>
-    <R d={100}>
-      <div style={{ display: 'flex', gap: 32 }}>
-        <OwnerKey owner="human" label="人" />
-        <OwnerKey owner="ai" label="AI 產出" />
-        <OwnerKey owner="both" label="AI＋人 協作" />
-        <OwnerKey owner="wip" label="AI 開發中" />
-      </div>
-    </R>
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 28 }}>
-      <FlowStage d={160} n="01" name="收需求" who="企劃／PO" owner="human" />
-      <FlowStep />
-      <FlowStage d={220} n="02" name="主視覺" who="設計師" owner="human" />
-      <FlowStep />
-      <FlowStage d={280} n="03" name="各版位母版" who="設計師" owner="wip" />
-      <FlowStep />
-      <FlowStage d={340} n="04" name="翻譯＋斷行" who="Content writer" owner="human" />
-      <FlowStep />
-      <FlowStage d={400} n="05" name="多語系＋幣別" who="AI · multi-lang" owner="ai" />
-      <FlowStep />
-      <FlowStage d={460} n="06" name="檢查＋校對" who="AI＋Writer" owner="both" />
-      <FlowStep />
-      <FlowStage d={520} n="07" name="匯出壓縮" who="AI · compress" owner="ai" />
+  <LightPage chip="HOW · 全流程" title={<>從需求到交付，<Hi>AI 幫到哪一段</Hi></>}>
+    <div style={{ display: 'grid', gridTemplateColumns: flowCols, alignItems: 'center', height: 300 }}>
+      <FlowStage d={140} n="01" name="收需求" who="企劃／PO" />
+      <FlowGap />
+      <FlowStage d={200} n="02" name="主視覺" who="設計師" />
+      <FlowGap />
+      <FlowStage d={260} n="03" name="各版位母版" who="設計師" note="resize 開發中" />
+      <FlowGap />
+      <FlowStage d={320} n="04" name="翻譯＋斷行" who="Content writer" />
+      <FlowGap />
+      <FlowStage d={380} n="05" name="多語系＋幣別" who="AI" ai />
+      <FlowGap />
+      <FlowStage d={440} n="06" name="檢查＋匯出" who="AI → writer 校對" ai />
     </div>
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginTop: 28 }}>
-      <Steps>
-        <Step duration={280}>
-          <div
-            style={{
-              height: 170,
-              boxSizing: 'border-box',
-              borderRadius: 'var(--osd-radius)',
-              border: `2px dashed ${blueLine}`,
-              padding: '24px 32px',
-            }}
-          >
-            <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--osd-accent)', letterSpacing: '0.08em' }}>03 · 開發中</div>
-            <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>各版位母版，目前還是設計師做</div>
-            <div style={{ fontSize: 22, color: muted, marginTop: 8 }}>resize skill 還在努力：排版沒有單一範本，要先整理出規則</div>
-          </div>
-        </Step>
-        <Step duration={280}>
-          <div
-            style={{
-              height: 170,
-              boxSizing: 'border-box',
-              borderRadius: 'var(--osd-radius)',
-              background: blueSoft,
-              padding: '24px 4px',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Gain title="05 多語系＋幣別" value="一句話" note="12 種語系一次換好" />
-            <Gain title="06 檢查" value="自動截圖" note="漏字、裁切先抓出來" />
-            <Gain title="07 匯出壓縮" value="批次" note="壓到 100KB、分資料夾" />
-          </div>
-        </Step>
-      </Steps>
+    <div style={{ display: 'grid', gridTemplateColumns: flowCols, marginTop: 8 }}>
+      <Bracket d={540} col="1 / 8" label="人：需要判斷的" />
+      <Bracket d={620} col="9 / 12" label="AI：重複生產的" ai />
     </div>
     <Steps>
       <Step duration={280}>
         <div
           style={{
-            marginTop: 24,
-            padding: '18px 40px',
+            marginTop: 56,
+            padding: '22px 40px',
             background: surface,
             borderRadius: 'var(--osd-radius)',
             ...heavy,
-            fontSize: 34,
+            fontSize: 38,
             textAlign: 'center',
           }}
         >
-          AI 接手後半段的重複生產，<Hi>需要判斷的前半段留給人</Hi>
+          重複的交給 AI，<Hi>要判斷的留給人</Hi>
         </div>
       </Step>
     </Steps>
@@ -1922,7 +1736,7 @@ const TeamCard = ({
 }: {
   icon: IconName;
   name: string;
-  tag: string;
+  tag?: string;
   hot?: boolean;
   children: ReactNode;
 }) => (
@@ -1956,7 +1770,7 @@ const TeamCard = ({
         <IconTile name={icon} size={52} />
       )}
       <div style={{ ...heavy, fontSize: 34, flex: 1, whiteSpace: 'nowrap' }}>{name}</div>
-      <span
+      {tag && (<span
         style={{
           fontSize: 18,
           fontWeight: 800,
@@ -1968,17 +1782,17 @@ const TeamCard = ({
         }}
       >
         {tag}
-      </span>
+      </span>)}
     </div>
     {children}
   </div>
 );
 
 const CrossTeam: Page = () => (
-  <LightPage chip="BONUS · 跨部門交流" title={<>跟別的部門聊完，<Hi>大家都有好做法</Hi></>}>
+  <LightPage chip="TEAM · 跨部門交流" title={<>跟別的部門聊完，<Hi>大家都有好做法</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, height: 528 }}>
       <R d={160} style={{ height: '100%' }}>
-        <TeamCard icon="doc" name="Games" tag="≈ 模組 D">
+        <TeamCard icon="doc" name="Games">
           <CompareRow label="做法">固定範本，每次只換背景圖和前景圖</CompareRow>
           <CompareRow label="靠什麼省力">版面、圖層位置都固定、不用判斷，寫成 Figma plugin 一鍵換圖</CompareRow>
           <CompareRow label="優點">快、穩定，每次結果都一樣</CompareRow>
@@ -1987,7 +1801,7 @@ const CrossTeam: Page = () => (
       </R>
       <Steps>
         <Step duration={280}>
-          <TeamCard icon="sheet" name="Promotion" tag="≈ 模組 B＋C">
+          <TeamCard icon="sheet" name="Promotion">
             <CompareRow label="做法">不用做全版位，只要另外出給 MKT 的多語系和尺寸</CompareRow>
             <CompareRow label="靠什麼省力">範圍小、規則清楚，剛好適合寫成 plugin</CompareRow>
             <CompareRow label="優點">針對需求、不多做，工具簡單好維護</CompareRow>
@@ -1995,7 +1809,7 @@ const CrossTeam: Page = () => (
           </TeamCard>
         </Step>
         <Step duration={280}>
-          <TeamCard icon="spark" name="Casino" tag="模組 A–E" hot>
+          <TeamCard icon="spark" name="Casino" hot>
             <CompareRow label="做法" light>把做法寫成 Skill，一句話交給 AI</CompareRow>
             <CompareRow label="靠什麼省力" light>語系多、文案長短不一，AI 照 Skill 換字、對位、檢查</CompareRow>
             <CompareRow label="優點" light>規則用文字寫就好，設計師、content writer 都能一起補</CompareRow>
@@ -2065,30 +1879,30 @@ const Letter = ({ l, small }: { l: string; small?: boolean }) => (
   </span>
 );
 
-const ModuleRow = ({ l, name, who, tag }: { l: string; name: string; who: string; tag?: string }) => (
+const ModuleRow = ({ l, name, who, from }: { l: string; name: string; who: string; from?: string }) => (
   <div
     style={{
       ...card,
       height: 80,
       padding: '0 28px',
       display: 'grid',
-      gridTemplateColumns: '56px 230px 1fr',
+      gridTemplateColumns: '56px 220px 1fr auto',
       gap: 24,
       alignItems: 'center',
     }}
   >
     <Letter l={l} />
     <div style={{ fontSize: 32, fontWeight: 800 }}>{name}</div>
-    <div style={{ fontSize: 26, color: muted, display: 'flex', alignItems: 'center', gap: 16 }}>
-      {who}
-      {tag && (
-        <span
-          style={{ fontSize: 20, fontWeight: 800, background: purpleSoft, color: purple, padding: '4px 14px', borderRadius: 999 }}
-        >
-          {tag}
-        </span>
-      )}
-    </div>
+    <div style={{ fontSize: 26, color: muted }}>{who}</div>
+    {from ? (
+      <span
+        style={{ fontSize: 20, fontWeight: 800, background: purpleSoft, color: purple, padding: '6px 16px', borderRadius: 999, whiteSpace: 'nowrap' }}
+      >
+        ← {from}
+      </span>
+    ) : (
+      <span />
+    )}
   </div>
 );
 
@@ -2111,7 +1925,7 @@ const Combo = ({ name, children }: { name: string; children: ReactNode }) => (
 );
 
 const Modules: Page = () => (
-  <LightPage chip="METHOD · 設計模組" title={<>收到需求，<Hi>先問四個問題</Hi></>}>
+  <LightPage chip="TEAM · 最終版" title={<>三個部門的做法，<Hi>合成一套模組</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '440px 1fr', gap: 48, height: 456 }}>
       <div style={{ display: 'grid', gridTemplateRows: 'repeat(4, 1fr)', gap: 14 }}>
         <R d={160} style={{ height: '100%' }}>
@@ -2132,16 +1946,16 @@ const Modules: Page = () => (
           <ModuleRow l="A" name="主視覺" who="設計師" />
         </R>
         <R d={460}>
-          <ModuleRow l="B" name="多尺寸" who="設計師做各版位母版（AI resize 開發中）" />
+          <ModuleRow l="B" name="多尺寸" who="設計師做母版（AI resize 開發中）" from="Promotion" />
         </R>
         <R d={520}>
-          <ModuleRow l="C" name="多語系＋幣別" who="Content writer 翻譯提供 Google Sheet → AI 帶入文案與幣別" />
+          <ModuleRow l="C" name="多語系＋幣別" who="Writer 翻譯 → AI 帶入文案與幣別" from="Promotion＋Casino" />
         </R>
         <R d={580}>
-          <ModuleRow l="D" name="固定範本" who="AI 換字、換圖、換日期" tag="門檻最低" />
+          <ModuleRow l="D" name="固定範本" who="換字、換圖、換日期" from="Games" />
         </R>
         <R d={640}>
-          <ModuleRow l="E" name="校對交付" who="AI 檢查、回報、命名、匯出壓縮，content writer 校對" />
+          <ModuleRow l="E" name="校對交付" who="AI 檢查、匯出壓縮，writer 校對" from="Casino" />
         </R>
       </div>
     </div>
@@ -2267,7 +2081,7 @@ const BannerType = ({ name, note }: { name: string; note: string }) => (
 );
 
 const Next: Page = () => (
-  <LightPage chip="NEXT · 下一步" title={<>Skill <Hi>是活的</Hi></>}>
+  <LightPage chip="NEXT · Skill 是活的" title={<>Skill <Hi>是活的</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '520px 1fr', gap: 48, height: 600 }}>
       <R d={160} style={{ height: '100%' }}>
         <div style={{ height: '100%', background: surface, borderRadius: 'var(--osd-radius)', padding: '40px 44px', boxSizing: 'border-box', position: 'relative' }}>
@@ -2400,7 +2214,7 @@ const Cmd = ({ n, children }: { n: string; children: ReactNode }) => (
 );
 
 const TakeHome: Page = () => (
-  <LightPage chip="TAKE HOME · 帶回家" title={<>Banner Kit，<Hi>團隊一起用</Hi></>}>
+  <LightPage chip="NEXT · 帶回家" title={<>Banner Kit，<Hi>團隊一起用</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 260 }}>
       <R d={160} style={{ height: '100%' }}>
         <SkillCard name="multi-lang" module="模組 C · 多語系" what="做好的各版位母版 → 換成每種語系文案，尺寸不變" say="「多語系」" />
@@ -2463,7 +2277,7 @@ const TakeHome: Page = () => (
 );
 
 // ── 15 · Closing ────────────────────────────────────────────────────────────
-const LazyStep = ({ n, text }: { n: string; text: string }) => (
+const LazyStep = ({ n, from, to }: { n: string; from: string; to: string }) => (
   <div
     style={{
       display: 'flex',
@@ -2488,12 +2302,12 @@ const LazyStep = ({ n, text }: { n: string; text: string }) => (
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 800,
-        fontSize: 24,
+        fontSize: 22,
       }}
     >
       {n}
     </span>
-    {text}
+    {from}，<Hi>{to}</Hi>
   </div>
 );
 
@@ -2522,19 +2336,13 @@ const Closing: Page = () => (
       </R>
       <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 64 }}>
         <R d={300}>
-          <LazyStep n="1" text="找出重複的" />
+          <LazyStep n="01" from="重複的" to="交給工具" />
         </R>
-        <R d={360}>
-          <Arrow color="var(--lz-hi, var(--osd-accent))" size={30} />
+        <R d={380}>
+          <LazyStep n="02" from="會錯的" to="交給流程" />
         </R>
-        <R d={420}>
-          <LazyStep n="2" text="寫成你的做法" />
-        </R>
-        <R d={480}>
-          <Arrow color="var(--lz-hi, var(--osd-accent))" size={30} />
-        </R>
-        <R d={540}>
-          <LazyStep n="3" text="交給 AI" />
+        <R d={460}>
+          <LazyStep n="03" from="要判斷的" to="才交給人" />
         </R>
       </div>
       <R d={680} style={{ alignSelf: 'flex-start' }}>
@@ -2575,15 +2383,14 @@ export default [
   Manifesto,
   Handmade,
   FullFlow,
-  EvolutionMap,
   Evolution1,
   Evolution2,
   SkillInside,
-  RulePage,
   Demo,
   Impact,
   CrossTeam,
   Modules,
+  RulePage,
   Next,
   TakeHome,
   Closing,
@@ -2609,21 +2416,16 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 （指向截圖）這是 Pragmatic Play 一檔活動的全部 banner——13 個版位乘 12 個語系，156 張圖。
 重複、容易錯、又佔掉設計的時間。設計結束的地方，就是重複的開始。`,
 
-  // 3.2 · 全流程 0:50
-  `【0:50】
-先把現在的整條流程攤開來看：從收需求、主視覺、各版位母版、翻譯斷行，到多語系、檢查、匯出交付，一共七段。白色是人做的，藍色是 AI 產出，紫色是 AI 和人一起。
-（按 →）第三段各版位母版，現在還是設計師做——resize 還在開發中。
-（按 →）AI 接手的是後半段：多語系和幣別一句話換好、自動截圖檢查、批次匯出壓縮。
-（按 →）也就是說，AI 接手的是後半段的重複生產；前半段需要判斷的，還是留給人。至於省了多少時間，看完 Demo 再公布。`,
-
-  // 3.5 · 進化路線 0:30
-  `【0:30】
-那我是怎麼一步步走到這裡的？同一套流程，我偷懶了兩次。第一階段，全部手工。
-（按 →）第二階段，貼文案交給 Sheet Plugin。
-（按 →）第三階段，多語系文案交給 AI，一句話換好所有語系。主視覺和各版位母版還是我做——自動 resize 還在努力中。`,
+  // 4 · 全流程 0:45
+  `【0:45】
+先把現在的整條流程攤開：收需求、主視覺、各版位母版、翻譯斷行，到多語系、檢查匯出，一共六段。
+白色是人做的，藍色是 AI 做的。第三段各版位母版，目前還是設計師做——resize 還在開發中。
+所以前四段需要判斷的，留給人；後兩段重複生產的，交給 AI。
+（按 →）重複的交給 AI，要判斷的留給人。至於省了多少時間，看完 Demo 再公布。`,
 
   // 5 · 第一次偷懶 1:00
   `【1:00】
+那我是怎麼一步步走到這裡的？同一套流程，我偷懶了兩次。
 第一次偷懶：善用現成工具。以前是逐格複製、切回 Figma 貼上，改一個字就全部重貼。
 （按 → AFTER）接上 Google Sheet 後，文案集中一處，Plugin 依語系自動填入。
 （按 → 截圖）用的就是 Figma 社群的 Google Sheets Sync。
@@ -2638,23 +2440,15 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 （按 →）我就去做別的設計。
 （按 →）從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。`,
 
-  // 6.5 · Skill 長什麼樣 1:00
+  // 7 · Skill 長什麼樣 1:00
   `【1:00】
 Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名、Figma 檔，
 （按 →）找到我先做好的各版位母版、認出各圖層，
 （按 →）每個版位、每個語系跑一輪：填文案、換幣別、命名，最後截圖檢查，
 （按 →）回報給我哪裡要看。
 現在用的是 multi-lang；自動 resize 版位的 skill 還在開發中。
-常有人問：為什麼不用 Figma 自己的 AI agent？因為我們的流程不只在 Figma 裡——要讀 Google Sheet、改 Figma、檢查、再匯出壓縮；而且版位、語系、幣別、T&C 這些規則是我們團隊自己的，寫成 Skill 才能共用、版控、隨時補。`,
-
-  // 7.5 · 規則長這樣 1:00
-  `【1:00】
-規則實際長這樣，左邊是 Skill 原文。
-（按 →）CasualTop 是 master，
-（按 →）圖層角色以它為準，
-（按 →）角色的臉一定要完整。
-（按 →）下一步是 resize，規則已經先寫好：像 KratosTop，安全區 829 px、置中，
-（按 →）subtitle 一定保留。resize 還在努力中，但規則寫好了，AI 就有依據。接下來看它實際跑一次多語系。`,
+常有人問：為什麼不用 Figma 自己的 AI agent？因為我們的流程不只在 Figma 裡——要讀 Google Sheet、改 Figma、檢查、再匯出壓縮；而且版位、語系、幣別、T&C 這些規則是我們團隊自己的，寫成 Skill 才能共用、版控、隨時補。
+接下來，直接看它實際跑一次多語系。`,
 
   // 8 · Demo 2:30
   `【2:30】影片靜音、現場口述，中段快轉；實際耗時約 7 分鐘。
@@ -2677,28 +2471,40 @@ Games 版面固定、只換圖，規則不用判斷，很適合寫成 Figma plug
 （按 →）我們 Casino 語系多、文案長短不一，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
 
-  // 12 · 模組化 1:15
+  // 11 · 最終版模組 1:15
   `【1:15】
-我把流程拆成五個模組。收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
+聊完之後，我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸和 C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
+收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
 A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 14 · Skill 是活的 0:45
+  // 12 · 規則先寫好 1:00
+  `【1:00】
+接下來的方向：把規則寫下來。左邊是 Skill 原文。
+（按 →）CasualTop 是 master，
+（按 →）圖層角色以它為準，
+（按 →）角色的臉一定要完整。
+（按 →）下一步是 resize，規則已經先寫好：像 KratosTop，安全區 829 px、置中，
+（按 →）subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
+而且規則不是一次寫完的——`,
+
+  // 13 · Skill 是活的 0:45
   `【0:45】
-Skill 是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
+它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
 （按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中；
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。`,
 
-  // 15.5 · 帶回家 0:30
+  // 14 · 帶回家 0:30
   `【0:30】
 這套 Banner Kit 團隊都能用：做好母版後，說「多語系」就能換好所有語系；resize 還在開發中，好了會自動更新給大家。三行指令裝好就能用。`,
 
   // 15 · 總結 0:20 + Q&A 5:00
   `【0:20】
 偷懶不是終點，是每次都問自己：還能更懶嗎？
-找出重複的、寫成你的做法、交給 AI。謝謝大家，接下來開放 Q&A。
+還記得開頭的三個原則嗎？重複的，交給工具；會錯的，交給流程；要判斷的，才交給人。
+今天整套 Banner Kit，就是照這三句做出來的。謝謝大家，接下來開放 Q&A。
 
 —— Q&A 準備（5:00）——
 ・為什麼不直接寫腳本或 plugin？腳本要有人寫、要維護；Skill 用文字寫，設計師自己就能調整。規則固定的部分（像 Games、Promotion），寫 plugin 反而更適合。
