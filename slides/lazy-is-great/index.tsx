@@ -1603,7 +1603,7 @@ const DemoVideo = () => {
 };
 
 const Demo: Page = () => (
-  <LightPage dark chip="DEMO · 實際操作" title={<>一句話，<Hi>看 AI 跑完整套流程</Hi></>}>
+  <LightPage dark chip="DEMO · 實際操作" title={<>一句話，<Hi>看 AI 換好所有語系</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1040px 1fr', gap: 64 }}>
       <R k="lz-pop" d={180}>
         <div
