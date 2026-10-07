@@ -1812,7 +1812,7 @@ const CrossTeam: Page = () => (
       <R d={160} style={{ height: '100%' }}>
         <TeamCard icon="doc" name="Games" tag="≈ 模組 D">
           <CompareRow label="做法">固定範本，每次只換背景圖和前景圖</CompareRow>
-          <CompareRow label="為什麼能寫 Figma plugin">版面、尺寸、圖層位置都固定，不用判斷，可以直接寫成程式一鍵換圖</CompareRow>
+          <CompareRow label="靠什麼省力"><b>靠程式</b>——版面、圖層位置都固定、不用判斷，寫成 Figma plugin 一鍵換圖</CompareRow>
           <CompareRow label="優點">快、穩定，每次結果都一樣</CompareRow>
           <CompareRow label="限制">版面一改就要改程式，需要有人維護 plugin</CompareRow>
         </TeamCard>
@@ -1821,15 +1821,15 @@ const CrossTeam: Page = () => (
         <Step duration={280}>
           <TeamCard icon="sheet" name="Promotion" tag="≈ 模組 B">
             <CompareRow label="做法">只產出 MKT 需要的尺寸，不做全版位</CompareRow>
-            <CompareRow label="為什麼這樣做">需要的版位不多，手工就來得及，不需要整套自動化</CompareRow>
+            <CompareRow label="靠什麼省力"><b>靠精簡</b>——只做 MKT 需要的版位，量少手作就很快</CompareRow>
             <CompareRow label="優點">簡單、彈性高，沒有額外的工具成本</CompareRow>
-            <CompareRow label="限制">還是手工，需求一變多就要重新評估</CompareRow>
+            <CompareRow label="限制">量一多時，可以再搭配自動化工具</CompareRow>
           </TeamCard>
         </Step>
         <Step duration={280}>
           <TeamCard icon="spark" name="我們" tag="模組 A–E" hot>
             <CompareRow label="做法" light>把做法寫成 Skill，一句話交給 AI</CompareRow>
-            <CompareRow label="為什麼用 AI" light>版位多、排版會變，需要「判斷」，不只是照固定位置換圖</CompareRow>
+            <CompareRow label="靠什麼省力" light><b>靠 AI</b>——版位多、排版會變，AI 能照 Skill 幫忙判斷</CompareRow>
             <CompareRow label="優點" light>規則用文字寫就好，設計師、content writer 都能一起補</CompareRow>
             <CompareRow label="限制" light>規則還在補，成品仍需要人最後檢查</CompareRow>
           </TeamCard>
@@ -2609,9 +2609,9 @@ export const notes: (string | undefined)[] = [
   // 10 · 三個部門的做法比較 2:00
   `【2:00】
 我也去看了其他部門怎麼做 banner，發現大家需求不一樣，做法也都很聰明。
-先看 Games：他們的設計有固定範本，每次只換背景圖和前景圖。因為版面、尺寸、圖層位置都固定，不需要判斷，規則可以直接寫成程式——所以很適合做成 Figma plugin，一鍵換圖。好處是快、穩定、結果一致；限制是版面一改就要改程式，要有會寫 plugin 的人維護。
-（按 →）Promotion：他們只產出 MKT 需要的尺寸，不做全版位。需要的版位不多，手工就來得及，不需要整套自動化。簡單、彈性高，也沒有工具成本；只是還是手工，需求變多時就要重新評估。
-（按 →）我們：版位多、排版又常常變，需要的是「判斷」，不只是照固定位置換圖，所以我們用 AI，把做法寫成 Skill。最大的好處是規則用文字寫就好，不用會寫程式——設計師、content writer 都能補規則。限制是規則還在補，成品還是要人最後檢查。
+先看 Games：他們的設計有固定範本，每次只換背景圖和前景圖。他們靠的是程式：因為版面、尺寸、圖層位置都固定，不需要判斷，規則可以直接寫成程式——所以很適合做成 Figma plugin，一鍵換圖。好處是快、穩定、結果一致；限制是版面一改就要改程式，要有會寫 plugin 的人維護。
+（按 →）Promotion：他們只產出 MKT 需要的尺寸，不做全版位。他們靠的是精簡：需要的版位不多，手作就很快。簡單、彈性高，也沒有工具成本；之後量一多，也可以再搭配自動化工具。
+（按 →）我們靠的是 AI：版位多、排版又常常變，需要的是「判斷」，不只是照固定位置換圖，所以我們把做法寫成 Skill，讓 AI 幫忙判斷。最大的好處是規則用文字寫就好，不用會寫程式——設計師、content writer 都能補規則。限制是規則還在補，成品還是要人最後檢查。
 （按 →）所以我覺得 AI 最大的改變是：規則用說的就能寫，每個人都能貢獻自己的好做法。下一頁，就是把這些做法整理成大家都能挑著用的模組。`,
 
   // 12 · 模組化 2:00
