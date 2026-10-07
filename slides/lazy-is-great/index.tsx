@@ -1618,7 +1618,7 @@ const Demo: Page = () => (
               }}
             >
               <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700 }}>實際耗時</span>
-              <span style={{ ...heavy, fontSize: 40, color: 'var(--lz-hi, var(--osd-accent))' }}>約 7 分鐘</span>
+              <span style={{ ...heavy, fontSize: 40, color: 'var(--lz-hi, var(--osd-accent))' }}>約 10 分鐘</span>
             </div>
           </R>
           <R d={320}>
@@ -1633,9 +1633,9 @@ const Demo: Page = () => (
         </div>
         <R d={620}>
           <div style={{ fontSize: 22, lineHeight: 1.6, color: `var(--lz-muted, ${muted})` }}>
-            錄製日期：【YYYY/MM/DD】
-            <br />
-            備案：本機另存一份影片檔
+            {''}<br />{''}
+            
+            {''}
           </div>
         </R>
       </div>
@@ -1728,94 +1728,132 @@ const Impact: Page = () => (
   </LightPage>
 );
 
-// ── 10 · Other departments + what I found ──────────────────────────────────
-const DeptCard = ({
-  icon,
-  name,
-  approach,
-  module,
-}: {
-  icon: IconName;
-  name: string;
-  approach: string;
-  module: string;
-}) => (
-  <div style={{ ...card, height: '100%', padding: '26px 36px', display: 'flex', flexDirection: 'column', gap: 18 }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-      <IconTile name={icon} size={56} />
-      <div style={{ ...heavy, fontSize: 40, flex: 1 }}>{name}</div>
-      <span
-        style={{ fontSize: 20, fontWeight: 800, padding: '6px 14px', borderRadius: 999, background: blueSoft, color: 'var(--osd-accent)' }}
-      >
-        {module}
-      </span>
+// ── 10 · How each team does it ─────────────────────────────────────────────────
+const CompareRow = ({ label, children, light }: { label: string; children: ReactNode; light?: boolean }) => (
+  <div style={{ marginTop: 18 }}>
+    <div
+      style={{
+        fontSize: 19,
+        fontWeight: 800,
+        letterSpacing: '0.1em',
+        color: light ? 'rgba(255,255,255,0.7)' : 'var(--osd-accent)',
+      }}
+    >
+      {label}
     </div>
-    <div>
-      <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', color: 'var(--osd-accent)' }}>他們的做法</div>
-      <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.45, marginTop: 8 }}>{approach}</div>
-    </div>
+    <div style={{ fontSize: 24, lineHeight: 1.45, marginTop: 4, color: light ? '#FFFFFF' : 'var(--osd-text)' }}>{children}</div>
   </div>
 );
 
-const FindingCard = ({ n, title, desc, hot }: { n: string; title: string; desc?: string; hot?: boolean }) => (
+const TeamCard = ({
+  icon,
+  name,
+  tag,
+  hot,
+  children,
+}: {
+  icon: IconName;
+  name: string;
+  tag: string;
+  hot?: boolean;
+  children: ReactNode;
+}) => (
   <div
     style={{
       ...card,
       height: '100%',
-      padding: '30px 36px',
+      padding: '26px 32px',
       background: hot ? 'var(--osd-accent)' : '#FFFFFF',
       border: hot ? '2px solid transparent' : `2px solid ${line}`,
+      boxShadow: hot ? '0 28px 56px -32px rgba(8,120,229,0.6)' : 'none',
       color: hot ? '#FFFFFF' : 'var(--osd-text)',
-      position: 'relative',
-      overflow: 'hidden',
     }}
   >
-    {hot && (
-      <div
-        style={{ position: 'absolute', right: -120, bottom: -150, width: 360, height: 360, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.2)' }}
-      />
-    )}
-    <div style={{ position: 'relative' }}>
-      <div style={{ ...heavy, fontSize: 56, lineHeight: 1, color: hot ? 'rgba(255,255,255,0.55)' : blueLine }}>{n}</div>
-      <div style={{ fontSize: 32, fontWeight: 800, lineHeight: 1.35, margin: '22px 0 12px' }}>{title}</div>
-      {desc && <div style={{ fontSize: 24, lineHeight: 1.55, color: hot ? 'rgba(255,255,255,0.85)' : muted }}>{desc}</div>}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+      {hot ? (
+        <div
+          style={{
+            width: 52,
+            height: 52,
+            borderRadius: 14,
+            background: 'rgba(255,255,255,0.16)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Icon name={icon} size={28} />
+        </div>
+      ) : (
+        <IconTile name={icon} size={52} />
+      )}
+      <div style={{ ...heavy, fontSize: 34, flex: 1, whiteSpace: 'nowrap' }}>{name}</div>
+      <span
+        style={{
+          fontSize: 18,
+          fontWeight: 800,
+          padding: '5px 12px',
+          borderRadius: 999,
+          background: hot ? 'rgba(255,255,255,0.18)' : blueSoft,
+          color: hot ? '#FFFFFF' : 'var(--osd-accent)',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {tag}
+      </span>
     </div>
+    {children}
   </div>
 );
 
 const CrossTeam: Page = () => (
   <LightPage chip="BONUS · 跨部門交流" title={<>跟別的部門聊完，<Hi>大家都有好做法</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 236 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, height: 528 }}>
       <R d={160} style={{ height: '100%' }}>
-        <DeptCard
-          icon="doc"
-          name="Games"
-          approach="設計有固定範本，每次只換背景圖和前景圖"
-          module="≈ 模組 D 固定範本"
-        />
+        <TeamCard icon="doc" name="Games" tag="≈ 模組 D">
+          <CompareRow label="做法">固定範本，每次只換背景圖和前景圖</CompareRow>
+          <CompareRow label="為什麼能寫 Figma plugin">版面、尺寸、圖層位置都固定，不用判斷，可以直接寫成程式一鍵換圖</CompareRow>
+          <CompareRow label="優點">快、穩定，每次結果都一樣</CompareRow>
+          <CompareRow label="限制">版面一改就要改程式，需要有人維護 plugin</CompareRow>
+        </TeamCard>
       </R>
-      <R d={260} style={{ height: '100%' }}>
-        <DeptCard
-          icon="sheet"
-          name="Promotion"
-          approach="只產出 MKT 需要的尺寸，不做全版位"
-          module="≈ 模組 B 多尺寸"
-        />
-      </R>
-    </div>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, height: 330, marginTop: 32 }}>
       <Steps>
         <Step duration={280}>
-          <FindingCard n="01" title="大家的痛點其實很像" desc="resize、多語系、改字重來" />
+          <TeamCard icon="sheet" name="Promotion" tag="≈ 模組 B">
+            <CompareRow label="做法">只產出 MKT 需要的尺寸，不做全版位</CompareRow>
+            <CompareRow label="為什麼這樣做">需要的版位不多，手工就來得及，不需要整套自動化</CompareRow>
+            <CompareRow label="優點">簡單、彈性高，沒有額外的工具成本</CompareRow>
+            <CompareRow label="限制">還是手工，需求一變多就要重新評估</CompareRow>
+          </TeamCard>
         </Step>
         <Step duration={280}>
-          <FindingCard n="02" title="但每個部門的需求不一樣" desc="各自找到適合自己的做法，都很聰明" />
-        </Step>
-        <Step duration={280}>
-          <FindingCard n="03" title="好做法可以互相分享" desc="拆成模組，大家依需求挑著用" hot />
+          <TeamCard icon="spark" name="我們" tag="模組 A–E" hot>
+            <CompareRow label="做法" light>把做法寫成 Skill，一句話交給 AI</CompareRow>
+            <CompareRow label="為什麼用 AI" light>版位多、排版會變，需要「判斷」，不只是照固定位置換圖</CompareRow>
+            <CompareRow label="優點" light>規則用文字寫就好，設計師、content writer 都能一起補</CompareRow>
+            <CompareRow label="限制" light>規則還在補，成品仍需要人最後檢查</CompareRow>
+          </TeamCard>
         </Step>
       </Steps>
     </div>
+    <Steps>
+      <Step duration={280}>
+        <div
+          style={{
+            marginTop: 28,
+            padding: '20px 40px',
+            background: surface,
+            borderRadius: 'var(--osd-radius)',
+            ...heavy,
+            fontSize: 36,
+            lineHeight: 1.3,
+            textAlign: 'center',
+          }}
+        >
+          有了 AI，規則用說的就能寫——<Hi>每個人都能貢獻自己的好做法</Hi>
+        </div>
+      </Step>
+    </Steps>
   </LightPage>
 );
 
@@ -2568,15 +2606,13 @@ export const notes: (string | undefined)[] = [
 每套製作時間少了【92%】，校稿錯誤大幅減少，而且多出時間做真正需要設計的工作。
 補充一下：這是目前階段的數據，截至【X 月】，翻譯時間另計。`,
 
-  // 10 · 其他部門的做法＋我的發現 1:30
-  `【1:30】
-我也去看了其他部門怎麼做 banner。
-Games：設計有固定範本，每次只換背景圖和前景圖——這其實就是後面會講的「固定範本」模組。
-Promotion：只產出 MKT 需要的尺寸，不做全版位——這就是在「多尺寸」上做取捨。
-聊完之後，我發現：
-（按 →）一、大家的痛點其實很像——resize、多語系、改字重來。
-（按 →）二、但每個部門的需求不一樣：Games 要的是固定範本，Promotion 只要 MKT 需要的尺寸。大家都找到了適合自己的做法，都很聰明。
-（按 →）三、所以這些好做法其實可以互相分享。我把它們拆成模組，大家依自己的需求挑著用——下一頁就是這套模組。`,
+  // 10 · 三個部門的做法比較 2:00
+  `【2:00】
+我也去看了其他部門怎麼做 banner，發現大家需求不一樣，做法也都很聰明。
+先看 Games：他們的設計有固定範本，每次只換背景圖和前景圖。因為版面、尺寸、圖層位置都固定，不需要判斷，規則可以直接寫成程式——所以很適合做成 Figma plugin，一鍵換圖。好處是快、穩定、結果一致；限制是版面一改就要改程式，要有會寫 plugin 的人維護。
+（按 →）Promotion：他們只產出 MKT 需要的尺寸，不做全版位。需要的版位不多，手工就來得及，不需要整套自動化。簡單、彈性高，也沒有工具成本；只是還是手工，需求變多時就要重新評估。
+（按 →）我們：版位多、排版又常常變，需要的是「判斷」，不只是照固定位置換圖，所以我們用 AI，把做法寫成 Skill。最大的好處是規則用文字寫就好，不用會寫程式——設計師、content writer 都能補規則。限制是規則還在補，成品還是要人最後檢查。
+（按 →）所以我覺得 AI 最大的改變是：規則用說的就能寫，每個人都能貢獻自己的好做法。下一頁，就是把這些做法整理成大家都能挑著用的模組。`,
 
   // 12 · 模組化 2:00
   `【2:00】
