@@ -8,13 +8,14 @@ import {
   useIsActivePage,
   useSlidePageNumber,
 } from '@open-slide/core';
-import { type CSSProperties, type ReactNode, useEffect, useState } from 'react';
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react';
 import campaignBanners from './assets/campaign-banners.webp';
 import sheetsSync from './assets/google-sheets-sync.png';
 import larryWall from './assets/larry-wall.png';
 import robertHeinlein from './assets/robert-heinlein.png';
 import casualTop from './assets/casualtop-choice.png';
 import kratosTop from './assets/kratostop-choice.png';
+import demoVideo from './assets/banner-demo.mp4';
 
 export const design: DesignSystem = {
   palette: { bg: '#FFFFFF', text: '#101216', accent: '#0878E5' },
@@ -1555,81 +1556,51 @@ const DemoBeat = ({ n, title, time, desc }: { n: string; title: string; time: st
   </div>
 );
 
+// Plays (muted, from the start) when the page comes on stage; pauses when it leaves.
+// Thumbnails never play — they only show the first frame.
+const DemoVideo = () => {
+  const active = useIsActivePage();
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (active) {
+      v.currentTime = 0;
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+    }
+  }, [active]);
+  return (
+    <video
+      ref={ref}
+      src={demoVideo}
+      muted
+      playsInline
+      controls
+      preload="metadata"
+      style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000000' }}
+    />
+  );
+};
+
 const Demo: Page = () => (
   <LightPage dark chip="DEMO · 實際操作" title={<>一句話，<Hi>看 AI 跑完整套流程</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1040px 1fr', gap: 64 }}>
-      {/* Replace this frame with the demo <video> (slides/lazy-is-great/assets/demo.mp4). */}
       <R k="lz-pop" d={180}>
         <div
           style={{
             width: 1040,
             height: 585,
             borderRadius: 'var(--osd-radius)',
-            background: '#070B14',
+            background: '#000000',
             border: '2px solid rgba(255,255,255,0.12)',
             boxSizing: 'border-box',
             boxShadow: '0 40px 80px -40px rgba(0,0,0,0.7)',
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             overflow: 'hidden',
           }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'radial-gradient(600px 400px at 80% 0%, rgba(8,120,229,0.35), transparent 70%)',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: 24,
-              right: 24,
-              fontSize: 22,
-              fontWeight: 700,
-              background: 'rgba(255,255,255,0.12)',
-              color: '#FFFFFF',
-              borderRadius: 999,
-              padding: '8px 20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-            }}
-          >
-            <span className="lz-blink" style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5A4E' }} />
-            實際耗時 【X 分鐘】
-          </div>
-          <div
-            className="lz-ping"
-            style={{
-              position: 'relative',
-              width: 128,
-              height: 128,
-              borderRadius: '50%',
-              background: 'var(--osd-accent)',
-              color: 'var(--osd-accent)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <div
-              style={{
-                width: 0,
-                height: 0,
-                marginLeft: 10,
-                borderTop: '26px solid transparent',
-                borderBottom: '26px solid transparent',
-                borderLeft: '42px solid #FFFFFF',
-              }}
-            />
-          </div>
-          <div style={{ position: 'absolute', left: 32, bottom: 28, fontSize: 22, color: 'rgba(255,255,255,0.65)' }}>
-            Demo 影片 · 約 2.5 分鐘 · 靜音，現場口述
-          </div>
+          <DemoVideo />
         </div>
       </R>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -1736,7 +1707,7 @@ const Impact: Page = () => (
       </div>
     </div>
     <R d={1000}>
-      <div style={{ fontSize: 22, color: muted, marginTop: 32 }}>註：目前階段數據（截至 【X 月】）・翻譯時間另計</div>
+      <div style={{ fontSize: 22, color: muted, marginTop: 32 }}>{''}<br />{''}</div>
     </R>
   </LightPage>
 );
