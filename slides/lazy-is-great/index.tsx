@@ -1819,11 +1819,11 @@ const CrossTeam: Page = () => (
       </R>
       <Steps>
         <Step duration={280}>
-          <TeamCard icon="sheet" name="Promotion" tag="≈ 模組 B">
-            <CompareRow label="做法">只產出 MKT 需要的尺寸，不做全版位</CompareRow>
-            <CompareRow label="靠什麼省力"><b>靠精簡</b>——只做 MKT 需要的版位，量少手作就很快</CompareRow>
-            <CompareRow label="優點">簡單、彈性高，沒有額外的工具成本</CompareRow>
-            <CompareRow label="限制">量一多時，可以再搭配自動化工具</CompareRow>
+          <TeamCard icon="sheet" name="Promotion" tag="≈ 模組 B＋C">
+            <CompareRow label="做法">不用做全版位，只要另外出給 MKT 的多語系和幾個尺寸</CompareRow>
+            <CompareRow label="靠什麼省力"><b>靠精簡＋plugin</b>——需要的尺寸少又固定，這部分寫成 plugin 處理</CompareRow>
+            <CompareRow label="優點">針對需求、不多做，工具簡單好維護</CompareRow>
+            <CompareRow label="限制">需求超出這些尺寸時，plugin 可以再擴充</CompareRow>
           </TeamCard>
         </Step>
         <Step duration={280}>
@@ -2610,7 +2610,7 @@ export const notes: (string | undefined)[] = [
   `【2:00】
 我也去看了其他部門怎麼做 banner，發現大家需求不一樣，做法也都很聰明。
 先看 Games：他們的設計有固定範本，每次只換背景圖和前景圖。他們靠的是程式：因為版面、尺寸、圖層位置都固定，不需要判斷，規則可以直接寫成程式——所以很適合做成 Figma plugin，一鍵換圖。好處是快、穩定、結果一致；限制是版面一改就要改程式，要有會寫 plugin 的人維護。
-（按 →）Promotion：他們只產出 MKT 需要的尺寸，不做全版位。他們靠的是精簡：需要的版位不多，手作就很快。簡單、彈性高，也沒有工具成本；之後量一多，也可以再搭配自動化工具。
+（按 →）Promotion：他們不像我們需要那麼多版位，只要另外出給 MKT 的多語系和幾個尺寸就好。因為需要的尺寸少又固定，他們就把這部分寫成 plugin 來處理。針對需求、不多做，工具也簡單好維護；之後需求如果超出這些尺寸，plugin 也可以再擴充。
 （按 →）我們靠的是 AI：版位多、排版又常常變，需要的是「判斷」，不只是照固定位置換圖，所以我們把做法寫成 Skill，讓 AI 幫忙判斷。最大的好處是規則用文字寫就好，不用會寫程式——設計師、content writer 都能補規則。限制是規則還在補，成品還是要人最後檢查。
 （按 →）所以我覺得 AI 最大的改變是：規則用說的就能寫，每個人都能貢獻自己的好做法。下一頁，就是把這些做法整理成大家都能挑著用的模組。`,
 
