@@ -1812,7 +1812,7 @@ const CrossTeam: Page = () => (
       <R d={160} style={{ height: '100%' }}>
         <TeamCard icon="doc" name="Games" tag="≈ 模組 D">
           <CompareRow label="做法">固定範本，每次只換背景圖和前景圖</CompareRow>
-          <CompareRow label="靠什麼省力"><b>靠程式</b>——版面、圖層位置都固定、不用判斷，寫成 Figma plugin 一鍵換圖</CompareRow>
+          <CompareRow label="靠什麼省力"><b>{''}</b>版面、圖層位置都固定、不用判斷，寫成 Figma plugin 一鍵換圖</CompareRow>
           <CompareRow label="優點">快、穩定，每次結果都一樣</CompareRow>
           <CompareRow label="限制">版面一改就要改程式，需要有人維護 plugin</CompareRow>
         </TeamCard>
@@ -1820,8 +1820,8 @@ const CrossTeam: Page = () => (
       <Steps>
         <Step duration={280}>
           <TeamCard icon="sheet" name="Promotion" tag="≈ 模組 B＋C">
-            <CompareRow label="做法">不用做全版位，只要另外出給 MKT 的多語系和幾個尺寸</CompareRow>
-            <CompareRow label="靠什麼省力"><b>靠精簡＋plugin</b>——需要的尺寸少又固定，這部分寫成 plugin 處理</CompareRow>
+            <CompareRow label="做法">不用做全版位，只要另外出給 MKT 的多語系和尺寸</CompareRow>
+            <CompareRow label="靠什麼省力"><b>{''}</b>需要的尺寸少又固定，這部分寫成 plugin 處理</CompareRow>
             <CompareRow label="優點">針對需求、不多做，工具簡單好維護</CompareRow>
             <CompareRow label="限制">需求超出這些尺寸時，plugin 可以再擴充</CompareRow>
           </TeamCard>
@@ -1829,7 +1829,7 @@ const CrossTeam: Page = () => (
         <Step duration={280}>
           <TeamCard icon="spark" name="我們" tag="模組 A–E" hot>
             <CompareRow label="做法" light>把做法寫成 Skill，一句話交給 AI</CompareRow>
-            <CompareRow label="靠什麼省力" light><b>靠 AI</b>——版位多、排版會變，AI 能照 Skill 幫忙判斷</CompareRow>
+            <CompareRow label="靠什麼省力" light><b>{''}</b>版位多、排版會變，AI 能照 Skill 幫忙判斷</CompareRow>
             <CompareRow label="優點" light>規則用文字寫就好，設計師、content writer 都能一起補</CompareRow>
             <CompareRow label="限制" light>規則還在補，成品仍需要人最後檢查</CompareRow>
           </TeamCard>
