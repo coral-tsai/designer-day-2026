@@ -1643,7 +1643,7 @@ const Demo: Page = () => (
             <DemoBeat n="1" title="說一句話" desc="直接對 AI agent 下指令" />
           </R>
           <R d={420}>
-            <DemoBeat n="2" title="AI 執行中" time="現場快轉" desc="中間切到 Skill 檔內容" />
+            <DemoBeat n="2" title="AI 執行中" desc="中間切到 Skill 檔內容" />
           </R>
           <R d={520}>
             <DemoBeat n="3" title="成品拼貼" desc="所有版位成品＋產出清單" />
