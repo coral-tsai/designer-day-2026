@@ -1746,6 +1746,156 @@ const Impact: Page = () => (
   </LightPage>
 );
 
+// ── 9.5 · End-to-end flow — where AI helps ───────────────────────────────────
+type Owner = 'human' | 'ai' | 'both' | 'wip';
+const ownerLook: Record<Owner, { bg: string; fg: string; border: string; chipBg: string; chipFg: string }> = {
+  human: { bg: '#FFFFFF', fg: 'var(--osd-text)', border: `2px solid ${line}`, chipBg: 'var(--osd-text)', chipFg: '#FFFFFF' },
+  ai: { bg: 'var(--osd-accent)', fg: '#FFFFFF', border: '2px solid transparent', chipBg: '#FFFFFF', chipFg: 'var(--osd-accent)' },
+  both: { bg: purpleSoft, fg: 'var(--osd-text)', border: `2px solid ${purple}`, chipBg: purple, chipFg: '#FFFFFF' },
+  wip: { bg: '#FFFFFF', fg: muted, border: `2px dashed ${blueLine}`, chipBg: blueSoft, chipFg: 'var(--osd-accent)' },
+};
+
+const FlowStage = ({ n, name, who, owner, d }: { n: string; name: string; who: string; owner: Owner; d: number }) => {
+  const k = ownerLook[owner];
+  return (
+    <R d={d} style={{ flex: 1 }}>
+      <div
+        style={{
+          height: 220,
+          boxSizing: 'border-box',
+          borderRadius: 'var(--osd-radius)',
+          background: k.bg,
+          color: k.fg,
+          border: k.border,
+          padding: '22px 12px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          textAlign: 'center',
+        }}
+      >
+        <span style={{ fontSize: 20, fontWeight: 800, opacity: 0.6 }}>{n}</span>
+        <span style={{ fontSize: 28, fontWeight: 800, lineHeight: 1.25 }}>{name}</span>
+        <span
+          style={{
+            fontSize: 18,
+            fontWeight: 800,
+            padding: '6px 12px',
+            borderRadius: 999,
+            background: k.chipBg,
+            color: k.chipFg,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {who}
+        </span>
+      </div>
+    </R>
+  );
+};
+
+const FlowStep = () => <div style={{ width: 22, flexShrink: 0, textAlign: 'center', fontSize: 24, color: muted }}>→</div>;
+
+const OwnerKey = ({ owner, label }: { owner: Owner; label: string }) => {
+  const k = ownerLook[owner];
+  return (
+    <span style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 22, color: muted, fontWeight: 600 }}>
+      <span style={{ width: 22, height: 22, borderRadius: 6, background: k.bg, border: k.border, boxSizing: 'border-box' }} />
+      {label}
+    </span>
+  );
+};
+
+const Gain = ({ title, value, note }: { title: string; value: string; note: string }) => (
+  <div style={{ flex: 1, padding: '0 28px', borderLeft: `3px solid var(--osd-accent)` }}>
+    <div style={{ fontSize: 22, fontWeight: 800 }}>{title}</div>
+    <div style={{ ...heavy, fontSize: 40, color: 'var(--osd-accent)', lineHeight: 1.2, marginTop: 6 }}>{value}</div>
+    <div style={{ fontSize: 20, color: muted, marginTop: 4 }}>{note}</div>
+  </div>
+);
+
+const FullFlow: Page = () => (
+  <LightPage chip="OVERVIEW · 全流程" title={<>從需求到交付，<Hi>AI 幫到哪一段</Hi></>}>
+    <R d={100}>
+      <div style={{ display: 'flex', gap: 32 }}>
+        <OwnerKey owner="human" label="人" />
+        <OwnerKey owner="ai" label="AI 產出" />
+        <OwnerKey owner="both" label="AI＋人 協作" />
+        <OwnerKey owner="wip" label="AI 開發中" />
+      </div>
+    </R>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 28 }}>
+      <FlowStage d={160} n="01" name="收需求" who="企劃／PO" owner="human" />
+      <FlowStep />
+      <FlowStage d={220} n="02" name="主視覺" who="設計師" owner="human" />
+      <FlowStep />
+      <FlowStage d={280} n="03" name="各版位母版" who="設計師" owner="wip" />
+      <FlowStep />
+      <FlowStage d={340} n="04" name="翻譯＋斷行" who="Content writer" owner="human" />
+      <FlowStep />
+      <FlowStage d={400} n="05" name="多語系＋幣別" who="AI · multi-lang" owner="ai" />
+      <FlowStep />
+      <FlowStage d={460} n="06" name="檢查＋校對" who="AI＋Writer" owner="both" />
+      <FlowStep />
+      <FlowStage d={520} n="07" name="匯出壓縮" who="AI · compress" owner="ai" />
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginTop: 28 }}>
+      <Steps>
+        <Step duration={280}>
+          <div
+            style={{
+              height: 170,
+              boxSizing: 'border-box',
+              borderRadius: 'var(--osd-radius)',
+              border: `2px dashed ${blueLine}`,
+              padding: '24px 32px',
+            }}
+          >
+            <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--osd-accent)', letterSpacing: '0.08em' }}>03 · 開發中</div>
+            <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>各版位母版，目前還是設計師做</div>
+            <div style={{ fontSize: 22, color: muted, marginTop: 8 }}>resize skill 還在努力：排版沒有單一範本，要先整理出規則</div>
+          </div>
+        </Step>
+        <Step duration={280}>
+          <div
+            style={{
+              height: 170,
+              boxSizing: 'border-box',
+              borderRadius: 'var(--osd-radius)',
+              background: blueSoft,
+              padding: '24px 4px',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Gain title="05 多語系＋幣別" value="一句話" note="12 種語系一次換好" />
+            <Gain title="06 檢查" value="自動截圖" note="漏字、裁切先抓出來" />
+            <Gain title="07 匯出壓縮" value="批次" note="壓到 100KB、分資料夾" />
+          </div>
+        </Step>
+      </Steps>
+    </div>
+    <Steps>
+      <Step duration={280}>
+        <div
+          style={{
+            marginTop: 24,
+            padding: '18px 40px',
+            background: surface,
+            borderRadius: 'var(--osd-radius)',
+            ...heavy,
+            fontSize: 34,
+            textAlign: 'center',
+          }}
+        >
+          AI 接手的是後半段的重複生產——每套從約 120 分鐘，<Hi>變成約 10 分鐘</Hi>
+        </div>
+      </Step>
+    </Steps>
+  </LightPage>
+);
+
 // ── 10 · How each team does it ─────────────────────────────────────────────────
 const CompareRow = ({ label, children, light }: { label: string; children: ReactNode; light?: boolean }) => (
   <div style={{ marginTop: 18 }}>
@@ -2431,6 +2581,7 @@ export default [
   RulePage,
   Demo,
   Impact,
+  FullFlow,
   CrossTeam,
   Modules,
   Next,
@@ -2480,13 +2631,14 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 （按 →）我就去做別的設計。
 （按 →）從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。`,
 
-  // 6.5 · Skill 長什麼樣 0:45
-  `【0:45】
+  // 6.5 · Skill 長什麼樣 1:00
+  `【1:00】
 Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名、Figma 檔，
 （按 →）找到我先做好的各版位母版、認出各圖層，
 （按 →）每個版位、每個語系跑一輪：填文案、換幣別、命名，最後截圖檢查，
 （按 →）回報給我哪裡要看。
-現在用的是 multi-lang；自動 resize 版位的 skill 還在開發中。`,
+現在用的是 multi-lang；自動 resize 版位的 skill 還在開發中。
+常有人問：為什麼不用 Figma 自己的 AI agent？因為我們的流程不只在 Figma 裡——要讀 Google Sheet、改 Figma、檢查、再匯出壓縮；而且版位、語系、幣別、T&C 這些規則是我們團隊自己的，寫成 Skill 才能共用、版控、隨時補。`,
 
   // 7.5 · 規則長這樣 1:00
   `【1:00】
@@ -2509,6 +2661,13 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
   `【0:40】
 公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 10 分鐘。
 製作時間少了【92%】，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）`,
+
+  // 9.5 · 全流程 0:50
+  `【0:50】
+把整條流程攤開來看：從收需求、主視覺、各版位母版、翻譯斷行，到多語系、檢查、匯出交付，一共七段。白色是人做的，藍色是 AI 產出，紫色是 AI 和人一起。
+（按 →）第三段各版位母版，現在還是設計師做——resize 還在開發中。
+（按 →）AI 接手的是後半段：多語系和幣別一句話換好、自動截圖檢查、批次匯出壓縮。
+（按 →）也就是說，AI 接手的是後半段的重複生產，每套從約 120 分鐘變成約 10 分鐘；前半段需要判斷的，還是留給人。`,
 
   // 10 · 三個部門的做法比較 1:30
   `【1:30】
@@ -2548,6 +2707,8 @@ Skill 是活的：出錯就補規則。像緬甸文顯示不出來，我補了�
 ・省下的時間做了什麼？【新主視覺／參與的討論】。
 ・AI 出錯怎麼辦？出錯 → 補規則 → 下次不再錯（緬甸文例子）。
 ・用的是哪個 AI agent？【工具名稱】＋【如何連接設計工具】。
+・為什麼不用 Figma 自己的 AI agent？流程要跨工具（Google Sheet → Figma → 檢查 → 匯出壓縮），而且規則是團隊自己的，寫成 Skill 才能共用、版控、持續補規則。
+・不同 AI 模型跑出來結果會不會不一樣？會有差異，所以：固定使用的模型版本、準備幾組標準測試案例（固定母版＋文案）換模型或改 Skill 後先跑一次比對，再加上 AI 截圖檢查和 content writer 校對兩道關。
 ・急件可以當天上嗎？生產時間縮短了，但校對與確認仍需要時間——避免變成承諾。
 ・其他部門要怎麼開始？先從模組 D 固定範本試，再找我一起寫規則。`,
 ];
