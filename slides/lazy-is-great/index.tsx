@@ -1527,7 +1527,7 @@ const RulePage: Page = () => {
 };
 
 // ── 8 · Demo ────────────────────────────────────────────────────────────────
-const DemoBeat = ({ n, title, time, desc }: { n: string; title: string; time: string; desc: string }) => (
+const DemoBeat = ({ n, title, time, desc }: { n: string; title: string; time?: string; desc: string }) => (
   <div style={{ display: 'flex', gap: 24 }}>
     <div
       style={{
@@ -1549,7 +1549,7 @@ const DemoBeat = ({ n, title, time, desc }: { n: string; title: string; time: st
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
         <span style={{ fontSize: 32, fontWeight: 800 }}>{title}</span>
-        <span style={{ fontSize: 22, color: 'var(--lz-hi, var(--osd-accent))', fontWeight: 700 }}>{time}</span>
+        {time && <span style={{ fontSize: 22, color: 'var(--lz-hi, var(--osd-accent))', fontWeight: 700 }}>{time}</span>}
       </div>
       <div style={{ fontSize: 26, lineHeight: 1.5, color: `var(--lz-muted, ${muted})`, marginTop: 8 }}>{desc}</div>
     </div>
@@ -1605,14 +1605,30 @@ const Demo: Page = () => (
       </R>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+          <R d={260}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'baseline',
+                gap: 12,
+                padding: '12px 22px',
+                borderRadius: 14,
+                background: 'rgba(79,163,247,0.14)',
+                border: '1px solid rgba(79,163,247,0.35)',
+              }}
+            >
+              <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700 }}>實際耗時</span>
+              <span style={{ ...heavy, fontSize: 40, color: 'var(--lz-hi, var(--osd-accent))' }}>約 7 分鐘</span>
+            </div>
+          </R>
           <R d={320}>
-            <DemoBeat n="1" title="說一句話" time="約 20 秒" desc="直接對 AI agent 下指令" />
+            <DemoBeat n="1" title="說一句話" desc="直接對 AI agent 下指令" />
           </R>
           <R d={420}>
-            <DemoBeat n="2" title="AI 執行中" time="快轉＋計時器" desc="中間切到 Skill 檔內容" />
+            <DemoBeat n="2" title="AI 執行中" time="現場快轉" desc="中間切到 Skill 檔內容" />
           </R>
           <R d={520}>
-            <DemoBeat n="3" title="成品拼貼" time="約 1 分鐘" desc="所有版位成品＋產出清單" />
+            <DemoBeat n="3" title="成品拼貼" desc="所有版位成品＋產出清單" />
           </R>
         </div>
         <R d={620}>
@@ -2540,10 +2556,10 @@ export const notes: (string | undefined)[] = [
 就是這樣幾行字，AI 每次都會照做，我不用每次重新解釋。`,
 
   // 8 · Demo 3:00
-  `【3:00】影片約 2.5 分鐘，靜音，現場口述。
-① 先看我說一句話（約 20 秒）。
-② AI 執行中——這段有快轉，看角落計時器，實際耗時【X 分鐘】。中間會切到 Skill 檔，讓大家看我寫了哪些規則。
-③ 最後是成品拼貼和產出清單（約 1 分鐘）。
+  `【3:00】影片靜音，現場口述；實際耗時約 7 分鐘，現場快轉播放。
+① 先看我說一句話。
+② AI 執行中——這段我會快轉，整個流程實際跑了約 7 分鐘。中間會切到 Skill 檔，讓大家看我寫了哪些規則。
+③ 最後是成品拼貼和產出清單。
 錄製日期：【YYYY/MM/DD】。影片若無法播放，改用本機備份檔。`,
 
   // 9 · 成效 1:00
