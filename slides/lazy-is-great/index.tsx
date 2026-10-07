@@ -979,7 +979,7 @@ const Evolution2: Page = () => (
             <FlowArrow />
             <div style={{ flex: 1 }}>
             <ActCard icon="user" n="03" title="我去做別的設計">
-              想新主視覺、跟企劃討論
+              想新主視覺、跟 PO 討論
               <span
                 style={{
                   display: 'block',
@@ -1092,7 +1092,7 @@ const PhaseArrow = () => (
 );
 
 const SkillInside: Page = () => (
-  <LightPage chip="HOW · Skill 長什麼樣" title={<>Skill 裡面，<Hi>寫的就是我的做法</Hi></>}>
+  <LightPage chip="HOW · Skill 長什麼樣" title={<>Skill 裡面，<Hi>寫的就是做法</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '360px 328px 1fr 328px', height: 480 }}>
       <Steps>
         <R d={160} style={{ height: '100%' }}>
@@ -1674,7 +1674,7 @@ const Bracket = ({ col, label, ai, d }: { col: string; label: ReactNode; ai?: bo
 const FullFlow: Page = () => (
   <LightPage chip="HOW · 全流程" title={<>從需求到交付，<Hi>AI 幫到哪一段</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: flowCols, alignItems: 'center', height: 300 }}>
-      <FlowStage d={140} n="01" name="收需求" who="企劃／PO" />
+      <FlowStage d={140} n="01" name="收需求" who="PO" />
       <FlowGap />
       <FlowStage d={200} n="02" name="主視覺" who="設計師" />
       <FlowGap />
