@@ -795,14 +795,14 @@ const EvolutionMap: Page = () => (
             <StageCard
               n="3"
               name="交給 AI"
-              tagline="一句話跑完全套"
+              tagline="一句話換好所有語系"
               badge="第二次偷懶"
               color="#0878E5"
               hot
             >
               <TaskLine task="畫主視覺" who="設計師" doer="human" />
               <TaskLine task="帶入多語系文案" who="AI agent" doer="ai" />
-              <TaskLine task="resize＋替換" who="AI agent" doer="ai" />
+              <TaskLine task="resize 版位" who="設計師" doer="human" />
             </StageCard>
           </div>
         </Step>
@@ -1067,8 +1067,7 @@ const Evolution2: Page = () => (
                 borderRadius: 14,
                 padding: '16px 20px',
               }}
-            >「resize」
-「多語系」</span>
+            >「多語系」</span>
           </ActCard>
         </Step>
         <Step duration={260}>
@@ -1107,8 +1106,8 @@ const Evolution2: Page = () => (
                   <div style={{ fontSize: 36, fontWeight: 800 }}>照著 Skill 跑完三件事</div>
                 </div>
               </div>
-              <AIJob n="1" title="聽懂一句話" desc="要哪些版位、哪些語系" />
-              <AIJob n="2" title="照 Skill 執行" desc="帶入斷好行的文案、延展、對位" />
+              <AIJob n="1" title="聽懂一句話" desc="要做哪些母版、哪些語系" />
+              <AIJob n="2" title="照 Skill 執行" desc="帶入斷好行的文案、換幣別、對位" />
               <AIJob n="3" title="檢查並回報" desc="截圖確認每張都排好" />
             </div>
           </div>
@@ -1249,9 +1248,9 @@ const SkillInside: Page = () => (
           <div style={{ display: 'flex', height: '100%' }}>
             <PhaseArrow />
             <div style={{ ...phaseCard, ...card, flex: 1 }}>
-              <PhaseHead n="2" title="自己找 master" />
+              <PhaseHead n="2" title="找到各版位母版" />
               <div style={{ fontSize: 24, lineHeight: 1.55, color: muted }}>
-                依名稱和尺寸找到主圖（例如 CasualTop 750×224），讀出 headline、subtitle、CTA、T&amp;C 各是哪個圖層
+                設計師先做好每個版位的母版，AI 自己找到它們，讀出 headline、subtitle、CTA、T&amp;C 各是哪個圖層
               </div>
             </div>
           </div>
@@ -1274,22 +1273,19 @@ const SkillInside: Page = () => (
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <R d={120}>
-                  <LoopRow n="1">複製 master（絕不動原檔）</LoopRow>
+                  <LoopRow n="1">複製母版（絕不動原檔）</LoopRow>
                 </R>
                 <R d={190}>
-                  <LoopRow n="2">resize 到版位精確尺寸</LoopRow>
+                  <LoopRow n="2">填入 writer 斷好行的文案</LoopRow>
                 </R>
                 <R d={260}>
-                  <LoopRow n="3">依新比例重新排版</LoopRow>
+                  <LoopRow n="3">換上該語系的幣別與 T&amp;C</LoopRow>
                 </R>
                 <R d={330}>
-                  <LoopRow n="4">填入 writer 斷好行的文案</LoopRow>
+                  <LoopRow n="4">命名 CasualTop_TH_THB</LoopRow>
                 </R>
                 <R d={400}>
-                  <LoopRow n="5">命名 CasualTop_TH_THB</LoopRow>
-                </R>
-                <R d={470}>
-                  <LoopRow n="6">截圖檢查：塞得下、沒裁到</LoopRow>
+                  <LoopRow n="5">截圖檢查：塞得下、沒漏字</LoopRow>
                 </R>
               </div>
             </div>
@@ -1310,8 +1306,8 @@ const SkillInside: Page = () => (
     </div>
     <R d={260}>
       <div style={{ fontSize: 22, color: muted, marginTop: 28 }}>
-        取自 metamon 的 <b style={{ color: 'var(--osd-text)' }}>resize</b> skill · 只換語系不換尺寸時用{' '}
-        <b style={{ color: 'var(--osd-text)' }}>multi-lang</b>，流程相同、但不 resize 也不重排
+        取自 metamon 的 <b style={{ color: 'var(--osd-text)' }}>multi-lang</b> skill · 自動 resize 版位的{' '}
+        <b style={{ color: 'var(--osd-text)' }}>resize</b> skill 還在開發中
       </div>
     </R>
   </LightPage>
@@ -1494,7 +1490,7 @@ const RulePage: Page = () => {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    同一套圖層 → <Hi>KratosTop 1178 × 100</Hi>
+                    resize 開發中 · <Hi>KratosTop</Hi> 的規則先寫好了
                   </div>
                   <img
                     src={kratosTop}
@@ -1851,7 +1847,7 @@ const CrossTeam: Page = () => (
         <Step duration={280}>
           <TeamCard icon="spark" name="Casino" tag="模組 A–E" hot>
             <CompareRow label="做法" light>把做法寫成 Skill，一句話交給 AI</CompareRow>
-            <CompareRow label="靠什麼省力" light>版位多、排版會變，AI 能照 Skill 幫忙判斷</CompareRow>
+            <CompareRow label="靠什麼省力" light>語系多、文案長短不一，AI 照 Skill 換字、對位、檢查</CompareRow>
             <CompareRow label="優點" light>規則用文字寫就好，設計師、content writer 都能一起補</CompareRow>
             <CompareRow label="限制" light>規則還在補，成品仍需要人最後檢查</CompareRow>
           </TeamCard>
@@ -1983,7 +1979,7 @@ const Modules: Page = () => (
           <ModuleRow l="A" name="主視覺" who="設計師" />
         </R>
         <R d={460}>
-          <ModuleRow l="B" name="多尺寸" who="AI 依 Skill 延展，人抽查" />
+          <ModuleRow l="B" name="多尺寸" who="設計師做各版位母版（AI resize 開發中）" />
         </R>
         <R d={520}>
           <ModuleRow l="C" name="多語系" who="Content writer 翻譯提供 Google Sheet → AI 從 Sheet 帶入並套用" />
@@ -2025,113 +2021,6 @@ const Modules: Page = () => (
       </div>
     </div>
     </Step>
-    </Steps>
-  </LightPage>
-);
-
-// ── 13 · Rules into Skill ───────────────────────────────────────────────────
-const SpecRow = ({ item, rule, last }: { item: string; rule: string; last?: boolean }) => (
-  <div
-    style={{
-      display: 'grid',
-      gridTemplateColumns: '180px 1fr',
-      alignItems: 'center',
-      height: 92,
-      padding: '0 36px',
-      borderBottom: last ? 'none' : `2px solid ${line}`,
-    }}
-  >
-    <span style={{ fontSize: 32, fontWeight: 800 }}>{item}</span>
-    <span style={{ fontSize: 28, color: muted }}>{rule}</span>
-  </div>
-);
-
-const FixStep = ({ n, text, who, human }: { n: string; text: string; who: string; human?: boolean }) => (
-  <div
-    style={{
-      ...card,
-      height: 80,
-      padding: '0 28px',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 20,
-      border: human ? `3px solid ${purple}` : `2px solid ${line}`,
-      background: human ? purpleSoft : '#FFFFFF',
-    }}
-  >
-    <span style={{ fontSize: 34, fontWeight: 800, color: human ? purple : 'var(--osd-accent)', width: 28 }}>{n}</span>
-    <span style={{ fontSize: 28, fontWeight: 700, flex: 1 }}>{text}</span>
-    <span
-      style={{
-        fontSize: 20,
-        fontWeight: 800,
-        padding: '4px 12px',
-        borderRadius: 999,
-        background: human ? purple : blueSoft,
-        color: human ? '#FFFFFF' : 'var(--osd-accent)',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      {who}
-    </span>
-  </div>
-);
-
-const Rules: Page = () => (
-  <LightPage chip="METHOD · 規則" title={<>把腦中的規則，<Hi>寫成一張表</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 700px', gap: 48, height: 428 }}>
-      <R d={160} style={{ height: '100%' }}>
-        <div style={{ ...card, height: '100%', overflow: 'hidden' }}>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '180px 1fr',
-              alignItems: 'center',
-              height: 60,
-              padding: '0 36px',
-              background: surface,
-              borderBottom: `2px solid ${line}`,
-              color: muted,
-              fontSize: 22,
-              fontWeight: 800,
-              letterSpacing: '0.08em',
-            }}
-          >
-            <span>項目</span>
-            <span>寫進 Skill 的規則</span>
-          </div>
-          <SpecRow item="版面" rule="每個版位的範本與對齊方式" />
-          <SpecRow item="文字寬度" rule="每個文字框的最大寬度" />
-          <SpecRow item="字級" rule="標題／副標／CTA 層級＋最小字級" />
-          <SpecRow item="字型" rule="語系 × 字型對照表" last />
-        </div>
-      </R>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <R d={300}>
-          <div style={{ fontSize: 28, fontWeight: 800, height: 40 }}>從文案到成品，照這個順序</div>
-        </R>
-        <Steps>
-          <Step duration={260}>
-            <FixStep n="1" text="Content writer 提供斷好行的文案" who="人" human />
-          </Step>
-          <Step duration={260}>
-            <FixStep n="2" text="AI 依版位規格排版（安全區、字級）" who="規則" />
-          </Step>
-          <Step duration={260}>
-            <FixStep n="3" text="AI 截圖檢查每一張" who="AI" />
-          </Step>
-          <Step duration={260}>
-            <FixStep n="4" text="Content writer 校對、我最後確認" who="人" human />
-          </Step>
-        </Steps>
-      </div>
-    </div>
-    <Steps>
-      <Step duration={280}>
-        <h3 style={{ ...heavy, fontSize: 52, lineHeight: 1.3, margin: '56px 0 0' }}>
-          文案交給<Hi>專業的人</Hi>，設計留給<Hi>自己</Hi>，生產交給<Hi color={purple}>AI</Hi>。
-        </h3>
-      </Step>
     </Steps>
   </LightPage>
 );
@@ -2277,7 +2166,7 @@ const Next: Page = () => (
             <div style={{ ...card, padding: '24px 36px', height: 294 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>1</span>
-                <span style={{ fontSize: 30, fontWeight: 800 }}>resize 沒辦法只用一種排版範本</span>
+                <span style={{ fontSize: 30, fontWeight: 800 }}>resize 還在努力：沒辦法只用一種排版</span>
               </div>
               <div style={{ fontSize: 22, color: muted, marginTop: 6 }}>每次主視覺不同，文字的位置也跟著不同</div>
               <div style={{ display: 'flex', gap: 24, marginTop: 18 }}>
@@ -2361,10 +2250,10 @@ const TakeHome: Page = () => (
   <LightPage chip="TAKE HOME · 帶回家" title={<>Banner Kit，<Hi>團隊一起用</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, height: 260 }}>
       <R d={160} style={{ height: '100%' }}>
-        <SkillCard name="resize" module="模組 B · 多尺寸" what="一張 master → 全部版位 × 全部語系，依比例重新排版" say="「resize」" />
+        <SkillCard name="multi-lang" module="模組 C · 多語系" what="做好的各版位母版 → 換成每種語系文案，尺寸不變" say="「多語系」" />
       </R>
       <R d={260} style={{ height: '100%' }}>
-        <SkillCard name="multi-lang" module="模組 C · 多語系" what="做好的各版位 → 同尺寸換成每種語系文案，不重排" say="「多語系」" />
+        <SkillCard name="resize" module="開發中" what="一張 master → 全部版位，依比例重新排版（還在努力）" say="「resize」" />
       </R>
     </div>
     <R d={380}>
@@ -2541,7 +2430,6 @@ export default [
   Impact,
   CrossTeam,
   Modules,
-  Rules,
   Next,
   TakeHome,
   Closing,
@@ -2571,7 +2459,7 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
   `【0:30】
 同一套流程，我偷懶了兩次。第一階段，全部手工。
 （按 →）第二階段，貼文案交給 Sheet Plugin。
-（按 →）第三階段，帶入文案、resize、替換全部交給 AI。主視覺始終在我手上。`,
+（按 →）第三階段，多語系文案交給 AI，一句話換好所有語系。主視覺和各版位母版還是我做——自動 resize 還在努力中。`,
 
   // 5 · 第一次偷懶 1:00
   `【1:00】
@@ -2585,16 +2473,17 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
   `【1:00】
 第二次偷懶：把我的做法寫成 Skill，一句話交給 AI。
 （按 →）我只要說一句，甚至只說「多語系」，
-（按 →）AI 就照 Skill 跑完：聽懂需求、帶入 content writer 斷好行的文案、延展對位，再自己截圖檢查。
+（按 →）AI 就照 Skill 跑完：聽懂需求、帶入 content writer 斷好行的文案、換幣別、對位，再自己截圖檢查。
 （按 →）我就去做別的設計。
 （按 →）從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。`,
 
   // 6.5 · Skill 長什麼樣 0:45
   `【0:45】
 Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名、Figma 檔，
-（按 →）自己找 master、認出各圖層，
-（按 →）每個版位、每個語系跑一輪，最後截圖檢查，
-（按 →）回報給我哪裡要看。`,
+（按 →）找到我先做好的各版位母版、認出各圖層，
+（按 →）每個版位、每個語系跑一輪：填文案、換幣別、命名，最後截圖檢查，
+（按 →）回報給我哪裡要看。
+現在用的是 multi-lang；自動 resize 版位的 skill 還在開發中。`,
 
   // 7.5 · 規則長這樣 1:00
   `【1:00】
@@ -2602,8 +2491,8 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 （按 →）CasualTop 是 master，
 （按 →）圖層角色以它為準，
 （按 →）角色的臉一定要完整。
-（按 →）放到 KratosTop：安全區 829 px、置中，
-（按 →）subtitle 一定保留。幾行字，AI 每次都照做。接下來看它實際跑一次。`,
+（按 →）下一步是 resize，規則已經先寫好：像 KratosTop，安全區 829 px、置中，
+（按 →）subtitle 一定保留。resize 還在努力中，但規則寫好了，AI 就有依據。接下來看它實際跑一次多語系。`,
 
   // 8 · Demo 2:30
   `【2:30】影片靜音、現場口述，中段快轉；實際耗時約 7 分鐘。
@@ -2623,34 +2512,26 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 我也看了其他部門，大家需求不同，做法都很聰明。
 Games 版面固定、只換圖，規則不用判斷，很適合寫成 Figma plugin，快又穩定。
 （按 →）Promotion 只需要出給 MKT 的多語系和尺寸，範圍小、規則清楚，也剛好適合寫 plugin。
-（按 →）我們 Casino 版位多、排版常變，需要判斷，所以用 AI；規則用文字寫，設計師、content writer 都能補。
+（按 →）我們 Casino 語系多、文案長短不一，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
 
   // 12 · 模組化 1:15
   `【1:15】
 我把流程拆成五個模組。收到需求先問三題：要新主視覺嗎？幾種尺寸？幾種語言？
-A 主視覺設計師做；B 多尺寸、C 多語系交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、content writer 再校對。
-（按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。`,
-
-  // 13 · 把規則寫進 Skill 0:45
-  `【0:45】
-要穩定，就把規則寫成一張表。從文案到成品的順序是：
-（按 →）writer 提供斷好行的文案，
-（按 →）AI 照規格排版，
-（按 →）AI 截圖檢查，
-（按 →）writer 校對、我確認。
-（按 →）文案交給專業的人，設計留給自己，生產交給 AI。`,
+A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、content writer 再校對。
+（按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
+一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
   // 14 · Skill 是活的 0:45
   `【0:45】
 Skill 是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
-（按 →）resize 排版沒有單一範本，文字有時靠左、靠右、置中；
+（按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中；
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。`,
 
   // 15.5 · 帶回家 0:30
   `【0:30】
-這套 Banner Kit 團隊都能用：換尺寸說「resize」，換語系說「多語系」。三行指令裝好，之後自動更新。`,
+這套 Banner Kit 團隊都能用：做好母版後，說「多語系」就能換好所有語系；resize 還在開發中，好了會自動更新給大家。三行指令裝好就能用。`,
 
   // 15 · 總結 0:20 + Q&A 5:00
   `【0:20】
