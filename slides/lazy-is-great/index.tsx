@@ -1988,7 +1988,7 @@ const Modules: Page = () => (
           <ModuleRow l="D" name="固定範本" who="AI 換字、換圖、換日期" tag="門檻最低" />
         </R>
         <R d={640}>
-          <ModuleRow l="E" name="校對交付" who="AI 檢查、回報、命名打包，content writer 校對" />
+          <ModuleRow l="E" name="校對交付" who="AI 檢查、回報、命名、匯出壓縮，content writer 校對" />
         </R>
       </div>
     </div>
@@ -2518,7 +2518,7 @@ Games 版面固定、只換圖，規則不用判斷，很適合寫成 Figma plug
   // 12 · 模組化 1:15
   `【1:15】
 我把流程拆成五個模組。收到需求先問三題：要新主視覺嗎？幾種尺寸？幾種語言？
-A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、content writer 再校對。
+A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
