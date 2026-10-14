@@ -2244,14 +2244,14 @@ const Next: Page = () => (
 
 // ── 13.5 · Model test — same exam, different AI ─────────────────────────────
 // Fill in as tests finish; an empty string renders as 「測試中」.
-const modelGroups: { tool: string; vendor: string; flag?: string; models: { name: string; time: string }[] }[] = [
+const modelGroups: { tool: string; vendor: string; flag?: string; models: { name: string; time: string; fit?: string }[] }[] = [
   {
     tool: 'Claude',
     vendor: 'Anthropic',
     models: [
-      { name: 'Opus 5.5', time: '約 7 分' },
-      { name: 'Sonnet 5.5', time: '' },
-      { name: 'Haiku 4.5', time: '' },
+      { name: 'Opus 5.5', time: '約 7 分', fit: '最強推理：整套多語系、寫／改 Skill 規則、需要判斷的任務' },
+      { name: 'Sonnet 5.5', time: '約 13 分', fit: '能力與速度平衡：日常主力，寫文案、改單一版位' },
+      { name: 'Haiku 4.5', time: '約 18 分', fit: '最快最省：簡單大量的小事，翻譯初稿、檢查命名' },
     ],
   },
   {
@@ -2279,7 +2279,7 @@ const ModelTest: Page = () => (
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1.6fr 1fr',
+            gridTemplateColumns: '400px 200px 1fr',
             alignItems: 'center',
             height: 50,
             fontSize: 22,
@@ -2291,6 +2291,7 @@ const ModelTest: Page = () => (
         >
           <span>模型</span>
           <span>平均耗時</span>
+          <span>適合做什麼</span>
         </div>
         {modelGroups.map((g) => (
           <div key={g.tool}>
@@ -2308,7 +2309,7 @@ const ModelTest: Page = () => (
                 key={m.name}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.6fr 1fr',
+                  gridTemplateColumns: '400px 200px 1fr',
                   alignItems: 'center',
                   height: 44,
                   borderTop: `1px solid ${line}`,
@@ -2316,6 +2317,7 @@ const ModelTest: Page = () => (
               >
                 <span style={{ fontSize: 30, fontWeight: 800, paddingLeft: 20, whiteSpace: 'nowrap' }}>{m.name}</span>
                 <Cell v={m.time} />
+                <span style={{ fontSize: 22, color: ink2, whiteSpace: 'nowrap' }}>{m.fit ?? ''}</span>
               </div>
             ))}
           </div>
@@ -2677,7 +2679,8 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
   // 14 · 模型測試 0:45
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
-同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘，Codex 預設的 GPT-6 Astra 約 8 分鐘（含一輪修正）。其他模型：【待填】
+同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 預設的 GPT-6 Astra 約 8 分鐘（含一輪修正）。
+有趣的是最強的 Opus 反而最快——它比較少走錯路、不用重試。所以模型要看任務挑：整套多語系這種要判斷的大任務交給 Opus；日常寫文案、改單一版位用 Sonnet；簡單大量的小事（翻譯初稿、檢查命名）用 Haiku。其他 Codex 模型：【待填】
 （按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
 小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
 之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
