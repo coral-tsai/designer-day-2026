@@ -2010,7 +2010,7 @@ const Modules: Page = () => (
           <ModuleRow l="A" name="主視覺" who="設計師" />
         </R>
         <R d={460}>
-          <ModuleRow l="B" name="多尺寸" who="設計師做母版（AI resize 開發中）" from="Promotion＋Games" />
+          <ModuleRow l="B" name="多尺寸" who="設計師做母版（resize skill 開發中）" from="Promotion＋Games" />
         </R>
         <R d={520}>
           <ModuleRow l="C" name="多語系＋幣別" who="Writer 翻譯 → AI 帶入文案與幣別" from="Promotion＋Casino" />
@@ -2678,7 +2678,7 @@ Games 和 Promotion 寫成 Figma plugin，我們 Casino 用 AI 照 Skill 做。�
   `【1:15】
 大家需求不同，各有適合的做法；有了 AI，規則用說的就能寫，每個人都能貢獻好做法。所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
-A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
+A 主視覺設計師做；B 多尺寸目前也是設計師做母版，resize skill 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
