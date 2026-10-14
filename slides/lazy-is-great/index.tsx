@@ -2201,7 +2201,7 @@ const ModelTest: Page = () => (
             display: 'grid',
             gridTemplateColumns: '1.6fr 1fr 1fr 1fr',
             alignItems: 'center',
-            height: 56,
+            height: 50,
             fontSize: 22,
             fontWeight: 800,
             color: muted,
@@ -2216,7 +2216,7 @@ const ModelTest: Page = () => (
         </div>
         {modelGroups.map((g) => (
           <div key={g.tool}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 54, marginTop: 6 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 42, marginTop: 6 }}>
               <span style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
               <span style={{ fontSize: 20, color: muted }}>{g.vendor}</span>
               {g.flag && (
@@ -2232,7 +2232,7 @@ const ModelTest: Page = () => (
                   display: 'grid',
                   gridTemplateColumns: '1.6fr 1fr 1fr 1fr',
                   alignItems: 'center',
-                  height: 62,
+                  height: 50,
                   borderTop: `1px solid ${line}`,
                 }}
               >
@@ -2246,6 +2246,14 @@ const ModelTest: Page = () => (
         ))}
       </div>
     </R>
+    <Steps>
+      <Step duration={280}>
+        <div style={{ marginTop: 24, background: redSoft, borderRadius: 'var(--osd-radius)', padding: '18px 32px' }}>
+          <div style={{ fontSize: 28, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
+          <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>博弈相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
+        </div>
+      </Step>
+    </Steps>
   </LightPage>
 );
 
@@ -2587,7 +2595,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
   // 14 · 模型測試 0:45
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比耗時、錯誤數，還有 AI 自己檢查抓不抓得到錯。（數據：【待填】）
-Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
+（按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
 之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
   // 15 · 帶回家 0:30
