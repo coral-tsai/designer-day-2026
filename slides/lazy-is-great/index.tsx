@@ -1693,7 +1693,32 @@ const FlowStage = ({ n, name, who, ai, note, d }: { n: string; name: string; who
   </R>
 );
 
-const FlowGap = () => <div style={{ textAlign: 'center', fontSize: 28, color: muted }}>→</div>;
+// `note` marks a hand-off between stages (e.g. a review) with a small tag above the arrow.
+const FlowGap = ({ note }: { note?: string }) => (
+  <div style={{ position: 'relative', alignSelf: 'stretch', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, color: muted }}>
+    →
+    {note && (
+      <span
+        style={{
+          position: 'absolute',
+          top: -44,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontSize: 18,
+          fontWeight: 800,
+          padding: '3px 12px',
+          borderRadius: 999,
+          border: `2px solid ${line}`,
+          background: '#FFFFFF',
+          color: muted,
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {note}
+      </span>
+    )}
+  </div>
+);
 
 const Bracket = ({ col, label, ai, d }: { col: string; label: ReactNode; ai?: boolean; d: number }) => (
   <R d={d} style={{ gridColumn: col }}>
@@ -1718,7 +1743,7 @@ const FullFlow: Page = () => (
       <FlowStage d={140} n="01" name="收需求" who="PO" />
       <FlowGap />
       <FlowStage d={200} n="02" name="主視覺" who="設計師" />
-      <FlowGap />
+      <FlowGap note="review" />
       <FlowStage d={260} n="03" name="各版位母版" who="設計師" note="resize 開發中" />
       <FlowGap />
       <FlowStage d={320} n="04" name="翻譯＋斷行" who="Content writer" />
@@ -2557,7 +2582,7 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 
   // 4 · 全流程 0:45
   `【0:45】
-先把現在的整條流程攤開：收需求、主視覺、各版位母版、翻譯斷行，到多語系、檢查匯出，一共六段。
+先把現在的整條流程攤開：收需求、主視覺（主視覺先 review 過）、各版位母版、翻譯斷行，到多語系、檢查匯出，一共六段。
 白色是人做的，藍色是 AI 做的。第三段各版位母版，目前還是設計師做——resize 還在開發中。
 所以前四段需要判斷的，留給人；後兩段重複生產的，交給 AI。
 （按 →）重複的交給 AI，要判斷的留給人。至於省了多少時間，看完 Demo 再公布。`,
