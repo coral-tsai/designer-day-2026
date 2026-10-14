@@ -2169,7 +2169,7 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
     tool: 'Claude',
     vendor: 'Anthropic',
     models: [
-      { name: 'Opus 5.5', time: '' },
+      { name: 'Opus 5.5', time: '約 7 分' },
       { name: 'Sonnet 5.5', time: '' },
       { name: 'Haiku 4.5', time: '' },
     ],
