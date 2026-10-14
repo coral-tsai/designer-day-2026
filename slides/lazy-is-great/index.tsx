@@ -2164,14 +2164,14 @@ const Next: Page = () => (
 
 // ── 13.5 · Model test — same exam, different AI ─────────────────────────────
 // Fill in as tests finish; an empty string renders as 「測試中」.
-const modelGroups: { tool: string; vendor: string; flag?: string; models: { name: string; time: string; err: string; check: string }[] }[] = [
+const modelGroups: { tool: string; vendor: string; flag?: string; models: { name: string; time: string }[] }[] = [
   {
     tool: 'Claude',
     vendor: 'Anthropic',
     models: [
-      { name: 'Opus 5.5', time: '', err: '', check: '' },
-      { name: 'Sonnet 5.5', time: '', err: '', check: '' },
-      { name: 'Haiku 4.5', time: '', err: '', check: '' },
+      { name: 'Opus 5.5', time: '' },
+      { name: 'Sonnet 5.5', time: '' },
+      { name: 'Haiku 4.5', time: '' },
     ],
   },
   {
@@ -2179,9 +2179,9 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
     vendor: 'OpenAI',
     flag: 'policy 限制',
     models: [
-      { name: 'GPT-6 Astra（預設）', time: '', err: '', check: '' },
-      { name: 'GPT-6.1 Sol', time: '', err: '', check: '' },
-      { name: 'GPT-6 Luna', time: '', err: '', check: '' },
+      { name: 'GPT-6 Astra（預設）', time: '' },
+      { name: 'GPT-6.1 Sol', time: '' },
+      { name: 'GPT-6 Luna', time: '' },
     ],
   },
 ];
@@ -2199,7 +2199,7 @@ const ModelTest: Page = () => (
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1.6fr 1fr 1fr 1fr',
+            gridTemplateColumns: '1.6fr 1fr',
             alignItems: 'center',
             height: 50,
             fontSize: 22,
@@ -2211,12 +2211,10 @@ const ModelTest: Page = () => (
         >
           <span>模型</span>
           <span>平均耗時</span>
-          <span>平均錯誤</span>
-          <span>自我檢查</span>
         </div>
         {modelGroups.map((g) => (
           <div key={g.tool}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 42, marginTop: 6 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 38, marginTop: 4 }}>
               <span style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
               <span style={{ fontSize: 20, color: muted }}>{g.vendor}</span>
               {g.flag && (
@@ -2230,16 +2228,14 @@ const ModelTest: Page = () => (
                 key={m.name}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.6fr 1fr 1fr 1fr',
+                  gridTemplateColumns: '1.6fr 1fr',
                   alignItems: 'center',
-                  height: 50,
+                  height: 44,
                   borderTop: `1px solid ${line}`,
                 }}
               >
                 <span style={{ fontSize: 30, fontWeight: 800, paddingLeft: 20, whiteSpace: 'nowrap' }}>{m.name}</span>
                 <Cell v={m.time} />
-                <Cell v={m.err} />
-                <Cell v={m.check} />
               </div>
             ))}
           </div>
@@ -2251,6 +2247,12 @@ const ModelTest: Page = () => (
         <div style={{ marginTop: 24, background: redSoft, borderRadius: 'var(--osd-radius)', padding: '18px 32px' }}>
           <div style={{ fontSize: 28, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
           <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>博弈相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
+            <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: '0.08em', padding: '4px 12px', borderRadius: 999, background: 'var(--osd-accent)', color: '#FFFFFF' }}>
+              TIPS
+            </span>
+            <span style={{ fontSize: 24, fontWeight: 700 }}>跟它說明是教學用途，就可以繼續調整</span>
+          </div>
         </div>
       </Step>
     </Steps>
@@ -2594,8 +2596,9 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 
   // 14 · 模型測試 0:45
   `【0:45】
-常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比耗時、錯誤數，還有 AI 自己檢查抓不抓得到錯。（數據：【待填】）
+常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。（數據：【待填】）
 （按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
+小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
 之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
   // 15 · 帶回家 0:30
