@@ -1504,27 +1504,23 @@ const DemoVideo = () => {
 
 // Compact header (title + time chip on one row) and a single row of beats under
 // the video, so the recording gets as much height as the canvas allows.
-const DemoStep = ({ n, title, desc }: { n: string; title: string; desc: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 14, whiteSpace: 'nowrap' }}>
-    <span
-      style={{
-        width: 40,
-        height: 40,
-        borderRadius: '50%',
-        border: '2px solid var(--lz-hi, var(--osd-accent))',
-        color: 'var(--lz-hi, var(--osd-accent))',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 20,
-        fontWeight: 800,
-        flexShrink: 0,
-      }}
-    >
-      {n}
-    </span>
-    <span style={{ fontSize: 26, fontWeight: 800 }}>{title}</span>
-    <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})` }}>{desc}</span>
+const ImpactPill = ({ label, value, color, hot }: { label: string; value: string; color: string; hot?: boolean }) => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: 10,
+      padding: '6px 20px',
+      borderRadius: 999,
+      background: hot ? 'rgba(79,163,247,0.16)' : 'rgba(255,255,255,0.06)',
+      border: hot ? '1px solid rgba(79,163,247,0.45)' : '1px solid rgba(255,255,255,0.12)',
+      whiteSpace: 'nowrap',
+    }}
+  >
+    <span style={{ fontSize: 24, fontWeight: 800 }}>{label}</span>
+    <span style={{ fontSize: 20, color, fontWeight: 700 }}>約</span>
+    <span style={{ ...heavy, fontSize: 34, color }}>{value}</span>
+    <span style={{ fontSize: 20, color, fontWeight: 700 }}>分鐘</span>
   </div>
 );
 
@@ -1578,100 +1574,23 @@ const Demo: Page = () => (
         <DemoVideo />
       </div>
     </R>
-    <R d={360} style={{ marginTop: 20 }}>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 64 }}>
-        <DemoStep n="1" title="說一句話" desc="直接對 AI agent 下指令" />
-        <DemoStep n="2" title="AI 執行中" desc="中間切到 Skill 檔內容" />
-        <DemoStep n="3" title="成品拼貼" desc="所有版位成品＋產出清單" />
-      </div>
-    </R>
+    {/* Revealed after the video: the time comparison (was its own page). */}
+    <Steps>
+      <Step duration={280}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 22, marginTop: 20 }}>
+          <ImpactPill label="手貼" value="120" color={`var(--lz-muted, ${muted})`} />
+          <span style={{ fontSize: 28, color: `var(--lz-muted, ${muted})` }}>→</span>
+          <ImpactPill label="Sheet 帶入" value="45" color="#A79CF5" />
+          <span style={{ fontSize: 28, color: `var(--lz-muted, ${muted})` }}>→</span>
+          <ImpactPill label="交給 AI" value="10" color="var(--lz-hi, var(--osd-accent))" hot />
+          <span style={{ marginLeft: 18, fontSize: 24, color: `var(--lz-muted, ${muted})`, fontWeight: 700, whiteSpace: 'nowrap' }}>
+            每套製作時間 <b style={{ ...heavy, fontSize: 34, color: 'var(--lz-hi, var(--osd-accent))' }}>↓【92%】</b>
+          </span>
+        </div>
+      </Step>
+    </Steps>
     <Footer />
   </div>
-);
-
-// ── 9 · Impact ──────────────────────────────────────────────────────────────
-// Bar heights are proportional to 120 / 45 / 10 minutes (max = 320px).
-// Update `h` together with the value when the real numbers come in.
-const Bar = ({ value, h, color, d }: { value: string; h: number; color: string; d: number }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 240 }}>
-    <R d={d + 500}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 12, color, whiteSpace: 'nowrap' }}>
-        <span style={{ fontSize: 22, fontWeight: 700 }}>約</span>
-        <span style={{ ...heavy, fontSize: 44, lineHeight: 1.2 }}>{value}</span>
-        <span style={{ fontSize: 22, fontWeight: 700 }}>分鐘</span>
-      </div>
-    </R>
-    <div
-      className="lz-grow"
-      style={{ ['--d' as string]: d, width: 140, height: h, background: color, borderRadius: '12px 12px 0 0' } as CSSProperties}
-    />
-  </div>
-);
-
-const BarLabel = ({ children }: { children: ReactNode }) => (
-  <div style={{ width: 240, textAlign: 'center', fontSize: 28, fontWeight: 800 }}>{children}</div>
-);
-
-const StatCard = ({ label, big, color }: { label: string; big: string; color: string }) => (
-  <div
-    style={{
-      height: '100%',
-      background: surface,
-      borderRadius: 'var(--osd-radius)',
-      padding: '0 44px',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      borderLeft: `5px solid ${color}`,
-    }}
-  >
-    <div style={{ fontSize: 24, color: muted, fontWeight: 600 }}>{label}</div>
-    <div style={{ ...heavy, fontSize: 60, lineHeight: 1.2, color, marginTop: 4 }}>{big}</div>
-  </div>
-);
-
-const Impact: Page = () => (
-  <LightPage chip="PROOF · 成效總結" title={<>從 2 小時到 10 分鐘：<Hi>三次進化</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 560px', gap: 48, height: 560 }}>
-      <div style={{ ...card, padding: '36px 56px 32px', display: 'flex', flexDirection: 'column' }}>
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'space-around',
-            borderBottom: `2px solid ${line}`,
-          }}
-        >
-          <Bar value="120" h={320} color="#B8BFCC" d={200} />
-          <Bar value="45" h={120} color={purple} d={360} />
-          <Bar value="10" h={27} color="#0878E5" d={520} />
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: 20 }}>
-          <BarLabel>手貼</BarLabel>
-          <BarLabel>Sheet 帶入</BarLabel>
-          <BarLabel>
-            <Hi>交給 AI</Hi>
-          </BarLabel>
-        </div>
-      </div>
-      <div style={{ display: 'grid', gridTemplateRows: 'repeat(3, 1fr)', gap: 24 }}>
-        <R d={700} style={{ height: '100%' }}>
-          <StatCard label="每套製作時間" big="↓ 【92%】" color="#0878E5" />
-        </R>
-        <R d={800} style={{ height: '100%' }}>
-          <StatCard label="校稿錯誤" big="大幅減少" color={purple} />
-        </R>
-        <R d={900} style={{ height: '100%' }}>
-          <StatCard label="可專注的設計工作" big="＋1" color="#101216" />
-        </R>
-      </div>
-    </div>
-    <R d={1000}>
-      <div style={{ fontSize: 22, color: muted, marginTop: 32 }}>{''}<br />{''}</div>
-    </R>
-  </LightPage>
 );
 
 // ── 4 · End-to-end flow — where AI helps ─────────────────────────────────────
@@ -2686,7 +2605,6 @@ export default [
   Evolution2,
   SkillInside,
   Demo,
-  Impact,
   GamesPlugin,
   PromoPlugin,
   CrossTeam,
@@ -2752,29 +2670,26 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 常有人問：為什麼不用 Figma 自己的 AI agent？因為我們的流程不只在 Figma 裡——要讀 Google Sheet、改 Figma、檢查、再匯出壓縮；而且版位、語系、幣別、T&C 這些規則是我們團隊自己的，寫成 Skill 才能共用、版控、隨時補。
 接下來，直接看它實際跑一次多語系。`,
 
-  // 8 · Demo 2:30
-  `【2:30】影片已 3 倍速（約 2 分 24 秒）、靜音、現場口述；實際耗時約 7 分鐘。
+  // 8 · Demo＋成效 3:00
+  `【3:00】影片已 3 倍速（約 2 分 24 秒）、靜音、現場口述；實際耗時約 7 分鐘。
 ① 我說一句話。
 ② AI 執行中——中間切到 Skill 檔，看它照哪些規則在做。
 ③ 成品拼貼和產出清單。
-（影片無法播放：改開本機版，或口頭帶過直接跳下一頁。）
+（按 →）公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 10 分鐘。
+製作時間少了【92%】，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）
+（影片無法播放：改開本機版，或口頭帶過直接公布答案。）
 錄製日期：【YYYY/MM/DD】。`,
 
-  // 9 · 成效 0:40
-  `【0:40】
-公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 10 分鐘。
-製作時間少了【92%】，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）`,
-
-  // 10 · Games 的 plugin 0:25
+  // 9 · Games 的 plugin 0:25
   `【0:25】
 做完自己的流程，我也去跟其他部門聊，發現大家都有很聰明的做法。
 先看 Games：他們版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」——一張設計一鍵轉成所有尺寸和語系，連各語系的文字排版都會依設定自動調整。`,
 
-  // 11 · Promotion 的 plugin 0:25
+  // 10 · Promotion 的 plugin 0:25
   `【0:25】
 再來是 Promotion：他們只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以也寫成 plugin——Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生，還會自動壓縮、匯出 ZIP。`,
 
-  // 12 · 三種做法比較 1:00
+  // 11 · 三種做法比較 1:00
   `【1:00】
 把三個部門放在一起看，需求不同，做法也不同：
 Games 版面固定、不用判斷，寫成 plugin 最快最穩，但版面一改就要改程式。
@@ -2782,7 +2697,7 @@ Games 版面固定、不用判斷，寫成 plugin 最快最穩，但版面一改
 （按 →）我們 Casino 語系多、文案長短不一，需要判斷，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
 
-  // 13 · 最終版模組 1:15
+  // 12 · 最終版模組 1:15
   `【1:15】
 所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
@@ -2790,7 +2705,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 14 · 規則先寫好 1:00
+  // 13 · 規則先寫好 1:00
   `【1:00】
 接下來的方向：把規則寫下來。左邊是 Skill 原文。
 （按 →）CasualTop 是 master，
@@ -2800,7 +2715,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
 而且規則不是一次寫完的——`,
 
-  // 15 · Skill 是活的 0:45
+  // 14 · Skill 是活的 0:45
   `【0:45】
 它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
@@ -2808,7 +2723,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
 （按 →）有人說，以後跟 AI 對話就能產所有 banner，不用寫 Skill 了。我覺得對一半：以後可能真的不用自己寫——跟 AI 說一次，它就會自己記進 Skill。但規則還是得存在：AI 再聰明，也不知道我們家的安全區、命名和字型規則；而且對話會結束，規則要留給下一個人、下一個模型用。所以不是不用寫，是改成 AI 幫我們寫，人負責判斷這條規則對不對。`,
 
-  // 16 · 模型測試 0:45
+  // 15 · 模型測試 0:45
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
 同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
@@ -2818,11 +2733,11 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
 之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
-  // 17 · 帶回家 0:30
+  // 16 · 帶回家 0:30
   `【0:30】
 這套 Banner Kit 團隊都能用：做好母版後，說「多語系」就能換好所有語系；resize 還在開發中，好了會自動更新給大家。三行指令裝好就能用。`,
 
-  // 18 · 總結 0:20 + Q&A 5:00
+  // 17 · 總結 0:20 + Q&A 5:00
   `【0:20】
 偷懶不是終點，是每次都問自己：還能更懶嗎？
 還記得開頭的三個原則嗎？重複的，交給工具；會錯的，交給流程；要判斷的，才交給人。
