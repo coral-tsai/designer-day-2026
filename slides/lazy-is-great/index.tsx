@@ -599,13 +599,22 @@ const Handmade: Page = () => (
           boxShadow: '0 40px 80px -48px rgba(16,18,22,0.55)',
         }}
       >
-        <img
-          className="lz-ken"
-          src={campaignBanners}
-          alt="過去一檔活動的全部 banner：所有版位 × 所有語系"
-          // 2000×684 shown whole; the band's #1E1E1E matches the Figma canvas behind it.
-          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
-        />
+        {/* 2000×684 shown whole (height-bound, centred); the band's #1E1E1E matches the
+            Figma canvas behind it. Banner content is blurred so product names and artwork
+            aren't legible; only the language header row stays sharp. */}
+        <div className="lz-ken" style={{ position: 'relative', height: '100%', aspectRatio: '2000 / 684', margin: '0 auto' }}>
+          <img
+            src={campaignBanners}
+            alt="過去一檔活動的全部 banner：所有版位 × 所有語系"
+            style={{ width: '100%', height: '100%', display: 'block', filter: 'blur(5px)' }}
+          />
+          <img
+            src={campaignBanners}
+            alt=""
+            aria-hidden
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block', clipPath: 'inset(0 0 93% 0)' }}
+          />
+        </div>
       </div>
     </R>
     <div style={{ display: 'grid', gridTemplateColumns: '500px 1fr 560px', gap: 32, height: 178, marginTop: 32 }}>
@@ -2278,7 +2287,7 @@ const ModelTest: Page = () => (
       <Step duration={280}>
         <div style={{ marginTop: 24, background: redSoft, borderRadius: 'var(--osd-radius)', padding: '18px 32px' }}>
           <div style={{ fontSize: 28, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
-          <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>博弈相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
+          <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>特定產業相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
             <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: '0.08em', padding: '4px 12px', borderRadius: 999, background: 'var(--osd-accent)', color: '#FFFFFF' }}>
               TIPS
