@@ -3,7 +3,6 @@ import {
   type Page,
   type SlideMeta,
   type SlideTransition,
-  MorphElement,
   Step,
   Steps,
   useIsActivePage,
@@ -69,7 +68,6 @@ const CSS = `
 @keyframes lzDash { to { stroke-dashoffset: -32; } }
 @keyframes lzSheen { 0%, 55% { transform: translateX(-160%) skewX(-18deg); opacity: 0; } 70% { opacity: 0.6; } 100% { transform: translateX(420%) skewX(-18deg); opacity: 0; } }
 @keyframes lzKen { from { transform: scale(1); } to { transform: scale(1.07); } }
-@keyframes lzFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes lzBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @keyframes lzGlow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 0 12px var(--glow, rgba(8,120,229,0.18)); } }
 .lz-grow { transform-origin: 50% 100%; }
@@ -86,7 +84,6 @@ const CSS = `
 [data-lz-active="true"] .lz-sheen::after { content: ''; position: absolute; top: -20%; left: 0; width: 30%; height: 140%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent); animation: lzSheen 3.2s ease-out 800ms infinite; pointer-events: none; }
 [data-lz-active="true"] .lz-ken { animation: lzKen 14s cubic-bezier(0.23, 1, 0.32, 1) 400ms both; transform-origin: 30% 30%; }
 [data-lz-active="true"] .lz-blink { animation: lzBlink 1.6s ease-in-out infinite; }
-[data-lz-active="true"] .lz-after-morph { animation: lzFade 360ms ease-out 720ms both; }
 [data-lz-active="true"] .lz-glow { animation: lzGlow 2.4s ease-in-out 600ms infinite; }
 /* Nothing inside a hidden step animates until it is revealed (no spent or spoiled motion). */
 [data-osd-step="pending"] *, [data-osd-step="pending"] *::after { animation: none !important; }
@@ -117,15 +114,6 @@ export const transition: SlideTransition = {
       { opacity: 1, transform: 'translateX(0)' },
     ],
   },
-};
-
-// Morph cut for the flow: page 4's six stage cards glide into the strip at the top
-// of pages 5–6, and the stages each lazy step took over change colour.
-const morphTransition: SlideTransition = {
-  duration: 280,
-  exit: { duration: 308, easing: 'cubic-bezier(0.4, 0, 1, 1)', keyframes: [{ opacity: 1 }, { opacity: 1 }] },
-  enter: { duration: 308, easing: 'cubic-bezier(0, 0, 0.2, 1)', keyframes: [{ opacity: 0 }, { opacity: 1 }] },
-  morph: { duration: 760, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' },
 };
 
 // ── Shared building blocks ──────────────────────────────────────────────────
@@ -748,7 +736,7 @@ const BeforeAfterLine = ({ tag, text, good }: { tag: string; text: string; good?
 
 const Evolution1: Page = () => (
   <LightPage chip="HOW · 第一次偷懶" title={<>把 Google Sheet 接進流程，<Hi>文案不再手貼</Hi></>}>
-    <MiniFlow owners={{ '05': 'sheet' }} tags={{ '05': 'Sheet' }} afterMorph />
+    <MiniFlow owners={{ '05': 'sheet' }} tags={{ '05': 'Sheet' }} />
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 64px 1fr', alignItems: 'stretch', height: 120 }}>
       <Steps>
         <R d={180} style={{ height: '100%' }}>
@@ -1586,12 +1574,9 @@ const ownerLook: Record<Owner, { bg: string; fg: string; border: string }> = {
   ai: { bg: '#0878E5', fg: '#FFFFFF', border: '#0878E5' },
 };
 
-// Only the card's box (background, border, radius) morphs — text would squash when a
-// tall card glides into a thin chip, so it rides a separate layer and simply fades.
 const FlowStage = ({ n, name, who, d }: { n: string; name: string; who: string; d: number }) => (
   <R d={d} style={{ height: '100%' }}>
     <div style={{ position: 'relative', height: '100%' }}>
-      <MorphElement id={`flow-${n}`}>
         <div
           style={{
             position: 'absolute',
@@ -1602,8 +1587,7 @@ const FlowStage = ({ n, name, who, d }: { n: string; name: string; who: string; 
             border: `2px solid ${line}`,
           }}
         />
-      </MorphElement>
-      <div
+            <div
         style={{
           position: 'relative',
           height: '100%',
@@ -1625,8 +1609,7 @@ const FlowStage = ({ n, name, who, d }: { n: string; name: string; who: string; 
   </R>
 );
 
-// Compact version of the same flow for the two "lazy" pages. Each chip pairs with
-// page 4's card by id, so the cut morphs the cards down into this strip.
+// Compact version of the same flow for the two "lazy" pages.
 const flowSteps: [string, string][] = [
   ['01', '收需求'],
   ['02', '主視覺'],
@@ -1638,11 +1621,9 @@ const flowSteps: [string, string][] = [
 const MiniFlow = ({
   owners,
   tags,
-  afterMorph,
 }: {
   owners: Partial<Record<string, Owner>>;
   tags: Partial<Record<string, string>>;
-  afterMorph?: boolean; // labels wait for the boxes to land (page 5, coming from page 4's cards)
 }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
     {flowSteps.map(([n, name], i) => {
@@ -1650,12 +1631,11 @@ const MiniFlow = ({
       return (
         <div key={n} style={{ display: 'contents' }}>
           {i > 0 && (
-            <span className={afterMorph ? 'lz-after-morph' : undefined} style={{ fontSize: 20, color: muted }}>
+            <span style={{ fontSize: 20, color: muted }}>
               →
             </span>
           )}
           <div style={{ position: 'relative', flex: 1, height: 52 }}>
-            <MorphElement id={`flow-${n}`}>
               <div
                 style={{
                   position: 'absolute',
@@ -1666,9 +1646,7 @@ const MiniFlow = ({
                   border: `2px solid ${k.border}`,
                 }}
               />
-            </MorphElement>
-            <div
-              className={afterMorph ? 'lz-after-morph' : undefined}
+                        <div
               style={{
                 position: 'relative',
                 height: '100%',
@@ -1791,7 +1769,6 @@ const FullFlow: Page = () => (
     </Steps>
   </LightPage>
 );
-FullFlow.transition = morphTransition;
 
 // ── TEAM opener — bridges the model test into the other teams' tools ────────
 const TeamIntroCard = ({
@@ -2574,9 +2551,6 @@ const Closing: Page = () => (
     </R>
   </div>
 );
-
-Evolution1.transition = morphTransition;
-Evolution2.transition = morphTransition;
 
 export const meta: SlideMeta = {
   title: '人因懶惰而偉大',
