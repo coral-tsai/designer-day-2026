@@ -69,6 +69,7 @@ const CSS = `
 @keyframes lzSheen { 0%, 55% { transform: translateX(-160%) skewX(-18deg); opacity: 0; } 70% { opacity: 0.6; } 100% { transform: translateX(420%) skewX(-18deg); opacity: 0; } }
 @keyframes lzKen { from { transform: scale(1); } to { transform: scale(1.07); } }
 @keyframes lzBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@keyframes lzGlow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 0 12px var(--glow, rgba(8,120,229,0.18)); } }
 .lz-grow { transform-origin: 50% 100%; }
 /* A revealed <Step> rises in like the rest of the page. */
 [data-lz-active="true"] [data-osd-step="revealed"] > * { animation: lzRise 620ms ${EXPO} both; }
@@ -83,6 +84,7 @@ const CSS = `
 [data-lz-active="true"] .lz-sheen::after { content: ''; position: absolute; top: -20%; left: 0; width: 30%; height: 140%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent); animation: lzSheen 3.2s ease-out 800ms infinite; pointer-events: none; }
 [data-lz-active="true"] .lz-ken { animation: lzKen 14s cubic-bezier(0.23, 1, 0.32, 1) 400ms both; transform-origin: 30% 30%; }
 [data-lz-active="true"] .lz-blink { animation: lzBlink 1.6s ease-in-out infinite; }
+[data-lz-active="true"] .lz-glow { animation: lzGlow 2.4s ease-in-out 600ms infinite; }
 /* Nothing inside a hidden step animates until it is revealed (no spent or spoiled motion). */
 [data-osd-step="pending"] *, [data-osd-step="pending"] *::after { animation: none !important; }
 @media (prefers-reduced-motion: reduce) {
@@ -1680,8 +1682,43 @@ const Bracket = ({ col, label, ai, d }: { col: string; label: ReactNode; ai?: bo
   </R>
 );
 
+// Marks which stages each "lazy" step took over: a label above and a pulsing
+// frame around the stage cards. Lives in an absolute grid that mirrors flowCols.
+const LazyMark = ({ col, row, label, color, glow, inset }: { col: string; row: string; label: string; color: string; glow: string; inset: number }) => (
+  <div
+    style={{
+      position: 'absolute',
+      inset: 0,
+      display: 'grid',
+      gridTemplateColumns: flowCols,
+      gridTemplateRows: '46px 46px 1fr',
+      pointerEvents: 'none',
+    }}
+  >
+    <div style={{ gridColumn: col, gridRow: row, justifySelf: 'center', alignSelf: 'center' }}>
+      <span style={{ fontSize: 20, fontWeight: 800, padding: '5px 16px', borderRadius: 999, background: color, color: '#FFFFFF', whiteSpace: 'nowrap' }}>
+        {label}
+      </span>
+    </div>
+    <div
+      className="lz-glow"
+      style={
+        {
+          gridColumn: col,
+          gridRow: '3',
+          margin: -inset,
+          border: `3px dashed ${color}`,
+          borderRadius: 'calc(var(--osd-radius) + 8px)',
+          ['--glow' as string]: glow,
+        } as CSSProperties
+      }
+    />
+  </div>
+);
+
 const FullFlow: Page = () => (
   <LightPage chip="HOW · 全流程" title={<>從需求到交付，<Hi>AI 幫到哪一段</Hi></>}>
+    <div style={{ position: 'relative', paddingTop: 92 }}>
     <div style={{ display: 'grid', gridTemplateColumns: flowCols, alignItems: 'center', height: 300 }}>
       <FlowStage d={140} n="01" name="收需求" who="PO" />
       <FlowGap />
@@ -1695,6 +1732,15 @@ const FullFlow: Page = () => (
       <FlowGap />
       <FlowStage d={440} n="06" name="檢查＋匯出" who="AI → writer 校對" ai />
     </div>
+    <Steps>
+      <Step duration={280}>
+        <LazyMark col="9" row="2" label="① 第一次偷懶：Sheet 帶入文案" color={purple} glow="rgba(111,99,217,0.2)" inset={6} />
+      </Step>
+      <Step duration={280}>
+        <LazyMark col="9 / 12" row="1" label="② 第二次偷懶：Skill＋AI 接手到匯出" color="#0878E5" glow="rgba(8,120,229,0.18)" inset={16} />
+      </Step>
+    </Steps>
+    </div>
     <div style={{ display: 'grid', gridTemplateColumns: flowCols, marginTop: 8 }}>
       <Bracket d={540} col="1 / 8" label="人：需要判斷的" />
       <Bracket d={620} col="9 / 12" label="AI：重複生產的" ai />
@@ -1703,8 +1749,8 @@ const FullFlow: Page = () => (
       <Step duration={280}>
         <div
           style={{
-            marginTop: 56,
-            padding: '22px 40px',
+            marginTop: 32,
+            padding: '20px 40px',
             background: surface,
             borderRadius: 'var(--osd-radius)',
             ...heavy,
@@ -2551,6 +2597,8 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 先把現在的整條流程攤開：收需求、主視覺（主視覺先 review 過）、各版位母版、翻譯斷行，到多語系、檢查匯出，一共六段。
 白色是人做的，藍色是 AI 做的。第三段各版位母版，目前還是設計師做——resize 還在開發中。
 所以前四段需要判斷的，留給人；後兩段重複生產的，交給 AI。
+（按 →）我偷懶了兩次：第一次，用 Google Sheet 把文案帶進多語系；
+（按 →）第二次，寫成 Skill，從多語系、幣別一路到檢查、匯出都交給 AI。等一下一個一個看。
 （按 →）重複的交給 AI，要判斷的留給人。至於省了多少時間，看完 Demo 再公布。`,
 
   // 5 · 第一次偷懶 1:00
