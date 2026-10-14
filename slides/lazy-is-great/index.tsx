@@ -1882,10 +1882,10 @@ const CrossTeam: Page = () => (
       <Steps>
         <Step duration={280}>
           <TeamCard icon="sheet" name="Promotion">
-            <CompareRow label="做法">不用做全版位，只要另外出給 MKT 的多語系和尺寸</CompareRow>
-            <CompareRow label="靠什麼省力">範圍小、規則清楚，剛好適合寫成 plugin</CompareRow>
-            <CompareRow label="優點">針對需求、不多做，工具簡單好維護</CompareRow>
-            <CompareRow label="限制">需求超出這些尺寸時，plugin 可以再擴充</CompareRow>
+            <CompareRow label="做法">只出 MKT 用的 Social Banner</CompareRow>
+            <CompareRow label="靠什麼省力">Excel 填文案，Figma plugin 一鍵產生全部尺寸與語系</CompareRow>
+            <CompareRow label="優點">可調顏色版面，自動壓縮、匯出 ZIP</CompareRow>
+            <CompareRow label="限制">綁定這組範本，新版型要再擴充</CompareRow>
           </TeamCard>
         </Step>
         <Step duration={280}>
@@ -2275,7 +2275,7 @@ const Cell = ({ v }: { v: string }) => (
 const ModelTest: Page = () => (
   <LightPage chip="NEXT · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
     <R d={160}>
-      <div style={{ ...card, padding: '12px 40px', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '1680px', height: '467.04px', translate: '0px 0px' }}>
+      <div style={{ ...card, padding: '12px 40px', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '1680px', height: '476.98px', translate: '0px 0px' }}>
         <div
           style={{
             display: 'grid',
@@ -2643,7 +2643,7 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
   `【1:30】
 我也看了其他部門，大家需求不同，做法都很聰明。
 Games 版面固定、只換圖，規則不用判斷，很適合寫成 Figma plugin，快又穩定。
-（按 →）Promotion 只需要出給 MKT 的多語系和尺寸，範圍小、規則清楚，也剛好適合寫 plugin。
+（按 →）Promotion 只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以寫成 Figma plugin：Excel 填好文案、選底圖，一鍵產生全部尺寸和語系，還會自動壓縮、匯出 ZIP。
 （按 →）我們 Casino 語系多、文案長短不一，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
 
