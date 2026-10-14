@@ -600,20 +600,39 @@ const Handmade: Page = () => (
         }}
       >
         {/* 2000×684 shown whole (height-bound, centred); the band's #1E1E1E matches the
-            Figma canvas behind it. Banner content is blurred so product names and artwork
-            aren't legible; only the language header row stays sharp. */}
+            Figma canvas behind it. Thin blurred strips cover the 「BET & WIN」 lines;
+            bands are in the screenshot's own pixel rows (y0–y1 of 684). */}
         <div className="lz-ken" style={{ position: 'relative', height: '100%', aspectRatio: '2000 / 684', margin: '0 auto' }}>
           <img
             src={campaignBanners}
             alt="過去一檔活動的全部 banner：所有版位 × 所有語系"
-            style={{ width: '100%', height: '100%', display: 'block', filter: 'blur(5px)' }}
+            style={{ width: '100%', height: '100%', display: 'block' }}
           />
-          <img
-            src={campaignBanners}
-            alt=""
-            aria-hidden
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block', clipPath: 'inset(0 0 93% 0)' }}
-          />
+          {[
+            [0, 68, 90, 86],
+            [0, 252, 2000, 274],
+            [0, 392, 2000, 410],
+            [0, 453, 2000, 469],
+            [0, 495, 2000, 510],
+            [0, 536, 2000, 550],
+            [0, 566, 2000, 580],
+            [0, 611, 2000, 626],
+            [0, 645, 2000, 659],
+          ].map(([x0, y0, x1, y1]) => (
+            <div
+              key={y0}
+              style={{
+                position: 'absolute',
+                left: `${(x0 / 2000) * 100}%`,
+                top: `${(y0 / 684) * 100}%`,
+                width: `${((x1 - x0) / 2000) * 100}%`,
+                height: `${((y1 - y0) / 684) * 100}%`,
+                backdropFilter: 'blur(5px)',
+                WebkitBackdropFilter: 'blur(5px)',
+                pointerEvents: 'none',
+              }}
+            />
+          ))}
         </div>
       </div>
     </R>
@@ -1651,7 +1670,7 @@ const Impact: Page = () => (
 
 // ── 4 · End-to-end flow — where AI helps ─────────────────────────────────────
 // 11-column grid: 6 stages with 5 arrow gutters, so the brackets below line up.
-const flowCols = '1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr 36px 1fr';
+const flowCols = '1fr 36px 1fr 92px 1fr 36px 1fr 36px 1fr 36px 1fr';
 
 const FlowStage = ({ n, name, who, ai, note, d }: { n: string; name: string; who: string; ai?: boolean; note?: string; d: number }) => (
   <R d={d} style={{ height: '100%' }}>
@@ -1693,20 +1712,15 @@ const FlowStage = ({ n, name, who, ai, note, d }: { n: string; name: string; who
   </R>
 );
 
-// `note` marks a hand-off between stages (e.g. a review) with a small tag above the arrow.
+// `note` marks a hand-off between stages (e.g. a review) with a small tag sitting on the arrow.
 const FlowGap = ({ note }: { note?: string }) => (
-  <div style={{ position: 'relative', alignSelf: 'stretch', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, color: muted }}>
-    →
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, fontSize: 28, color: muted }}>
     {note && (
       <span
         style={{
-          position: 'absolute',
-          top: -44,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          fontSize: 18,
+          fontSize: 17,
           fontWeight: 800,
-          padding: '3px 12px',
+          padding: '2px 10px',
           borderRadius: 999,
           border: `2px solid ${line}`,
           background: '#FFFFFF',
@@ -1717,6 +1731,7 @@ const FlowGap = ({ note }: { note?: string }) => (
         {note}
       </span>
     )}
+    →
   </div>
 );
 
