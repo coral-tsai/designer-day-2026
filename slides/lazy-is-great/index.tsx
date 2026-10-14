@@ -1552,7 +1552,7 @@ const Demo: Page = () => (
             border: '1px solid rgba(79,163,247,0.35)',
           }}
         >
-          <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700, whiteSpace: 'nowrap' }}>實際耗時</span>
+          <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700, whiteSpace: 'nowrap' }}>130 張 · 實際耗時</span>
           <span style={{ ...heavy, fontSize: 36, color: 'var(--lz-hi, var(--osd-accent))', whiteSpace: 'nowrap' }}>約 7 分鐘</span>
         </div>
       </R>
@@ -1582,9 +1582,9 @@ const Demo: Page = () => (
           <span style={{ fontSize: 28, color: `var(--lz-muted, ${muted})` }}>→</span>
           <ImpactPill label="Sheet 帶入" value="45" color="#A79CF5" />
           <span style={{ fontSize: 28, color: `var(--lz-muted, ${muted})` }}>→</span>
-          <ImpactPill label="交給 AI" value="10" color="var(--lz-hi, var(--osd-accent))" hot />
+          <ImpactPill label="交給 AI" value="7" color="var(--lz-hi, var(--osd-accent))" hot />
           <span style={{ marginLeft: 18, fontSize: 24, color: `var(--lz-muted, ${muted})`, fontWeight: 700, whiteSpace: 'nowrap' }}>
-            每套製作時間 <b style={{ ...heavy, fontSize: 34, color: 'var(--lz-hi, var(--osd-accent))' }}>↓【92%】</b>
+            每套製作時間 <b style={{ ...heavy, fontSize: 34, color: 'var(--lz-hi, var(--osd-accent))' }}>↓ 94%</b>
           </span>
         </div>
       </Step>
@@ -2316,7 +2316,7 @@ const Cell = ({ v }: { v: string }) => (
 );
 
 const ModelTest: Page = () => (
-  <LightPage chip="NEXT · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
+  <LightPage chip="PROOF · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
     <R d={160}>
       <div style={{ ...card, padding: '12px 40px', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '1680px', height: '476.98px', translate: '0px 0px' }}>
         <div
@@ -2605,13 +2605,13 @@ export default [
   Evolution2,
   SkillInside,
   Demo,
+  ModelTest,
   GamesPlugin,
   PromoPlugin,
   CrossTeam,
   Modules,
   RulePage,
   Next,
-  ModelTest,
   TakeHome,
   Closing,
 ] satisfies Page[];
@@ -2672,24 +2672,35 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 
   // 8 · Demo＋成效 3:00
   `【3:00】影片已 3 倍速（約 2 分 24 秒）、靜音、現場口述；實際耗時約 7 分鐘。
+這次 Demo 的活動是 13 個版位 × 10 個語系，共 130 張（一般活動是 12 個語系）。
 ① 我說一句話。
 ② AI 執行中——中間切到 Skill 檔，看它照哪些規則在做。
 ③ 成品拼貼和產出清單。
-（按 →）公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 10 分鐘。
-製作時間少了【92%】，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）
+（按 →）公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 7 分鐘——就是剛剛影片那一次。
+製作時間少了約 94%，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）
 （影片無法播放：改開本機版，或口頭帶過直接公布答案。）
 錄製日期：【YYYY/MM/DD】。`,
 
-  // 9 · Games 的 plugin 0:25
+  // 9 · 模型測試 0:45
+  `【0:45】
+常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
+同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
+兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
+所以選模型看任務：要判斷的交給強模型，大量重複的交給輕量模型——跟開頭的原則一樣。所以模型要看任務挑（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
+（按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
+小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
+之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
+
+  // 10 · Games 的 plugin 0:25
   `【0:25】
 做完自己的流程，我也去跟其他部門聊，發現大家都有很聰明的做法。
 先看 Games：他們版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」——一張設計一鍵轉成所有尺寸和語系，連各語系的文字排版都會依設定自動調整。`,
 
-  // 10 · Promotion 的 plugin 0:25
+  // 11 · Promotion 的 plugin 0:25
   `【0:25】
 再來是 Promotion：他們只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以也寫成 plugin——Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生，還會自動壓縮、匯出 ZIP。`,
 
-  // 11 · 三種做法比較 1:00
+  // 12 · 三種做法比較 1:00
   `【1:00】
 把三個部門放在一起看，需求不同，做法也不同：
 Games 版面固定、不用判斷，寫成 plugin 最快最穩，但版面一改就要改程式。
@@ -2697,7 +2708,7 @@ Games 版面固定、不用判斷，寫成 plugin 最快最穩，但版面一改
 （按 →）我們 Casino 語系多、文案長短不一，需要判斷，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
 
-  // 12 · 最終版模組 1:15
+  // 13 · 最終版模組 1:15
   `【1:15】
 所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
@@ -2705,7 +2716,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 13 · 規則先寫好 1:00
+  // 14 · 規則先寫好 1:00
   `【1:00】
 接下來的方向：把規則寫下來。左邊是 Skill 原文。
 （按 →）CasualTop 是 master，
@@ -2715,23 +2726,13 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
 而且規則不是一次寫完的——`,
 
-  // 14 · Skill 是活的 0:45
+  // 15 · Skill 是活的 0:45
   `【0:45】
 它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
 （按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中——這部分可以參考 Games 的 Banner Mill，它已經能自動調整各語系的文字排版；
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
 （按 →）有人說，以後跟 AI 對話就能產所有 banner，不用寫 Skill 了。我覺得對一半：以後可能真的不用自己寫——跟 AI 說一次，它就會自己記進 Skill。但規則還是得存在：AI 再聰明，也不知道我們家的安全區、命名和字型規則；而且對話會結束，規則要留給下一個人、下一個模型用。所以不是不用寫，是改成 AI 幫我們寫，人負責判斷這條規則對不對。`,
-
-  // 15 · 模型測試 0:45
-  `【0:45】
-常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
-同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
-兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
-所以選模型看任務：要判斷的交給強模型，大量重複的交給輕量模型——跟開頭的原則一樣。所以模型要看任務挑（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
-（按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
-小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
-之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
   // 16 · 帶回家 0:30
   `【0:30】
