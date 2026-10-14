@@ -2218,7 +2218,7 @@ const ModelTest: Page = () => (
               <span style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
               <span style={{ fontSize: 20, color: muted }}>{g.vendor}</span>
               {g.flag && (
-                <span style={{ fontSize: 20, fontWeight: 800, padding: '4px 14px', borderRadius: 999, background: redSoft, color: red, border: `2px solid ${red}` }}>
+                <span style={{ fontSize: 20, fontWeight: 800, color: red }}>
                   {g.flag}
                 </span>
               )}
