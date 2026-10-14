@@ -1374,19 +1374,7 @@ const RulePage: Page = () => {
               <Step duration={260}>
                 <RuleLine>安全區：寬 829 px、水平置中——所有內容都留在這條帶狀範圍內。</RuleLine>
                 <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: KT.x,
-                      top: KT.y - 46,
-                      fontSize: 22,
-                      fontWeight: 800,
-                      color: 'var(--osd-text)',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    resize 開發中 · <Hi>KratosTop</Hi> 的規則先寫好了
-                  </div>
+                  
                   <img
                     src={kratosTop}
                     alt="KratosTop 1178×100 banner"
@@ -1522,7 +1510,7 @@ const Demo: Page = () => (
             border: '1px solid rgba(79,163,247,0.35)',
           }}
         >
-          <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700, whiteSpace: 'nowrap' }}>130 張 · 實際耗時</span>
+          <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700, whiteSpace: 'nowrap' }}>130 張（10 語系）· 實際耗時</span>
           <span style={{ ...heavy, fontSize: 36, color: 'var(--lz-hi, var(--osd-accent))', whiteSpace: 'nowrap' }}>約 7 分鐘</span>
         </div>
       </R>
@@ -1905,10 +1893,10 @@ const GamesPlugin: Page = () => (
     <ShotInfo
       tool="Figma plugin · Banner Mill"
       rows={[
-        ['做法', '固定範本，每次只換背景圖和前景圖'],
-        ['靠什麼省力', '一鍵把一張設計轉成所有尺寸、語系'],
-        ['優點', '快、穩定，各語系文字排版也自動調整'],
-        ['限制', '版面一改就要改程式，需要有人維護'],
+        ['做法', '固定範本，只換背景與前景圖'],
+        ['靠什麼省力', '一鍵轉成所有尺寸、語系'],
+        ['優點', '快又穩，文字排版自動調整'],
+        ['限制', '版面一改就要改程式'],
       ]}
     />
   </LightPage>
@@ -1946,9 +1934,9 @@ const PromoPlugin: Page = () => (
       tool="Figma plugin · Social Banner 產圖工具"
       rows={[
         ['做法', '只出 MKT 用的 Social Banner'],
-        ['靠什麼省力', 'Excel 填文案，一鍵產生全部尺寸與語系'],
-        ['優點', '可調顏色版面，自動壓縮、匯出 ZIP'],
-        ['限制', '綁定這組範本，新版型要再擴充'],
+        ['靠什麼省力', 'Excel 填文案，一鍵全部產生'],
+        ['優點', '自動壓縮、匯出 ZIP'],
+        ['限制', '新版型要再擴充 plugin'],
       ]}
     />
   </LightPage>
@@ -2151,8 +2139,8 @@ const Next: Page = () => (
   <LightPage chip="NEXT · Skill 是活的" title={<>Skill <Hi>是活的</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '520px 1fr', gap: 48, height: 560 }}>
       <R d={160} style={{ height: '100%' }}>
-        <div style={{ height: '100%', background: surface, borderRadius: 'var(--osd-radius)', padding: '40px 44px', boxSizing: 'border-box', position: 'relative' }}>
-          <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 28 }}>越用越聰明</div>
+        <div style={{ height: '100%', background: surface, borderRadius: 'var(--osd-radius)', padding: '32px 40px', boxSizing: 'border-box', position: 'relative' }}>
+          <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 18 }}>越用越聰明</div>
           <div style={{ position: 'relative', paddingRight: 64 }}>
             <LoopNode bg={redSoft} fg={red} outline={red}>
               出錯
@@ -2177,12 +2165,12 @@ const Next: Page = () => (
           </div>
           <div
             style={{
-              marginTop: 32,
+              marginTop: 20,
               background: '#FFFFFF',
               border: `2px solid ${line}`,
               borderRadius: 14,
-              padding: '18px 22px',
-              fontSize: 24,
+              padding: '14px 20px',
+              fontSize: 22,
               lineHeight: 1.5,
               color: muted,
             }}
