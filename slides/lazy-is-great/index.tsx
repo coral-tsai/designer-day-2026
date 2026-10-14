@@ -1718,135 +1718,6 @@ const FullFlow: Page = () => (
   </LightPage>
 );
 
-// ── 10 · How each team does it ─────────────────────────────────────────────────
-const CompareRow = ({ label, children, light }: { label: string; children: ReactNode; light?: boolean }) => (
-  <div style={{ marginTop: 18 }}>
-    <div
-      style={{
-        fontSize: 19,
-        fontWeight: 800,
-        letterSpacing: '0.1em',
-        color: light ? 'rgba(255,255,255,0.7)' : 'var(--osd-accent)',
-      }}
-    >
-      {label}
-    </div>
-    <div style={{ fontSize: 24, lineHeight: 1.45, marginTop: 4, color: light ? '#FFFFFF' : 'var(--osd-text)' }}>{children}</div>
-  </div>
-);
-
-const TeamCard = ({
-  icon,
-  name,
-  tag,
-  hot,
-  children,
-}: {
-  icon: IconName;
-  name: string;
-  tag?: string;
-  hot?: boolean;
-  children: ReactNode;
-}) => (
-  <div
-    style={{
-      ...card,
-      height: '100%',
-      padding: '26px 32px',
-      background: hot ? 'var(--osd-accent)' : '#FFFFFF',
-      border: hot ? '2px solid transparent' : `2px solid ${line}`,
-      boxShadow: hot ? '0 28px 56px -32px rgba(8,120,229,0.6)' : 'none',
-      color: hot ? '#FFFFFF' : 'var(--osd-text)',
-    }}
-  >
-    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-      {hot ? (
-        <div
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
-            background: 'rgba(255,255,255,0.16)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Icon name={icon} size={28} />
-        </div>
-      ) : (
-        <IconTile name={icon} size={52} />
-      )}
-      <div style={{ ...heavy, fontSize: 34, flex: 1, whiteSpace: 'nowrap' }}>{name}</div>
-      {tag && (<span
-        style={{
-          fontSize: 18,
-          fontWeight: 800,
-          padding: '5px 12px',
-          borderRadius: 999,
-          background: hot ? 'rgba(255,255,255,0.18)' : blueSoft,
-          color: hot ? '#FFFFFF' : 'var(--osd-accent)',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {tag}
-      </span>)}
-    </div>
-    {children}
-  </div>
-);
-
-const CrossTeam: Page = () => (
-  <LightPage chip="TEAM · 三種做法比較" title={<>三種做法，<Hi>各有適合的場景</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, height: 528 }}>
-      <R d={160} style={{ height: '100%' }}>
-        <TeamCard icon="doc" name="Games">
-          <CompareRow label="做法">固定範本，每次只換背景圖和前景圖</CompareRow>
-          <CompareRow label="靠什麼省力">Figma plugin 一鍵把一張設計轉成所有尺寸、語系</CompareRow>
-          <CompareRow label="優點">快、穩定，各語系文字排版也自動調整</CompareRow>
-          <CompareRow label="限制">版面一改就要改程式，需要有人維護 plugin</CompareRow>
-        </TeamCard>
-      </R>
-      <Steps>
-        <Step duration={280}>
-          <TeamCard icon="sheet" name="Promotion">
-            <CompareRow label="做法">只出 MKT 用的 Social Banner</CompareRow>
-            <CompareRow label="靠什麼省力">Excel 填文案，Figma plugin 一鍵產生全部尺寸與語系</CompareRow>
-            <CompareRow label="優點">可調顏色版面，自動壓縮、匯出 ZIP</CompareRow>
-            <CompareRow label="限制">綁定這組範本，新版型要再擴充</CompareRow>
-          </TeamCard>
-        </Step>
-        <Step duration={280}>
-          <TeamCard icon="spark" name="Casino" hot>
-            <CompareRow label="做法" light>把做法寫成 Skill，一句話交給 AI</CompareRow>
-            <CompareRow label="靠什麼省力" light>語系多、文案長短不一，AI 照 Skill 換字、對位、檢查</CompareRow>
-            <CompareRow label="優點" light>規則用文字寫就好，設計師、content writer 都能一起補</CompareRow>
-            <CompareRow label="限制" light>規則還在補，成品仍需要人最後檢查</CompareRow>
-          </TeamCard>
-        </Step>
-      </Steps>
-    </div>
-    <Steps>
-      <Step duration={280}>
-        <div
-          style={{
-            marginTop: 28,
-            padding: '20px 40px',
-            background: surface,
-            borderRadius: 'var(--osd-radius)',
-            ...heavy,
-            fontSize: 36,
-            lineHeight: 1.3,
-            textAlign: 'center',
-          }}
-        >
-          有了 AI，規則用說的就能寫——<Hi>每個人都能貢獻自己的好做法</Hi>
-        </div>
-      </Step>
-    </Steps>
-  </LightPage>
-);
-
 // ── TEAM opener — bridges the model test into the other teams' tools ────────
 const TeamIntroCard = ({
   icon,
@@ -1949,13 +1820,21 @@ const ShotRow = ({ shots, height }: { shots: Shot[]; height: number }) => (
   </div>
 );
 
-const ShotCaption = ({ tool, children }: { tool: string; children: ReactNode }) => (
+// The four comparison rows (formerly their own page), under each team's screenshots.
+const ShotInfo = ({ tool, rows }: { tool: string; rows: [string, string][] }) => (
   <R d={520}>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 22, fontSize: 26, color: ink2 }}>
+    <div style={{ marginTop: 22, background: surface, borderRadius: 'var(--osd-radius)', padding: '18px 32px 22px' }}>
       <span style={{ fontSize: 20, fontWeight: 800, padding: '4px 14px', borderRadius: 999, background: blueSoft, color: 'var(--osd-accent)', whiteSpace: 'nowrap' }}>
         {tool}
       </span>
-      <span>{children}</span>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, marginTop: 14 }}>
+        {rows.map(([label, text]) => (
+          <div key={label}>
+            <div style={{ fontSize: 18, fontWeight: 800, color: muted, letterSpacing: '0.06em' }}>{label}</div>
+            <div style={{ fontSize: 24, lineHeight: 1.45, marginTop: 6 }}>{text}</div>
+          </div>
+        ))}
+      </div>
     </div>
   </R>
 );
@@ -1963,7 +1842,7 @@ const ShotCaption = ({ tool, children }: { tool: string; children: ReactNode }) 
 const GamesPlugin: Page = () => (
   <LightPage chip="TEAM · 跨部門交流 · Games" title={<>Games：<Hi>一張設計，一鍵轉成所有尺寸</Hi></>}>
     <ShotRow
-      height={560}
+      height={400}
       shots={[
         { src: gamesCover, w: 1040, h: 1186, alt: 'Banner Mill plugin 介紹頁' },
         { src: games1, w: 778, h: 1258, alt: 'Banner Auto Layout：選擇要排版的語系' },
@@ -1971,14 +1850,22 @@ const GamesPlugin: Page = () => (
         { src: games3, w: 778, h: 1256, alt: '執行日誌' },
       ]}
     />
-    <ShotCaption tool="Figma plugin · Banner Mill">版面固定、只換圖——連各語系的文字排版都自動調整</ShotCaption>
+    <ShotInfo
+      tool="Figma plugin · Banner Mill"
+      rows={[
+        ['做法', '固定範本，每次只換背景圖和前景圖'],
+        ['靠什麼省力', '一鍵把一張設計轉成所有尺寸、語系'],
+        ['優點', '快、穩定，各語系文字排版也自動調整'],
+        ['限制', '版面一改就要改程式，需要有人維護'],
+      ]}
+    />
   </LightPage>
 );
 
 const PromoPlugin: Page = () => (
   <LightPage chip="TEAM · 跨部門交流 · Promotion" title={<>Promotion：<Hi>Excel 填文案，一鍵產生 Social Banner</Hi></>}>
     <ShotRow
-      height={560}
+      height={400}
       shots={[
         { src: promoCover, w: 1036, h: 1180, alt: 'Social Banner 產圖工具 plugin 介紹頁' },
         {
@@ -2003,7 +1890,15 @@ const PromoPlugin: Page = () => (
         },
       ]}
     />
-    <ShotCaption tool="Figma plugin · Social Banner 產圖工具">只出 MKT 要的尺寸——調好顏色版面，自動壓縮、匯出 ZIP</ShotCaption>
+    <ShotInfo
+      tool="Figma plugin · Social Banner 產圖工具"
+      rows={[
+        ['做法', '只出 MKT 用的 Social Banner'],
+        ['靠什麼省力', 'Excel 填文案，一鍵產生全部尺寸與語系'],
+        ['優點', '可調顏色版面，自動壓縮、匯出 ZIP'],
+        ['限制', '綁定這組範本，新版型要再擴充'],
+      ]}
+    />
   </LightPage>
 );
 
@@ -2672,7 +2567,6 @@ export default [
   TeamIntro,
   GamesPlugin,
   PromoPlugin,
-  CrossTeam,
   Modules,
   Next,
   TakeHome,
@@ -2771,29 +2665,23 @@ Games 和 Promotion 寫成 Figma plugin，我們 Casino 用 AI 照 Skill 做。�
 
   // 12 · Games 的 plugin 0:25
   `【0:25】
-先看 Games：他們版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」——一張設計一鍵轉成所有尺寸和語系，連各語系的文字排版都會依設定自動調整。`,
+先看 Games：他們版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」——一張設計一鍵轉成所有尺寸和語系，連各語系的文字排版都會依設定自動調整。
+（指下方）優點是快、穩定；限制是版面一改就要改程式，需要有人維護。`,
 
   // 13 · Promotion 的 plugin 0:25
   `【0:25】
-再來是 Promotion：他們只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以也寫成 plugin——Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生，還會自動壓縮、匯出 ZIP。`,
+再來是 Promotion：他們只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以也寫成 plugin——Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生，還會自動壓縮、匯出 ZIP。
+範圍小、規則清楚，plugin 剛好夠用；限制是綁定這組範本，新版型要再擴充。`,
 
-  // 14 · 三種做法比較 1:00
-  `【1:00】
-把三個部門放在一起看，需求不同，做法也不同：
-Games 版面固定、不用判斷，寫成 plugin 最快最穩，但版面一改就要改程式。
-（按 →）Promotion 範圍小、規則清楚，plugin 剛好夠用，新版型再擴充。
-（按 →）我們 Casino 語系多、文案長短不一，需要判斷，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
-（按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
-
-  // 15 · 最終版模組 1:15
+  // 14 · 最終版模組 1:15
   `【1:15】
-所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
+大家需求不同，各有適合的做法；有了 AI，規則用說的就能寫，每個人都能貢獻好做法。所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
 A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 16 · Skill 是活的 0:45
+  // 15 · Skill 是活的 0:45
   `【0:45】
 模組合好了，Skill 也要繼續長大——它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
@@ -2801,11 +2689,11 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
 （按 →）有人說，以後跟 AI 對話就能產所有 banner，不用寫 Skill 了。我覺得對一半：以後可能真的不用自己寫——跟 AI 說一次，它就會自己記進 Skill。但規則還是得存在：AI 再聰明，也不知道我們家的安全區、命名和字型規則；而且對話會結束，規則要留給下一個人、下一個模型用。所以不是不用寫，是改成 AI 幫我們寫，人負責判斷這條規則對不對。`,
 
-  // 17 · 帶回家 0:30
+  // 16 · 帶回家 0:30
   `【0:30】
 這套 Banner Kit 團隊都能用：做好母版後，說「多語系」就能換好所有語系；resize 還在開發中，好了會自動更新給大家。三行指令裝好就能用。`,
 
-  // 18 · 總結 0:20 + Q&A 5:00
+  // 17 · 總結 0:20 + Q&A 5:00
   `【0:20】
 偷懶不是終點，是每次都問自己：還能更懶嗎？
 還記得開頭的三個原則嗎？重複的，交給工具；會錯的，交給流程；要判斷的，才交給人。
