@@ -1188,6 +1188,29 @@ const box = (x0: number, y0: number, x1: number, y1: number, b = BANNER) => ({
   height: (y1 - y0) * b.s,
 });
 
+// Blurs a region of a banner (brand logo, product name, playing cards) so the
+// page shows the layout rules without the product content.
+const Blur = ({ at }: { at: CSSProperties }) => (
+  <div
+    style={{
+      position: 'absolute',
+      ...at,
+      borderRadius: 8,
+      backdropFilter: 'blur(14px)',
+      WebkitBackdropFilter: 'blur(14px)',
+      background: 'rgba(16,18,22,0.25)',
+      pointerEvents: 'none',
+    }}
+  />
+);
+// Same, but in the banner's own pixel space (relative to the image's top-left).
+const localBox = (x0: number, y0: number, x1: number, y1: number, s: number): CSSProperties => ({
+  left: x0 * s,
+  top: y0 * s,
+  width: (x1 - x0) * s,
+  height: (y1 - y0) * s,
+});
+
 const Mark = ({ at, label, tag }: { at: CSSProperties; label: string; tag: CSSProperties }) => (
   <>
     <div
@@ -1249,6 +1272,11 @@ const RulePage: Page = () => {
             alt="CasualTop 750×224 master banner"
             style={{ width: BANNER.w, height: BANNER.h, display: 'block', borderRadius: 14, boxShadow: '0 32px 64px -36px rgba(16,18,22,0.6)' }}
           />
+          <Blur at={localBox(408, 14, 514, 62, BANNER.s)} />
+          <Blur at={localBox(294, 118, 420, 144, BANNER.s)} />
+          <Blur at={localBox(466, 28, 560, 224, BANNER.s)} />
+          <Blur at={localBox(640, 140, 712, 224, BANNER.s)} />
+          <Blur at={localBox(636, 30, 666, 140, BANNER.s)} />
         </R>
         {/* Wrapper sits at the stage origin (padding, not margin, so nothing collapses) —
             overlays inside the steps are positioned from here. */}
@@ -1368,6 +1396,10 @@ const RulePage: Page = () => {
                       boxShadow: '0 24px 48px -30px rgba(16,18,22,0.6)',
                     }}
                   />
+                  <Blur at={box(200, 12, 266, 40, KT)} />
+                  <Blur at={box(372, 68, 472, 88, KT)} />
+                  <Blur at={box(748, 12, 808, 100, KT)} />
+                  <Blur at={box(866, 10, 912, 100, KT)} />
                   {/* Dim what falls outside the safe area. */}
                   <div
                     style={{ position: 'absolute', left: KT.x, top: KT.y, width: ktSafe.left - KT.x, height: KT.h, background: 'rgba(0,0,0,0.5)', borderRadius: '10px 0 0 10px' }}
