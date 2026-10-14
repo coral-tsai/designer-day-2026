@@ -2164,11 +2164,25 @@ const Next: Page = () => (
 
 // ── 13.5 · Model test — same exam, different AI ─────────────────────────────
 // Fill in as tests finish; an empty string renders as 「測試中」.
-const modelRuns: { name: string; vendor: string; time: string; err: string; check: string; flag?: string }[] = [
-  { name: 'Claude Opus 5.5', vendor: 'Anthropic', time: '', err: '', check: '' },
-  { name: 'Claude Sonnet 5.5', vendor: 'Anthropic', time: '', err: '', check: '' },
-  { name: 'Claude Haiku 4.5', vendor: 'Anthropic', time: '', err: '', check: '' },
-  { name: 'Codex', vendor: 'OpenAI', time: '', err: '', check: '', flag: 'policy 限制' },
+const modelGroups: { tool: string; vendor: string; flag?: string; models: { name: string; time: string; err: string; check: string }[] }[] = [
+  {
+    tool: 'Claude',
+    vendor: 'Anthropic',
+    models: [
+      { name: 'Opus 5.5', time: '', err: '', check: '' },
+      { name: 'Sonnet 5.5', time: '', err: '', check: '' },
+      { name: 'Haiku 4.5', time: '', err: '', check: '' },
+    ],
+  },
+  {
+    tool: 'Codex',
+    vendor: 'OpenAI',
+    flag: 'policy 限制',
+    models: [
+      { name: '【模型 1】', time: '', err: '', check: '' },
+      { name: '【模型 2】', time: '', err: '', check: '' },
+    ],
+  },
 ];
 
 const ExamRow = ({ l, name, desc }: { l: string; name: string; desc: string }) => (
@@ -2192,14 +2206,14 @@ const ExamRow = ({ l, name, desc }: { l: string; name: string; desc: string }) =
 );
 
 const Cell = ({ v }: { v: string }) => (
-  <span style={{ fontSize: 26, fontWeight: 800, color: v ? 'var(--osd-text)' : muted, opacity: v ? 1 : 0.6, fontVariantNumeric: 'tabular-nums' }}>
+  <span style={{ fontSize: 24, fontWeight: 800, color: v ? 'var(--osd-text)' : muted, opacity: v ? 1 : 0.6, fontVariantNumeric: 'tabular-nums' }}>
     {v || '測試中'}
   </span>
 );
 
 const ModelTest: Page = () => (
   <LightPage chip="NEXT · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '560px 1fr', gap: 48, height: 470 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '560px 1fr', gap: 48, height: 510 }}>
       <R d={160} style={{ height: '100%' }}>
         <div
           style={{
@@ -2235,7 +2249,7 @@ const ModelTest: Page = () => (
                 display: 'grid',
                 gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
                 alignItems: 'center',
-                height: 46,
+                height: 40,
                 fontSize: 20,
                 fontWeight: 800,
                 color: muted,
@@ -2248,41 +2262,41 @@ const ModelTest: Page = () => (
               <span>錯誤</span>
               <span>自查</span>
             </div>
-            {modelRuns.map((m, i) => (
-              <div
-                key={m.name}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
-                  alignItems: 'center',
-                  height: 68,
-                  borderBottom: i < modelRuns.length - 1 ? `1px solid ${line}` : 'none',
-                }}
-              >
-                <span style={{ display: 'flex', alignItems: 'baseline', gap: 10, whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: 26, fontWeight: 800 }}>{m.name}</span>
-                  <span style={{ fontSize: 18, color: muted }}>{m.vendor}</span>
-                </span>
-                {m.flag ? (
-                  <span style={{ gridColumn: '2 / 5' }}>
-                    <span style={{ fontSize: 20, fontWeight: 800, padding: '5px 14px', borderRadius: 999, background: redSoft, color: red, border: `2px solid ${red}` }}>
-                      {m.flag}
+            {modelGroups.map((g) => (
+              <div key={g.tool}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, height: 38, marginTop: 4 }}>
+                  <span style={{ fontSize: 24, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
+                  <span style={{ fontSize: 18, color: muted }}>{g.vendor}</span>
+                  {g.flag && (
+                    <span style={{ fontSize: 18, fontWeight: 800, padding: '3px 12px', borderRadius: 999, background: redSoft, color: red, border: `2px solid ${red}` }}>
+                      {g.flag}
                     </span>
-                  </span>
-                ) : (
-                  <>
+                  )}
+                </div>
+                {g.models.map((m) => (
+                  <div
+                    key={m.name}
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
+                      alignItems: 'center',
+                      height: 44,
+                      borderTop: `1px solid ${line}`,
+                    }}
+                  >
+                    <span style={{ fontSize: 24, fontWeight: 800, paddingLeft: 16, whiteSpace: 'nowrap' }}>{m.name}</span>
                     <Cell v={m.time} />
                     <Cell v={m.err} />
                     <Cell v={m.check} />
-                  </>
-                )}
+                  </div>
+                ))}
               </div>
             ))}
           </div>
         </R>
         <Steps>
           <Step duration={280}>
-            <div style={{ background: redSoft, borderRadius: 'var(--osd-radius)', padding: '20px 28px' }}>
+            <div style={{ background: redSoft, borderRadius: 'var(--osd-radius)', padding: '16px 28px' }}>
               <div style={{ fontSize: 26, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
               <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>博弈相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
             </div>
@@ -2294,7 +2308,7 @@ const ModelTest: Page = () => (
       <Step duration={280}>
         <div
           style={{
-            marginTop: 28,
+            marginTop: 20,
             padding: '18px 40px',
             background: surface,
             borderRadius: 'var(--osd-radius)',
@@ -2648,7 +2662,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
   // 14 · 模型測試 0:45
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？所以我出了同一套考題：A 基本、B 刁鑽（最長語系、緬甸文、幣別）、C 量大，
-每個模型跑兩次，比速度、錯誤數，還有 AI 自己檢查抓不抓得到錯。（數據：【待填】）
+Claude 和 Codex 各自也有不同模型，每個模型跑兩次，比速度、錯誤數，還有 AI 自己檢查抓不抓得到錯。（數據：【待填】）
 （按 →）也試了 OpenAI 的 Codex：一開始它因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋。所以選 AI 不只看能力，也要看能不能用在我們的內容上。
 （按 →）之後換模型或改 Skill，都先用這套考題跑一次，結果一致才放行。`,
 
