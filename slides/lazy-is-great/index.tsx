@@ -1299,7 +1299,7 @@ const RulePage: Page = () => {
   const ktHl = box(203, 36, 517, 69, KT);
   const ktCta = box(548, 39, 674, 86, KT);
   return (
-    <LightPage chip="NEXT · 規則先寫好" title={<>寫下一條規則，<Hi>AI 就照著做</Hi></>}>
+    <LightPage chip="HOW · 規則長這樣" title={<>寫下一條規則，<Hi>AI 就照著做</Hi></>}>
       <div style={{ position: 'relative', height: 600 }}>
         <R k="lz-pop" d={260} style={{ position: 'absolute', left: BANNER.x, top: BANNER.y }}>
           <img
@@ -2316,7 +2316,7 @@ const Cell = ({ v }: { v: string }) => (
 );
 
 const ModelTest: Page = () => (
-  <LightPage chip="PROOF · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
+  <LightPage chip="NEXT · 選哪個 AI" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
     <R d={160}>
       <div style={{ ...card, padding: '12px 40px', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '1680px', height: '476.98px', translate: '0px 0px' }}>
         <div
@@ -2604,13 +2604,13 @@ export default [
   Evolution1,
   Evolution2,
   SkillInside,
+  RulePage,
   Demo,
-  ModelTest,
   GamesPlugin,
   PromoPlugin,
   CrossTeam,
   Modules,
-  RulePage,
+  ModelTest,
   Next,
   TakeHome,
   Closing,
@@ -2668,9 +2668,19 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 （按 →）回報給我哪裡要看。
 現在用的是 multi-lang；自動 resize 版位的 skill 還在開發中。
 常有人問：為什麼不用 Figma 自己的 AI agent？因為我們的流程不只在 Figma 裡——要讀 Google Sheet、改 Figma、檢查、再匯出壓縮；而且版位、語系、幣別、T&C 這些規則是我們團隊自己的，寫成 Skill 才能共用、版控、隨時補。
+來看一條規則實際長什麼樣。`,
+
+  // 8 · 規則長這樣 1:00
+  `【1:00】
+規則實際長這樣，左邊是 Skill 原文。
+（按 →）CasualTop 是 master，
+（按 →）圖層角色以它為準，
+（按 →）角色的臉一定要完整。
+（按 →）下一步是 resize，規則已經先寫好：像 KratosTop，安全區 829 px、置中，
+（按 →）subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
 接下來，直接看它實際跑一次多語系。`,
 
-  // 8 · Demo＋成效 3:00
+  // 9 · Demo＋成效 3:00
   `【3:00】影片已 3 倍速（約 2 分 24 秒）、靜音、現場口述；實際耗時約 7 分鐘。
 這次 Demo 的活動是 13 個版位 × 10 個語系，共 130 張（一般活動是 12 個語系）。
 ① 我說一句話。
@@ -2680,16 +2690,6 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 製作時間少了約 94%，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）
 （影片無法播放：改開本機版，或口頭帶過直接公布答案。）
 錄製日期：【YYYY/MM/DD】。`,
-
-  // 9 · 模型測試 0:45
-  `【0:45】
-常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
-同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
-兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
-所以選模型看任務：要判斷的交給強模型，大量重複的交給輕量模型——跟開頭的原則一樣。所以模型要看任務挑（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
-（按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
-小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
-之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
   // 10 · Games 的 plugin 0:25
   `【0:25】
@@ -2716,19 +2716,19 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 14 · 規則先寫好 1:00
-  `【1:00】
-接下來的方向：把規則寫下來。左邊是 Skill 原文。
-（按 →）CasualTop 是 master，
-（按 →）圖層角色以它為準，
-（按 →）角色的臉一定要完整。
-（按 →）下一步是 resize，規則已經先寫好：像 KratosTop，安全區 829 px、置中，
-（按 →）subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
-而且規則不是一次寫完的——`,
+  // 14 · 模型測試 0:45
+  `【0:45】
+模組定好了，下一個問題是：要用哪個 AI 來跑？換一個模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
+同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
+兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
+所以選模型看任務——跟開頭的原則一樣（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
+（按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
+小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
+之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
   // 15 · Skill 是活的 0:45
   `【0:45】
-它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
+不管用哪個模型，Skill 都是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
 （按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中——這部分可以參考 Games 的 Banner Mill，它已經能自動調整各語系的文字排版；
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
