@@ -2249,9 +2249,9 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
     tool: 'Claude',
     vendor: 'Anthropic',
     models: [
-      { name: 'Opus 5.5', time: '約 7 分', fit: '長時間的 agent 任務、知識工作：整套多語系、寫 Skill' },
-      { name: 'Sonnet 5.5', time: '約 13 分', fit: '速度與能力的最佳平衡：日常主力' },
-      { name: 'Haiku 5.5', time: '約 18 分', fit: '最快：大量、即時的小任務，分類、擷取資料' },
+      { name: 'Opus 5.5', time: '約 7 分', fit: '長時間、多步驟的 agent 任務；複雜程式與知識工作' },
+      { name: 'Sonnet 5.5', time: '約 13 分', fit: '日常主力：寫作、程式、分析，兼顧速度與品質' },
+      { name: 'Haiku 5.5', time: '約 18 分', fit: '大量、要即時回應的小任務：分類、資料擷取、分流' },
     ],
   },
   {
@@ -2259,9 +2259,9 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
     vendor: 'OpenAI',
     flag: 'policy 限制',
     models: [
-      { name: 'GPT-6 Astra（預設）', time: '約 8 分', fit: '最高智慧：最難的推理、程式與專業工作' },
-      { name: 'GPT-6.1 Sol', time: '約 15 分', fit: '速度、成本、能力平衡：複雜程式、電腦操作' },
-      { name: 'GPT-6 Luna', time: '約 34 分', fit: '最快最省：專注、大量的小任務' },
+      { name: 'GPT-6 Astra（預設）', time: '約 8 分', fit: '需求不明確、資料互相矛盾、要權衡多條件；複雜系統與除錯' },
+      { name: 'GPT-6.1 Sol', time: '約 15 分', fit: '日常寫作、研究、程式、簡報；需要判斷、反覆修改的完整交付' },
+      { name: 'GPT-6 Luna', time: '約 34 分', fit: '範圍清楚的編修、分類、資料擷取，頻繁執行的例行工作' },
     ],
   },
 ];
@@ -2295,7 +2295,7 @@ const ModelTest: Page = () => (
         </div>
         {modelGroups.map((g) => (
           <div key={g.tool}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 38, marginTop: 4 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 34, marginTop: 2 }}>
               <span style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
               <span style={{ fontSize: 20, color: muted }}>{g.vendor}</span>
               {g.flag && (
@@ -2311,7 +2311,7 @@ const ModelTest: Page = () => (
                   display: 'grid',
                   gridTemplateColumns: '400px 200px 1fr',
                   alignItems: 'center',
-                  height: 44,
+                  height: 40,
                   borderTop: `1px solid ${line}`,
                 }}
               >
@@ -2326,7 +2326,21 @@ const ModelTest: Page = () => (
     </R>
     <Steps>
       <Step duration={280}>
-        <div style={{ marginTop: 24, background: redSoft, borderRadius: 'var(--osd-radius)', padding: '18px 32px' }}>
+        <div
+          style={{
+            marginTop: 20,
+            padding: '14px 32px',
+            background: blueSoft,
+            borderRadius: 'var(--osd-radius)',
+            fontSize: 28,
+            fontWeight: 800,
+          }}
+        >
+          發現：最強的反而最快（Opus 7 分、Astra 8 分），<Hi>標榜最快的輕量模型反而最慢</Hi>（Haiku 18 分、Luna 34 分）
+        </div>
+      </Step>
+      <Step duration={280}>
+        <div style={{ marginTop: 16, background: redSoft, borderRadius: 'var(--osd-radius)', padding: '18px 32px' }}>
           <div style={{ fontSize: 28, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
           <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>特定產業相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
@@ -2680,7 +2694,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
 同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
-有趣的是兩邊都一樣：最強的模型反而最快（Opus、Astra），標榜「最快」的輕量模型反而最慢（Haiku、Luna）——因為整套多語系要大量判斷，強的模型比較少走錯路、不用重試。所以模型要看任務挑（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
+（按 →）有趣的是兩邊都一樣：最強的模型反而最快（Opus、Astra），標榜「最快」的輕量模型反而最慢（Haiku、Luna）——因為整套多語系要大量判斷，強的模型比較少走錯路、不用重試。所以模型要看任務挑（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
 （按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
 小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
 之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
