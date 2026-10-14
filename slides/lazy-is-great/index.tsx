@@ -2326,21 +2326,7 @@ const ModelTest: Page = () => (
     </R>
     <Steps>
       <Step duration={280}>
-        <div
-          style={{
-            marginTop: 20,
-            padding: '14px 32px',
-            background: blueSoft,
-            borderRadius: 'var(--osd-radius)',
-            fontSize: 28,
-            fontWeight: 800,
-          }}
-        >
-          選模型看任務：<Hi>要判斷的交給強模型</Hi>，大量重複的交給輕量模型
-        </div>
-      </Step>
-      <Step duration={280}>
-        <div style={{ marginTop: 16, background: redSoft, borderRadius: 'var(--osd-radius)', padding: '18px 32px' }}>
+        <div style={{ marginTop: 24, background: redSoft, borderRadius: 'var(--osd-radius)', padding: '18px 32px' }}>
           <div style={{ fontSize: 28, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
           <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>特定產業相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
@@ -2694,7 +2680,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
 同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
-（按 →）兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
+兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
 所以選模型看任務：要判斷的交給強模型，大量重複的交給輕量模型——跟開頭的原則一樣。所以模型要看任務挑（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
 （按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
 小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
