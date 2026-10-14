@@ -2275,7 +2275,7 @@ const Cell = ({ v }: { v: string }) => (
 const ModelTest: Page = () => (
   <LightPage chip="NEXT · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
     <R d={160}>
-      <div style={{ ...card, padding: '8px 40px 16px' }}>
+      <div style={{ ...card, padding: '12px 40px', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '1680px', height: '467.04px', translate: '0px 0px' }}>
         <div
           style={{
             display: 'grid',
@@ -2293,25 +2293,21 @@ const ModelTest: Page = () => (
           <span>平均耗時</span>
           <span>適合做什麼</span>
         </div>
-        {modelGroups.map((g) => (
-          <div key={g.tool}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 34, marginTop: 2 }}>
+        {/* Group labels and model rows share one grid, so every line gets the same height. */}
+        <div style={{ flex: 1, display: 'grid', gridTemplateRows: `repeat(${modelGroups.reduce((n, g) => n + 1 + g.models.length, 0)}, 1fr)` }}>
+          {modelGroups.flatMap((g) => [
+            <div key={g.tool} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <span style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
               <span style={{ fontSize: 20, color: muted }}>{g.vendor}</span>
-              {g.flag && (
-                <span style={{ fontSize: 20, fontWeight: 800, color: red }}>
-                  {g.flag}
-                </span>
-              )}
-            </div>
-            {g.models.map((m) => (
+              {g.flag && <span style={{ fontSize: 20, fontWeight: 800, color: red }}>{g.flag}</span>}
+            </div>,
+            ...g.models.map((m) => (
               <div
                 key={m.name}
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '400px 200px 1fr',
                   alignItems: 'center',
-                  height: 40,
                   borderTop: `1px solid ${line}`,
                 }}
               >
@@ -2319,9 +2315,9 @@ const ModelTest: Page = () => (
                 <Cell v={m.time} />
                 <span style={{ fontSize: 22, color: ink2, whiteSpace: 'nowrap' }}>{m.fit ?? ''}</span>
               </div>
-            ))}
-          </div>
-        ))}
+            )),
+          ])}
+        </div>
       </div>
     </R>
     <Steps>
