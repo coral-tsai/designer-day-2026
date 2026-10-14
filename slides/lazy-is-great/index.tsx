@@ -1544,7 +1544,7 @@ const Demo: Page = () => (
         </div>
       </R>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '382.46px', height: '491px', translate: '193.55px 0px' }}>
           <R d={260}>
             <div
               style={{
@@ -1558,7 +1558,7 @@ const Demo: Page = () => (
               }}
             >
               <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700 }}>實際耗時</span>
-              <span style={{ ...heavy, fontSize: 40, color: 'var(--lz-hi, var(--osd-accent))' }}>約 10 分鐘</span>
+              <span style={{ ...heavy, fontSize: 40, color: 'var(--lz-hi, var(--osd-accent))' }}>約 7 分鐘</span>
             </div>
           </R>
           <R d={320}>
@@ -2630,9 +2630,9 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 接下來，直接看它實際跑一次多語系。`,
 
   // 8 · Demo 2:30
-  `【2:30】影片靜音、現場口述，中段快轉；實際耗時約 7 分鐘。
+  `【2:30】影片已 3 倍速（約 2 分 24 秒）、靜音、現場口述；實際耗時約 7 分鐘。
 ① 我說一句話。
-② AI 執行中——快轉，中間切到 Skill 檔，看它照哪些規則在做。
+② AI 執行中——中間切到 Skill 檔，看它照哪些規則在做。
 ③ 成品拼貼和產出清單。
 （影片無法播放：改開本機版，或口頭帶過直接跳下一頁。）
 錄製日期：【YYYY/MM/DD】。`,
