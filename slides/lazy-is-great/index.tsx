@@ -1970,27 +1970,9 @@ const ModuleRow = ({ l, name, who, from }: { l: string; name: string; who: strin
   </div>
 );
 
-const Combo = ({ name, children }: { name: string; children: ReactNode }) => (
-  <div
-    style={{
-      height: 88,
-      borderRadius: 'var(--osd-radius)',
-      border: `2px dashed ${line}`,
-      padding: '0 28px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      boxSizing: 'border-box',
-    }}
-  >
-    <span style={{ fontSize: 28, fontWeight: 800 }}>{name}</span>
-    <span style={{ display: 'flex', gap: 8 }}>{children}</span>
-  </div>
-);
-
 const Modules: Page = () => (
   <LightPage chip="TEAM · 最終版" title={<>三個部門的做法，<Hi>合成一套模組</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '440px 1fr', gap: 48, height: 456 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '440px 1fr', gap: 48, height: 540 }}>
       <div style={{ display: 'grid', gridTemplateRows: 'repeat(4, 1fr)', gap: 14 }}>
         <R d={160} style={{ height: '100%' }}>
           <Question q="要新主視覺嗎？" to="A" />
@@ -2023,36 +2005,6 @@ const Modules: Page = () => (
         </R>
       </div>
     </div>
-    <Steps>
-    <Step duration={280}>
-    <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr 1fr 1fr', alignItems: 'center', gap: 24, marginTop: 36 }}>
-      <div>
-        <div style={{ fontSize: 22, color: muted, fontWeight: 800, letterSpacing: '0.08em' }}>組合範例</div>
-      </div>
-      <div>
-        <Combo name="週期活動">
-          <Letter l="D" small />
-          <Letter l="E" small />
-        </Combo>
-      </div>
-      <div>
-        <Combo name="新活動單語系">
-          <Letter l="A" small />
-          <Letter l="B" small />
-          <Letter l="E" small />
-        </Combo>
-      </div>
-      <div>
-        <Combo name="大型跨國活動">
-          <Letter l="A" small />
-          <Letter l="B" small />
-          <Letter l="C" small />
-          <Letter l="E" small />
-        </Combo>
-      </div>
-    </div>
-    </Step>
-    </Steps>
   </LightPage>
 );
 
@@ -2679,7 +2631,7 @@ Games 和 Promotion 寫成 Figma plugin，我們 Casino 用 AI 照 Skill 做。�
 大家需求不同，各有適合的做法；有了 AI，規則用說的就能寫，每個人都能貢獻好做法。所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
 A 主視覺設計師做；B 多尺寸目前也是設計師做母版，resize skill 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
-（按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
+想試的部門，建議從 D 固定範本開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
   // 15 · Skill 是活的 0:45
