@@ -25,6 +25,7 @@ import promo1 from './assets/promo-plugin-1.png';
 import promo2 from './assets/promo-plugin-2.png';
 import gamesBadge from './assets/games-plugin-badge.png';
 import promoBadge from './assets/promo-plugin-badge.png';
+import casinoBadge from './assets/casino-skill-badge.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#FFFFFF', text: '#101216', accent: '#0878E5' },
@@ -1756,7 +1757,7 @@ const TeamIntroCard = ({
       {/* Plugin store badge (icon + name + tagline) — same box height on every card. */}
       <div style={{ height: 200, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {badge ? (
-          <img src={badge} alt={`${tool} plugin`} style={{ height: 200, width: 'auto', maxWidth: '100%', display: 'block' }} />
+          <img src={badge} alt={`${tool} plugin`} style={{ maxHeight: 200, maxWidth: '100%', width: 'auto', height: 'auto', display: 'block', objectFit: 'contain' }} />
         ) : (
           <IconTile name={icon} size={120} />
         )}
@@ -1773,7 +1774,7 @@ const TeamIntro: Page = () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, height: 520 }}>
       <TeamIntroCard d={160} icon="doc" badge={gamesBadge} team="Games" tool="Figma plugin · Banner Mill" how="版面固定、只換圖" />
       <TeamIntroCard d={240} icon="sheet" badge={promoBadge} team="Promotion" tool="Figma plugin · Social Banner 產圖工具" how="只出 MKT 要的 Social Banner" />
-      <TeamIntroCard d={320} icon="spark" team="Casino" tool="AI ＋ Skill · Banner Kit" how="語系多、文案長短不一，要判斷" />
+      <TeamIntroCard d={320} icon="spark" badge={casinoBadge} team="Casino" tool="AI ＋ Skill · Banner Kit" how="語系多、文案長短不一，要判斷" />
     </div>
   </LightPage>
 );
