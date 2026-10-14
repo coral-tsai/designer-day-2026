@@ -2179,8 +2179,9 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
     vendor: 'OpenAI',
     flag: 'policy 限制',
     models: [
-      { name: '【模型 1】', time: '', err: '', check: '' },
-      { name: '【模型 2】', time: '', err: '', check: '' },
+      { name: '預設（推薦組合）', time: '', err: '', check: '' },
+      { name: 'GPT-6.1 Sol', time: '', err: '', check: '' },
+      { name: 'GPT-6 Luna', time: '', err: '', check: '' },
     ],
   },
 ];
@@ -2264,7 +2265,7 @@ const ModelTest: Page = () => (
             </div>
             {modelGroups.map((g) => (
               <div key={g.tool}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, height: 38, marginTop: 4 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, height: 34, marginTop: 2 }}>
                   <span style={{ fontSize: 24, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
                   <span style={{ fontSize: 18, color: muted }}>{g.vendor}</span>
                   {g.flag && (
@@ -2280,7 +2281,7 @@ const ModelTest: Page = () => (
                       display: 'grid',
                       gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
                       alignItems: 'center',
-                      height: 44,
+                      height: 42,
                       borderTop: `1px solid ${line}`,
                     }}
                   >
