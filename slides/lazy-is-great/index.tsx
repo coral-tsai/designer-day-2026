@@ -2212,7 +2212,7 @@ const ModelTest: Page = () => (
           <span>模型</span>
           <span>平均耗時</span>
           <span>平均錯誤</span>
-          <span>自查抓到</span>
+          <span>自我檢查</span>
         </div>
         {modelGroups.map((g) => (
           <div key={g.tool}>
