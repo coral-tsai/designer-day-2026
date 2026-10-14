@@ -1398,8 +1398,8 @@ const RulePage: Page = () => {
                   />
                   <Blur at={box(200, 12, 266, 40, KT)} />
                   <Blur at={box(372, 68, 472, 88, KT)} />
-                  <Blur at={box(748, 12, 808, 100, KT)} />
-                  <Blur at={box(866, 10, 912, 100, KT)} />
+                  <Blur at={box(746, 12, 828, 100, KT)} />
+                  <Blur at={box(876, 10, 912, 100, KT)} />
                   {/* Dim what falls outside the safe area. */}
                   <div
                     style={{ position: 'absolute', left: KT.x, top: KT.y, width: ktSafe.left - KT.x, height: KT.h, background: 'rgba(0,0,0,0.5)', borderRadius: '10px 0 0 10px' }}
