@@ -3,6 +3,7 @@ import {
   type Page,
   type SlideMeta,
   type SlideTransition,
+  MorphElement,
   Step,
   Steps,
   useIsActivePage,
@@ -114,6 +115,15 @@ export const transition: SlideTransition = {
       { opacity: 1, transform: 'translateX(0)' },
     ],
   },
+};
+
+// Morph cut for the flow: page 4's six stage cards glide into the strip at the top
+// of pages 5–6, and the stages each lazy step took over change colour.
+const morphTransition: SlideTransition = {
+  duration: 280,
+  exit: { duration: 308, easing: 'cubic-bezier(0.4, 0, 1, 1)', keyframes: [{ opacity: 1 }, { opacity: 1 }] },
+  enter: { duration: 308, easing: 'cubic-bezier(0, 0, 0.2, 1)', keyframes: [{ opacity: 0 }, { opacity: 1 }] },
+  morph: { duration: 868, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' },
 };
 
 // ── Shared building blocks ──────────────────────────────────────────────────
@@ -763,6 +773,7 @@ const BeforeAfterCard = ({ tag, label, good, children }: { tag: string; label: s
 
 const Evolution1: Page = () => (
   <LightPage chip="HOW · 第一次偷懶" title={<>把 Google Sheet 接進流程，<Hi>文案不再手貼</Hi></>}>
+    <MiniFlow owners={{ '05': 'sheet' }} tags={{ '05': 'Sheet' }} />
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 72px 1fr', height: 300, alignItems: 'stretch' }}>
       <Steps>
         <R d={180} style={{ height: '100%' }}>
@@ -784,14 +795,14 @@ const Evolution1: Page = () => (
         </Step>
       </Steps>
     </div>
-    <div style={{ display: 'grid', gridTemplateColumns: '981px 1fr', gap: 40, height: 327, marginTop: 36 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '981px 1fr', gap: 40, height: 276, marginTop: 24 }}>
       {/* The plugin we used: Google Sheets Sync (Figma Community page). 1504×500 */}
       <Steps>
       <Step duration={280}>
         <div
           style={{
             position: 'relative',
-            height: 327,
+            height: 276,
             borderRadius: 'var(--osd-radius)',
             overflow: 'hidden',
             background: '#2B2B2B',
@@ -811,7 +822,7 @@ const Evolution1: Page = () => (
           <Step duration={280}>
             <div
               style={{
-                height: 190,
+                height: 160,
                 boxSizing: 'border-box',
                 background: blueSoft,
                 color: 'var(--osd-text)',
@@ -823,13 +834,13 @@ const Evolution1: Page = () => (
               }}
             >
               <span style={{ fontSize: 28, fontWeight: 700 }}>多語系貼字時間</span>
-              <span style={{ ...heavy, fontSize: 72, color: 'var(--osd-accent)', lineHeight: 1.15, marginTop: 6 }}>↓ 約 【60%】</span>
+              <span style={{ ...heavy, fontSize: 60, color: 'var(--osd-accent)', lineHeight: 1.15, marginTop: 4 }}>↓ 約 【60%】</span>
             </div>
           </Step>
           <Step duration={280}>
             <div
               style={{
-                height: 121,
+                height: 100,
                 boxSizing: 'border-box',
                 background: redSoft,
                 borderRadius: 'var(--osd-radius)',
@@ -957,6 +968,7 @@ const FlowArrow = () => (
 
 const Evolution2: Page = () => (
   <LightPage chip="HOW · 第二次偷懶" title={<>寫成 Skill，然後<Hi>一句話交給 AI</Hi></>}>
+    <MiniFlow owners={{ '05': 'ai', '06': 'ai' }} tags={{ '05': 'AI', '06': 'AI' }} />
     <div style={{ display: 'grid', gridTemplateColumns: '420px 1fr 484px', height: 432 }}>
       <Steps>
         <Step duration={260}>
@@ -1039,7 +1051,7 @@ const Evolution2: Page = () => (
     </div>
     <Steps>
       <Step duration={280}>
-        <h3 style={{ ...heavy, fontSize: 72, lineHeight: 1.25, margin: '56px 0 0' }}>
+        <h3 style={{ ...heavy, fontSize: 72, lineHeight: 1.25, margin: '36px 0 0' }}>
           從<Hi color={muted}>動手做</Hi>，變成<Hi>只出一張嘴</Hi>。
         </h3>
       </Step>
@@ -1602,44 +1614,86 @@ const Demo: Page = () => (
 // 11-column grid: 6 stages with 5 arrow gutters, so the brackets below line up.
 const flowCols = '1fr 36px 1fr 92px 1fr 36px 1fr 36px 1fr 36px 1fr';
 
-const FlowStage = ({ n, name, who, ai, note, d }: { n: string; name: string; who: string; ai?: boolean; note?: string; d: number }) => (
+type Owner = 'human' | 'sheet' | 'ai';
+const ownerLook: Record<Owner, { bg: string; fg: string; border: string }> = {
+  human: { bg: '#FFFFFF', fg: 'var(--osd-text)', border: line },
+  sheet: { bg: purple, fg: '#FFFFFF', border: purple },
+  ai: { bg: '#0878E5', fg: '#FFFFFF', border: '#0878E5' },
+};
+
+// The stage card itself is the morph node (no transform on it — R animates its wrapper).
+const FlowStage = ({ n, name, who, d }: { n: string; name: string; who: string; d: number }) => (
   <R d={d} style={{ height: '100%' }}>
-    <div
-      style={{
-        height: '100%',
-        boxSizing: 'border-box',
-        borderRadius: 'var(--osd-radius)',
-        background: ai ? 'var(--osd-accent)' : '#FFFFFF',
-        color: ai ? '#FFFFFF' : 'var(--osd-text)',
-        border: ai ? '2px solid transparent' : `2px solid ${line}`,
-        boxShadow: ai ? '0 24px 48px -28px rgba(8,120,229,0.6)' : 'none',
-        padding: '28px 12px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        textAlign: 'center',
-      }}
-    >
-      <span style={{ fontSize: 22, fontWeight: 800, opacity: 0.55 }}>{n}</span>
-      <span style={{ fontSize: 34, fontWeight: 800, lineHeight: 1.25 }}>{name}</span>
-      <span style={{ fontSize: 22, fontWeight: 700, opacity: ai ? 0.9 : 0.7 }}>{who}</span>
-      <span
+    <MorphElement id={`flow-${n}`}>
+      <div
         style={{
-          fontSize: 18,
-          fontWeight: 800,
-          padding: '4px 12px',
-          borderRadius: 999,
-          border: `2px dashed ${blueLine}`,
-          color: 'var(--osd-accent)',
-          visibility: note ? 'visible' : 'hidden',
-          whiteSpace: 'nowrap',
+          height: '100%',
+          boxSizing: 'border-box',
+          borderRadius: 'var(--osd-radius)',
+          background: '#FFFFFF',
+          color: 'var(--osd-text)',
+          border: `2px solid ${line}`,
+          padding: '28px 12px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          textAlign: 'center',
         }}
       >
-        {note ?? '·'}
-      </span>
-    </div>
+        <span style={{ fontSize: 22, fontWeight: 800, opacity: 0.55 }}>{n}</span>
+        <span style={{ fontSize: 34, fontWeight: 800, lineHeight: 1.25 }}>{name}</span>
+        <span style={{ fontSize: 22, fontWeight: 700, opacity: 0.7 }}>{who}</span>
+      </div>
+    </MorphElement>
   </R>
+);
+
+// Compact version of the same flow for the two "lazy" pages. Each chip pairs with
+// page 4's card by id, so the cut morphs the cards down into this strip.
+const flowSteps: [string, string][] = [
+  ['01', '收需求'],
+  ['02', '主視覺'],
+  ['03', '各版位母版'],
+  ['04', '翻譯＋斷行'],
+  ['05', '多語系＋幣別'],
+  ['06', '檢查＋匯出'],
+];
+const MiniFlow = ({ owners, tags }: { owners: Partial<Record<string, Owner>>; tags: Partial<Record<string, string>> }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+    {flowSteps.map(([n, name], i) => {
+      const k = ownerLook[owners[n] ?? 'human'];
+      return (
+        <div key={n} style={{ display: 'contents' }}>
+          {i > 0 && <span style={{ fontSize: 20, color: muted }}>→</span>}
+          <MorphElement id={`flow-${n}`}>
+            <div
+              style={{
+                flex: 1,
+                height: 52,
+                boxSizing: 'border-box',
+                borderRadius: 12,
+                background: k.bg,
+                color: k.fg,
+                border: `2px solid ${k.border}`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                fontSize: 20,
+                fontWeight: 800,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <span style={{ opacity: 0.6 }}>{n}</span>
+              {name}
+              {tags[n] && <span style={{ fontSize: 16, opacity: 0.85 }}>· {tags[n]}</span>}
+            </div>
+          </MorphElement>
+        </div>
+      );
+    })}
+  </div>
 );
 
 // `note` marks a hand-off between stages (e.g. a review) with a small tag sitting on the arrow.
@@ -1663,23 +1717,6 @@ const FlowGap = ({ note }: { note?: string }) => (
     )}
     →
   </div>
-);
-
-const Bracket = ({ col, label, ai, d }: { col: string; label: ReactNode; ai?: boolean; d: number }) => (
-  <R d={d} style={{ gridColumn: col }}>
-    <div
-      style={{
-        height: 22,
-        borderBottom: `3px solid ${ai ? 'var(--osd-accent)' : 'var(--osd-text)'}`,
-        borderLeft: `3px solid ${ai ? 'var(--osd-accent)' : 'var(--osd-text)'}`,
-        borderRight: `3px solid ${ai ? 'var(--osd-accent)' : 'var(--osd-text)'}`,
-        borderRadius: '0 0 10px 10px',
-      }}
-    />
-    <div style={{ marginTop: 18, textAlign: 'center', fontSize: 32, fontWeight: 800, color: ai ? 'var(--osd-accent)' : 'var(--osd-text)' }}>
-      {label}
-    </div>
-  </R>
 );
 
 // Marks which stages each "lazy" step took over: a label above and a pulsing
@@ -1717,39 +1754,32 @@ const LazyMark = ({ col, row, label, color, glow, inset }: { col: string; row: s
 );
 
 const FullFlow: Page = () => (
-  <LightPage chip="HOW · 全流程" title={<>從需求到交付，<Hi>AI 幫到哪一段</Hi></>}>
+  <LightPage chip="HOW · 全流程" title={<>從需求到交付，<Hi>一開始全靠手工</Hi></>}>
     <div style={{ position: 'relative', paddingTop: 92 }}>
-    <div style={{ display: 'grid', gridTemplateColumns: flowCols, alignItems: 'center', height: 300 }}>
-      <FlowStage d={140} n="01" name="收需求" who="PO" />
-      <FlowGap />
-      <FlowStage d={200} n="02" name="主視覺" who="設計師" />
-      <FlowGap note="review" />
-      <FlowStage d={260} n="03" name="各版位母版" who="設計師" note="resize 開發中" />
-      <FlowGap />
-      <FlowStage d={320} n="04" name="翻譯＋斷行" who="Content writer" />
-      <FlowGap />
-      <FlowStage d={380} n="05" name="多語系＋幣別" who="AI" ai />
-      <FlowGap />
-      <FlowStage d={440} n="06" name="檢查＋匯出" who="AI → writer 校對" ai />
-    </div>
-    <Steps>
-      <Step duration={280}>
-        <LazyMark col="9" row="2" label="① 第一次偷懶：Sheet 帶入文案" color={purple} glow="rgba(111,99,217,0.2)" inset={6} />
-      </Step>
-      <Step duration={280}>
-        <LazyMark col="9 / 12" row="1" label="② 第二次偷懶：Skill＋AI 接手到匯出" color="#0878E5" glow="rgba(8,120,229,0.18)" inset={16} />
-      </Step>
-    </Steps>
-    </div>
-    <div style={{ display: 'grid', gridTemplateColumns: flowCols, marginTop: 8 }}>
-      <Bracket d={540} col="1 / 8" label="人：需要判斷的" />
-      <Bracket d={620} col="9 / 12" label="AI：重複生產的" ai />
+      <div style={{ display: 'grid', gridTemplateColumns: flowCols, alignItems: 'center', height: 300 }}>
+        <FlowStage d={140} n="01" name="收需求" who="PO" />
+        <FlowGap />
+        <FlowStage d={200} n="02" name="主視覺" who="設計師" />
+        <FlowGap note="review" />
+        <FlowStage d={260} n="03" name="各版位母版" who="設計師" />
+        <FlowGap />
+        <FlowStage d={320} n="04" name="翻譯＋斷行" who="Content writer" />
+        <FlowGap />
+        <FlowStage d={380} n="05" name="多語系＋幣別" who="設計師 手貼" />
+        <FlowGap />
+        <FlowStage d={440} n="06" name="檢查＋匯出" who="設計師 手動" />
+      </div>
+      <Steps>
+        <Step duration={280}>
+          <LazyMark col="9 / 12" row="2" label="最重複、最容易錯的兩段" color={red} glow="rgba(200,70,58,0.16)" inset={12} />
+        </Step>
+      </Steps>
     </div>
     <Steps>
       <Step duration={280}>
         <div
           style={{
-            marginTop: 32,
+            marginTop: 56,
             padding: '20px 40px',
             background: surface,
             borderRadius: 'var(--osd-radius)',
@@ -1758,12 +1788,13 @@ const FullFlow: Page = () => (
             textAlign: 'center',
           }}
         >
-          重複的交給 AI，<Hi>要判斷的留給人</Hi>
+          每一段都靠人——<Hi>後面兩段，就是我偷懶的起點</Hi>
         </div>
       </Step>
     </Steps>
   </LightPage>
 );
+FullFlow.transition = morphTransition;
 
 // ── TEAM opener — bridges the model test into the other teams' tools ────────
 const TeamIntroCard = ({
@@ -2547,6 +2578,9 @@ const Closing: Page = () => (
   </div>
 );
 
+Evolution1.transition = morphTransition;
+Evolution2.transition = morphTransition;
+
 export const meta: SlideMeta = {
   title: '人因懶惰而偉大',
   createdAt: '2026-10-05T06:08:02.047Z',
@@ -2594,17 +2628,13 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 
   // 4 · 全流程 0:45
   `【0:45】
-先把現在的整條流程攤開：收需求、主視覺（主視覺先 review 過）、各版位母版、翻譯斷行，到多語系、檢查匯出，一共六段。
-白色是人做的，藍色是 AI 做的。第三段各版位母版，目前還是設計師做——resize 還在開發中。
-所以前四段需要判斷的，留給人；後兩段重複生產的，交給 AI。
-（按 →）我偷懶了兩次：第一次，用 Google Sheet 把文案帶進多語系；
-（按 →）第二次，寫成 Skill，從多語系、幣別一路到檢查、匯出都交給 AI。等一下一個一個看。
-（按 →）重複的交給 AI，要判斷的留給人。至於省了多少時間，看完 Demo 再公布。`,
+先把一開始的整條流程攤開：收需求、主視覺（先 review 過）、各版位母版、翻譯斷行，到多語系、檢查匯出，一共六段——每一段都靠人。
+（按 →）其中最後兩段：多語系＋幣別要一張一張手貼，檢查＋匯出也是手動——最重複、也最容易錯。
+（按 →）這兩段，就是我偷懶的起點。接下來看我偷懶了兩次，流程怎麼變。`,
 
   // 5 · 第一次偷懶 1:00
   `【1:00】
-那我是怎麼一步步走到這裡的？同一套流程，我偷懶了兩次。
-第一次偷懶：善用現成工具。以前是逐格複製、切回 Figma 貼上，改一個字就全部重貼。
+（流程縮到上方，05 變成紫色）第一次偷懶：把「多語系＋幣別」這段交給 Google Sheet。以前是逐格複製、切回 Figma 貼上，改一個字就全部重貼。
 （按 → AFTER）接上 Google Sheet 後，文案集中一處，Plugin 依語系自動填入。
 （按 → 截圖）用的就是 Figma 社群的 Google Sheets Sync。
 （按 → 60%）貼字時間少了大約【60%】。
@@ -2612,11 +2642,12 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 
   // 6 · 第二次偷懶 1:00
   `【1:00】
-第二次偷懶：把我的做法寫成 Skill，一句話交給 AI。
+（上方流程：05、06 都變成 AI）第二次偷懶：把我的做法寫成 Skill，從多語系、幣別一路到檢查、匯出，一句話交給 AI。
 （按 →）我只要說一句，甚至只說「多語系」，
 （按 →）AI 就照 Skill 跑完：聽懂需求、帶入 content writer 斷好行的文案、換幣別、對位，再自己截圖檢查。
 （按 →）我就去做別的設計。
-（按 →）從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。`,
+（按 →）從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。
+重複的交給 AI，要判斷的留給人。至於省了多少時間，看完 Demo 再公布。`,
 
   // 7 · Skill 長什麼樣 1:00
   `【1:00】
