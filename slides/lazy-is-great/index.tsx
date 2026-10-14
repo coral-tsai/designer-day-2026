@@ -2256,7 +2256,7 @@ const BannerType = ({ name, note }: { name: string; note: string }) => (
 
 const Next: Page = () => (
   <LightPage chip="NEXT · Skill 是活的" title={<>Skill <Hi>是活的</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '520px 1fr', gap: 48, height: 600 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '520px 1fr', gap: 48, height: 560 }}>
       <R d={160} style={{ height: '100%' }}>
         <div style={{ height: '100%', background: surface, borderRadius: 'var(--osd-radius)', padding: '40px 44px', boxSizing: 'border-box', position: 'relative' }}>
           <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 28 }}>越用越聰明</div>
@@ -2298,13 +2298,13 @@ const Next: Page = () => (
           </div>
         </div>
       </R>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
         <R d={240}>
           <div style={{ fontSize: 26, fontWeight: 800, color: muted, letterSpacing: '0.08em' }}>還在調整</div>
         </R>
         <Steps>
           <Step duration={260}>
-            <div style={{ ...card, padding: '24px 36px', height: 294 }}>
+            <div style={{ ...card, padding: '20px 36px', height: 262 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>1</span>
                 <span style={{ fontSize: 30, fontWeight: 800 }}>resize 還在努力：沒辦法只用一種排版</span>
@@ -2318,7 +2318,7 @@ const Next: Page = () => (
             </div>
           </Step>
           <Step duration={260}>
-            <div style={{ ...card, padding: '24px 36px', height: 226 }}>
+            <div style={{ ...card, padding: '20px 36px', height: 222 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>2</span>
                 <span style={{ fontSize: 30, fontWeight: 800 }}>Banner 有三種，要各自整理出規則</span>
@@ -2333,6 +2333,23 @@ const Next: Page = () => (
         </Steps>
       </div>
     </div>
+    <Steps>
+      <Step duration={280}>
+        <div
+          style={{
+            marginTop: 20,
+            padding: '14px 36px',
+            background: surface,
+            borderRadius: 'var(--osd-radius)',
+            ...heavy,
+            fontSize: 30,
+            textAlign: 'center',
+          }}
+        >
+          以後可能不用自己寫 Skill——<Hi>跟 AI 說一次，它幫你寫進 Skill</Hi>
+        </div>
+      </Step>
+    </Steps>
   </LightPage>
 );
 
@@ -2774,7 +2791,8 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
 （按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中——這部分可以參考 Games 的 Banner Mill，它已經能自動調整各語系的文字排版；
-（按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。`,
+（按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
+（按 →）有人說，以後跟 AI 對話就能產所有 banner，不用寫 Skill 了。我覺得對一半：以後可能真的不用自己寫——跟 AI 說一次，它就會自己記進 Skill。但規則還是得存在：AI 再聰明，也不知道我們家的安全區、命名和字型規則；而且對話會結束，規則要留給下一個人、下一個模型用。所以不是不用寫，是改成 AI 幫我們寫，人負責判斷這條規則對不對。`,
 
   // 16 · 模型測試 0:45
   `【0:45】
