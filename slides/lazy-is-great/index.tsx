@@ -23,6 +23,8 @@ import games3 from './assets/games-plugin-3.png';
 import promoCover from './assets/promo-plugin-cover.webp';
 import promo1 from './assets/promo-plugin-1.png';
 import promo2 from './assets/promo-plugin-2.png';
+import gamesBadge from './assets/games-plugin-badge.png';
+import promoBadge from './assets/promo-plugin-badge.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#FFFFFF', text: '#101216', accent: '#0878E5' },
@@ -1846,42 +1848,61 @@ const CrossTeam: Page = () => (
 );
 
 // ── TEAM opener — bridges the model test into the other teams' tools ────────
-const TeamIntroCard = ({ icon, team, tool, how, hot, d }: { icon: IconName; team: string; tool: string; how: string; hot?: boolean; d: number }) => (
+const TeamIntroCard = ({
+  icon,
+  badge,
+  team,
+  tool,
+  how,
+  hot,
+  d,
+}: {
+  icon: IconName;
+  badge?: string;
+  team: string;
+  tool: string;
+  how: string;
+  hot?: boolean;
+  d: number;
+}) => (
   <R d={d} style={{ height: '100%' }}>
     <div
       style={{
         ...card,
         height: '100%',
         boxSizing: 'border-box',
-        padding: '44px 40px',
+        padding: '28px 36px 40px',
         display: 'flex',
         flexDirection: 'column',
-        gap: 22,
+        alignItems: 'center',
+        textAlign: 'center',
+        gap: 14,
         background: hot ? 'var(--osd-accent)' : '#FFFFFF',
         color: hot ? '#FFFFFF' : 'var(--osd-text)',
         border: hot ? '2px solid transparent' : `2px solid ${line}`,
       }}
     >
-      {hot ? (
-        <div style={{ width: 88, height: 88, borderRadius: 21, background: 'rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Icon name={icon} size={44} color="#FFFFFF" />
-        </div>
-      ) : (
-        <IconTile name={icon} />
-      )}
-      <div style={{ ...heavy, fontSize: 48 }}>{team}</div>
-      <div style={{ fontSize: 26, fontWeight: 800, opacity: hot ? 0.95 : 1, color: hot ? '#FFFFFF' : 'var(--osd-accent)' }}>{tool}</div>
-      <div style={{ fontSize: 26, lineHeight: 1.5, color: hot ? 'rgba(255,255,255,0.85)' : muted }}>{how}</div>
+      {/* Plugin store badge (icon + name + tagline) — same box height on every card. */}
+      <div style={{ height: 200, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {badge ? (
+          <img src={badge} alt={`${tool} plugin`} style={{ height: 200, width: 'auto', maxWidth: '100%', display: 'block' }} />
+        ) : (
+          <IconTile name={icon} size={120} />
+        )}
+      </div>
+      <div style={{ ...heavy, fontSize: 44 }}>{team}</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: hot ? '#FFFFFF' : 'var(--osd-accent)' }}>{tool}</div>
+      <div style={{ fontSize: 24, lineHeight: 1.5, color: hot ? 'rgba(255,255,255,0.85)' : muted }}>{how}</div>
     </div>
   </R>
 );
 
 const TeamIntro: Page = () => (
   <LightPage chip="TEAM · 跨部門交流" title={<>跟別的部門聊完，<Hi>大家都有好做法</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, height: 430 }}>
-      <TeamIntroCard d={160} icon="doc" team="Games" tool="Figma plugin · Banner Mill" how="版面固定、只換圖" />
-      <TeamIntroCard d={240} icon="sheet" team="Promotion" tool="Figma plugin · Social Banner 產圖工具" how="只出 MKT 要的 Social Banner" />
-      <TeamIntroCard d={320} icon="spark" team="Casino" tool="AI ＋ Skill · Banner Kit" how="語系多、文案長短不一，要判斷" hot />
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, height: 520 }}>
+      <TeamIntroCard d={160} icon="doc" badge={gamesBadge} team="Games" tool="Figma plugin · Banner Mill" how="版面固定、只換圖" />
+      <TeamIntroCard d={240} icon="sheet" badge={promoBadge} team="Promotion" tool="Figma plugin · Social Banner 產圖工具" how="只出 MKT 要的 Social Banner" />
+      <TeamIntroCard d={320} icon="spark" team="Casino" tool="AI ＋ Skill · Banner Kit" how="語系多、文案長短不一，要判斷" />
     </div>
   </LightPage>
 );
