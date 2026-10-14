@@ -1526,12 +1526,13 @@ const DemoVideo = () => {
 
 const Demo: Page = () => (
   <LightPage dark chip="PROOF · 實際操作" title={<>一句話，<Hi>看 AI 換好所有語系</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '1040px 1fr', gap: 64 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1064px 1fr', gap: 48 }}>
       <R k="lz-pop" d={180}>
         <div
           style={{
-            width: 1040,
-            height: 585,
+            // Matches the recording's 1664×1080 frame, so no letterbox bars.
+            width: 1064,
+            height: 690,
             borderRadius: 'var(--osd-radius)',
             background: '#000000',
             border: '2px solid rgba(255,255,255,0.12)',
@@ -1544,7 +1545,7 @@ const Demo: Page = () => (
         </div>
       </R>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '382.46px', height: '491px', translate: '193.55px 0px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '382.46px', height: '491px', translate: '186px 0px' }}>
           <R d={260}>
             <div
               style={{
