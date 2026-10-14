@@ -2162,6 +2162,154 @@ const Next: Page = () => (
   </LightPage>
 );
 
+// ── 13.5 · Model test — same exam, different AI ─────────────────────────────
+// Fill in as tests finish; an empty string renders as 「測試中」.
+const modelRuns: { name: string; vendor: string; time: string; err: string; check: string; flag?: string }[] = [
+  { name: 'Claude Opus 5.5', vendor: 'Anthropic', time: '', err: '', check: '' },
+  { name: 'Claude Sonnet 5.5', vendor: 'Anthropic', time: '', err: '', check: '' },
+  { name: 'Claude Haiku 4.5', vendor: 'Anthropic', time: '', err: '', check: '' },
+  { name: 'Codex', vendor: 'OpenAI', time: '', err: '', check: '', flag: 'policy 限制' },
+];
+
+const ExamRow = ({ l, name, desc }: { l: string; name: string; desc: string }) => (
+  <div
+    style={{
+      background: '#FFFFFF',
+      border: `2px solid ${line}`,
+      borderRadius: 14,
+      height: 76,
+      padding: '0 20px',
+      boxSizing: 'border-box',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 18,
+    }}
+  >
+    <Letter l={l} />
+    <span style={{ fontSize: 28, fontWeight: 800, whiteSpace: 'nowrap' }}>{name}</span>
+    <span style={{ fontSize: 22, color: muted }}>{desc}</span>
+  </div>
+);
+
+const Cell = ({ v }: { v: string }) => (
+  <span style={{ fontSize: 26, fontWeight: 800, color: v ? 'var(--osd-text)' : muted, opacity: v ? 1 : 0.6, fontVariantNumeric: 'tabular-nums' }}>
+    {v || '測試中'}
+  </span>
+);
+
+const ModelTest: Page = () => (
+  <LightPage chip="NEXT · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
+    <div style={{ display: 'grid', gridTemplateColumns: '560px 1fr', gap: 48, height: 470 }}>
+      <R d={160} style={{ height: '100%' }}>
+        <div
+          style={{
+            height: '100%',
+            background: surface,
+            borderRadius: 'var(--osd-radius)',
+            padding: '32px 32px',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 14,
+          }}
+        >
+          <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 4 }}>同一套考題</div>
+          <ExamRow l="A" name="基本" desc="1 版位 × 12 語系" />
+          <ExamRow l="B" name="刁鑽" desc="最長語系＋緬甸文＋幣別" />
+          <ExamRow l="C" name="量大" desc="3 版位 × 12 語系" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 'auto', fontSize: 22, color: muted, fontWeight: 700 }}>
+            比三件事
+            {['速度', '錯誤數', '自查能力'].map((t) => (
+              <span key={t} style={{ fontSize: 22, fontWeight: 800, padding: '6px 16px', borderRadius: 999, background: blueSoft, color: 'var(--osd-accent)' }}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </R>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <R d={240}>
+          <div style={{ ...card, padding: '6px 28px' }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
+                alignItems: 'center',
+                height: 46,
+                fontSize: 20,
+                fontWeight: 800,
+                color: muted,
+                letterSpacing: '0.06em',
+                borderBottom: `2px solid ${line}`,
+              }}
+            >
+              <span>模型</span>
+              <span>耗時</span>
+              <span>錯誤</span>
+              <span>自查</span>
+            </div>
+            {modelRuns.map((m, i) => (
+              <div
+                key={m.name}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
+                  alignItems: 'center',
+                  height: 68,
+                  borderBottom: i < modelRuns.length - 1 ? `1px solid ${line}` : 'none',
+                }}
+              >
+                <span style={{ display: 'flex', alignItems: 'baseline', gap: 10, whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: 26, fontWeight: 800 }}>{m.name}</span>
+                  <span style={{ fontSize: 18, color: muted }}>{m.vendor}</span>
+                </span>
+                {m.flag ? (
+                  <span style={{ gridColumn: '2 / 5' }}>
+                    <span style={{ fontSize: 20, fontWeight: 800, padding: '5px 14px', borderRadius: 999, background: redSoft, color: red, border: `2px solid ${red}` }}>
+                      {m.flag}
+                    </span>
+                  </span>
+                ) : (
+                  <>
+                    <Cell v={m.time} />
+                    <Cell v={m.err} />
+                    <Cell v={m.check} />
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </R>
+        <Steps>
+          <Step duration={280}>
+            <div style={{ background: redSoft, borderRadius: 'var(--osd-radius)', padding: '20px 28px' }}>
+              <div style={{ fontSize: 26, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
+              <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>博弈相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
+            </div>
+          </Step>
+        </Steps>
+      </div>
+    </div>
+    <Steps>
+      <Step duration={280}>
+        <div
+          style={{
+            marginTop: 28,
+            padding: '18px 40px',
+            background: surface,
+            borderRadius: 'var(--osd-radius)',
+            ...heavy,
+            fontSize: 34,
+            textAlign: 'center',
+          }}
+        >
+          換模型、改 Skill 前，先用同一套考題跑一次——<Hi>結果一致才放行</Hi>
+        </div>
+      </Step>
+    </Steps>
+  </LightPage>
+);
+
 // ── 15.5 · Take home — Banner Kit ───────────────────────────────────────────
 const SkillCard = ({
   name,
@@ -2392,6 +2540,7 @@ export default [
   Modules,
   RulePage,
   Next,
+  ModelTest,
   TakeHome,
   Closing,
 ] satisfies Page[];
@@ -2496,11 +2645,18 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中；
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。`,
 
-  // 14 · 帶回家 0:30
+  // 14 · 模型測試 0:45
+  `【0:45】
+常被問：換一個 AI 模型，結果會一樣嗎？所以我出了同一套考題：A 基本、B 刁鑽（最長語系、緬甸文、幣別）、C 量大，
+每個模型跑兩次，比速度、錯誤數，還有 AI 自己檢查抓不抓得到錯。（數據：【待填】）
+（按 →）也試了 OpenAI 的 Codex：一開始它因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋。所以選 AI 不只看能力，也要看能不能用在我們的內容上。
+（按 →）之後換模型或改 Skill，都先用這套考題跑一次，結果一致才放行。`,
+
+  // 15 · 帶回家 0:30
   `【0:30】
 這套 Banner Kit 團隊都能用：做好母版後，說「多語系」就能換好所有語系；resize 還在開發中，好了會自動更新給大家。三行指令裝好就能用。`,
 
-  // 15 · 總結 0:20 + Q&A 5:00
+  // 16 · 總結 0:20 + Q&A 5:00
   `【0:20】
 偷懶不是終點，是每次都問自己：還能更懶嗎？
 還記得開頭的三個原則嗎？重複的，交給工具；會錯的，交給流程；要判斷的，才交給人。
@@ -2514,7 +2670,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 ・AI 出錯怎麼辦？出錯 → 補規則 → 下次不再錯（緬甸文例子）。
 ・用的是哪個 AI agent？【工具名稱】＋【如何連接設計工具】。
 ・為什麼不用 Figma 自己的 AI agent？流程要跨工具（Google Sheet → Figma → 檢查 → 匯出壓縮），而且規則是團隊自己的，寫成 Skill 才能共用、版控、持續補規則。
-・不同 AI 模型跑出來結果會不會不一樣？會有差異，所以：固定使用的模型版本、準備幾組標準測試案例（固定母版＋文案）換模型或改 Skill 後先跑一次比對，再加上 AI 截圖檢查和 content writer 校對兩道關。
+・不同 AI 模型跑出來結果會不會不一樣？（見模型測試頁）會有差異，所以：固定使用的模型版本、準備幾組標準測試案例（固定母版＋文案）換模型或改 Skill 後先跑一次比對，再加上 AI 截圖檢查和 content writer 校對兩道關。
 ・急件可以當天上嗎？生產時間縮短了，但校對與確認仍需要時間——避免變成承諾。
 ・其他部門要怎麼開始？先從模組 D 固定範本試，再找我一起寫規則。`,
 ];
