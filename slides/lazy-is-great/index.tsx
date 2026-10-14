@@ -2186,142 +2186,66 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
   },
 ];
 
-const ExamRow = ({ l, name, desc }: { l: string; name: string; desc: string }) => (
-  <div
-    style={{
-      background: '#FFFFFF',
-      border: `2px solid ${line}`,
-      borderRadius: 14,
-      height: 76,
-      padding: '0 20px',
-      boxSizing: 'border-box',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 18,
-    }}
-  >
-    <Letter l={l} />
-    <span style={{ fontSize: 28, fontWeight: 800, whiteSpace: 'nowrap' }}>{name}</span>
-    <span style={{ fontSize: 22, color: muted }}>{desc}</span>
-  </div>
-);
-
 const Cell = ({ v }: { v: string }) => (
-  <span style={{ fontSize: 24, fontWeight: 800, color: v ? 'var(--osd-text)' : muted, opacity: v ? 1 : 0.6, fontVariantNumeric: 'tabular-nums' }}>
+  <span style={{ fontSize: 30, fontWeight: 800, color: v ? 'var(--osd-text)' : muted, opacity: v ? 1 : 0.6, fontVariantNumeric: 'tabular-nums' }}>
     {v || '測試中'}
   </span>
 );
 
 const ModelTest: Page = () => (
   <LightPage chip="NEXT · 模型測試" title={<>換一個 AI，<Hi>結果一樣嗎？</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '560px 1fr', gap: 48, height: 510 }}>
-      <R d={160} style={{ height: '100%' }}>
+    <R d={160}>
+      <div style={{ ...card, padding: '8px 40px 16px' }}>
         <div
           style={{
-            height: '100%',
-            background: surface,
-            borderRadius: 'var(--osd-radius)',
-            padding: '32px 32px',
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 14,
+            display: 'grid',
+            gridTemplateColumns: '1.6fr 1fr 1fr 1fr',
+            alignItems: 'center',
+            height: 56,
+            fontSize: 22,
+            fontWeight: 800,
+            color: muted,
+            letterSpacing: '0.06em',
+            borderBottom: `2px solid ${line}`,
           }}
         >
-          <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 4 }}>同一套考題</div>
-          <ExamRow l="A" name="基本" desc="1 版位 × 12 語系" />
-          <ExamRow l="B" name="刁鑽" desc="最長語系＋緬甸文＋幣別" />
-          <ExamRow l="C" name="量大" desc="3 版位 × 12 語系" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 'auto', fontSize: 22, color: muted, fontWeight: 700 }}>
-            比三件事
-            {['速度', '錯誤數', '自查能力'].map((t) => (
-              <span key={t} style={{ fontSize: 22, fontWeight: 800, padding: '6px 16px', borderRadius: 999, background: blueSoft, color: 'var(--osd-accent)' }}>
-                {t}
-              </span>
-            ))}
-          </div>
+          <span>模型</span>
+          <span>平均耗時</span>
+          <span>平均錯誤</span>
+          <span>自查抓到</span>
         </div>
-      </R>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <R d={240}>
-          <div style={{ ...card, padding: '6px 28px' }}>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
-                alignItems: 'center',
-                height: 40,
-                fontSize: 20,
-                fontWeight: 800,
-                color: muted,
-                letterSpacing: '0.06em',
-                borderBottom: `2px solid ${line}`,
-              }}
-            >
-              <span>模型</span>
-              <span>耗時</span>
-              <span>錯誤</span>
-              <span>自查</span>
+        {modelGroups.map((g) => (
+          <div key={g.tool}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, height: 54, marginTop: 6 }}>
+              <span style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
+              <span style={{ fontSize: 20, color: muted }}>{g.vendor}</span>
+              {g.flag && (
+                <span style={{ fontSize: 20, fontWeight: 800, padding: '4px 14px', borderRadius: 999, background: redSoft, color: red, border: `2px solid ${red}` }}>
+                  {g.flag}
+                </span>
+              )}
             </div>
-            {modelGroups.map((g) => (
-              <div key={g.tool}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, height: 34, marginTop: 2 }}>
-                  <span style={{ fontSize: 24, fontWeight: 800, color: 'var(--osd-accent)' }}>{g.tool}</span>
-                  <span style={{ fontSize: 18, color: muted }}>{g.vendor}</span>
-                  {g.flag && (
-                    <span style={{ fontSize: 18, fontWeight: 800, padding: '3px 12px', borderRadius: 999, background: redSoft, color: red, border: `2px solid ${red}` }}>
-                      {g.flag}
-                    </span>
-                  )}
-                </div>
-                {g.models.map((m) => (
-                  <div
-                    key={m.name}
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: '1.7fr 1fr 1fr 1fr',
-                      alignItems: 'center',
-                      height: 42,
-                      borderTop: `1px solid ${line}`,
-                    }}
-                  >
-                    <span style={{ fontSize: 24, fontWeight: 800, paddingLeft: 16, whiteSpace: 'nowrap' }}>{m.name}</span>
-                    <Cell v={m.time} />
-                    <Cell v={m.err} />
-                    <Cell v={m.check} />
-                  </div>
-                ))}
+            {g.models.map((m) => (
+              <div
+                key={m.name}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1.6fr 1fr 1fr 1fr',
+                  alignItems: 'center',
+                  height: 62,
+                  borderTop: `1px solid ${line}`,
+                }}
+              >
+                <span style={{ fontSize: 30, fontWeight: 800, paddingLeft: 20, whiteSpace: 'nowrap' }}>{m.name}</span>
+                <Cell v={m.time} />
+                <Cell v={m.err} />
+                <Cell v={m.check} />
               </div>
             ))}
           </div>
-        </R>
-        <Steps>
-          <Step duration={280}>
-            <div style={{ background: redSoft, borderRadius: 'var(--osd-radius)', padding: '16px 28px' }}>
-              <div style={{ fontSize: 26, fontWeight: 800, color: red }}>Codex：一開始因內容政策，拒絕調整 banner</div>
-              <div style={{ fontSize: 22, color: ink2, marginTop: 6 }}>博弈相關內容可能直接被擋——選 AI 不只看能力，也要看能不能用在我們的內容上</div>
-            </div>
-          </Step>
-        </Steps>
+        ))}
       </div>
-    </div>
-    <Steps>
-      <Step duration={280}>
-        <div
-          style={{
-            marginTop: 20,
-            padding: '18px 40px',
-            background: surface,
-            borderRadius: 'var(--osd-radius)',
-            ...heavy,
-            fontSize: 34,
-            textAlign: 'center',
-          }}
-        >
-          換模型、改 Skill 前，先用同一套考題跑一次——<Hi>結果一致才放行</Hi>
-        </div>
-      </Step>
-    </Steps>
+    </R>
   </LightPage>
 );
 
@@ -2662,10 +2586,9 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 
   // 14 · 模型測試 0:45
   `【0:45】
-常被問：換一個 AI 模型，結果會一樣嗎？所以我出了同一套考題：A 基本、B 刁鑽（最長語系、緬甸文、幣別）、C 量大，
-Claude 和 Codex 各自也有不同模型，每個模型跑兩次，比速度、錯誤數，還有 AI 自己檢查抓不抓得到錯。（數據：【待填】）
-（按 →）也試了 OpenAI 的 Codex：一開始它因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋。所以選 AI 不只看能力，也要看能不能用在我們的內容上。
-（按 →）之後換模型或改 Skill，都先用這套考題跑一次，結果一致才放行。`,
+常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比耗時、錯誤數，還有 AI 自己檢查抓不抓得到錯。（數據：【待填】）
+Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
+之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
   // 15 · 帶回家 0:30
   `【0:30】
