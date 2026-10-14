@@ -1874,8 +1874,8 @@ const CrossTeam: Page = () => (
       <R d={160} style={{ height: '100%' }}>
         <TeamCard icon="doc" name="Games">
           <CompareRow label="做法">固定範本，每次只換背景圖和前景圖</CompareRow>
-          <CompareRow label="靠什麼省力">版面、圖層位置都固定、不用判斷，寫成 Figma plugin 一鍵換圖</CompareRow>
-          <CompareRow label="優點">快、穩定，每次結果都一樣</CompareRow>
+          <CompareRow label="靠什麼省力">Figma plugin 一鍵把一張設計轉成所有尺寸、語系</CompareRow>
+          <CompareRow label="優點">快、穩定，各語系文字排版也自動調整</CompareRow>
           <CompareRow label="限制">版面一改就要改程式，需要有人維護 plugin</CompareRow>
         </TeamCard>
       </R>
@@ -2642,7 +2642,7 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
   // 10 · 三個部門的做法比較 1:30
   `【1:30】
 我也看了其他部門，大家需求不同，做法都很聰明。
-Games 版面固定、只換圖，規則不用判斷，很適合寫成 Figma plugin，快又穩定。
+Games 版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」：一張設計一鍵轉成所有尺寸和語系，還會依設定自動調整各語系的文字排版，快又穩定。
 （按 →）Promotion 只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以寫成 Figma plugin：Excel 填好文案、選底圖，一鍵產生全部尺寸和語系，還會自動壓縮、匯出 ZIP。
 （按 →）我們 Casino 語系多、文案長短不一，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
