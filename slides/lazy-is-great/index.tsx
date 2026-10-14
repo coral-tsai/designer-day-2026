@@ -1876,7 +1876,7 @@ const TeamCard = ({
 );
 
 const CrossTeam: Page = () => (
-  <LightPage chip="TEAM · 跨部門交流" title={<>跟別的部門聊完，<Hi>大家都有好做法</Hi></>}>
+  <LightPage chip="TEAM · 三種做法比較" title={<>三種做法，<Hi>各有適合的場景</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, height: 528 }}>
       <R d={160} style={{ height: '100%' }}>
         <TeamCard icon="doc" name="Games">
@@ -1968,10 +1968,21 @@ const ShotRow = ({ shots, height }: { shots: Shot[]; height: number }) => (
   </div>
 );
 
+const ShotCaption = ({ tool, children }: { tool: string; children: ReactNode }) => (
+  <R d={520}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 22, fontSize: 26, color: ink2 }}>
+      <span style={{ fontSize: 20, fontWeight: 800, padding: '4px 14px', borderRadius: 999, background: blueSoft, color: 'var(--osd-accent)', whiteSpace: 'nowrap' }}>
+        {tool}
+      </span>
+      <span>{children}</span>
+    </div>
+  </R>
+);
+
 const GamesPlugin: Page = () => (
-  <LightPage chip="TEAM · Games 的做法" title={<>Games 的 plugin：<Hi>Banner Mill</Hi></>}>
+  <LightPage chip="TEAM · 跨部門交流 · Games" title={<>Games：<Hi>一張設計，一鍵轉成所有尺寸</Hi></>}>
     <ShotRow
-      height={590}
+      height={560}
       shots={[
         { src: gamesCover, w: 1040, h: 1186, alt: 'Banner Mill plugin 介紹頁' },
         { src: games1, w: 778, h: 1258, alt: 'Banner Auto Layout：選擇要排版的語系' },
@@ -1979,13 +1990,14 @@ const GamesPlugin: Page = () => (
         { src: games3, w: 778, h: 1256, alt: '執行日誌' },
       ]}
     />
+    <ShotCaption tool="Figma plugin · Banner Mill">版面固定、只換圖——連各語系的文字排版都自動調整</ShotCaption>
   </LightPage>
 );
 
 const PromoPlugin: Page = () => (
-  <LightPage chip="TEAM · Promotion 的做法" title={<>Promotion 的 plugin：<Hi>Social Banner 產圖工具</Hi></>}>
+  <LightPage chip="TEAM · 跨部門交流 · Promotion" title={<>Promotion：<Hi>Excel 填文案，一鍵產生 Social Banner</Hi></>}>
     <ShotRow
-      height={590}
+      height={560}
       shots={[
         { src: promoCover, w: 1036, h: 1180, alt: 'Social Banner 產圖工具 plugin 介紹頁' },
         {
@@ -2010,6 +2022,7 @@ const PromoPlugin: Page = () => (
         },
       ]}
     />
+    <ShotCaption tool="Figma plugin · Social Banner 產圖工具">只出 MKT 要的尺寸——調好顏色版面，自動壓縮、匯出 ZIP</ShotCaption>
   </LightPage>
 );
 
@@ -2674,9 +2687,9 @@ export default [
   SkillInside,
   Demo,
   Impact,
-  CrossTeam,
   GamesPlugin,
   PromoPlugin,
+  CrossTeam,
   Modules,
   RulePage,
   Next,
@@ -2752,25 +2765,26 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 10 分鐘。
 製作時間少了【92%】，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）`,
 
-  // 10 · 三個部門的做法比較 1:30
-  `【1:30】
-我也看了其他部門，大家需求不同，做法都很聰明。
-Games 版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」：一張設計一鍵轉成所有尺寸和語系，還會依設定自動調整各語系的文字排版，快又穩定。
-（按 →）Promotion 只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以寫成 Figma plugin：Excel 填好文案、選底圖，一鍵產生全部尺寸和語系，還會自動壓縮、匯出 ZIP。
-（按 →）我們 Casino 語系多、文案長短不一，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
+  // 10 · Games 的 plugin 0:25
+  `【0:25】
+做完自己的流程，我也去跟其他部門聊，發現大家都有很聰明的做法。
+先看 Games：他們版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」——一張設計一鍵轉成所有尺寸和語系，連各語系的文字排版都會依設定自動調整。`,
+
+  // 11 · Promotion 的 plugin 0:25
+  `【0:25】
+再來是 Promotion：他們只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以也寫成 plugin——Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生，還會自動壓縮、匯出 ZIP。`,
+
+  // 12 · 三種做法比較 1:00
+  `【1:00】
+把三個部門放在一起看，需求不同，做法也不同：
+Games 版面固定、不用判斷，寫成 plugin 最快最穩，但版面一改就要改程式。
+（按 →）Promotion 範圍小、規則清楚，plugin 剛好夠用，新版型再擴充。
+（按 →）我們 Casino 語系多、文案長短不一，需要判斷，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
-
-  // 11 · Games 的 plugin 0:20
-  `【0:20】
-這是 Games 的 Banner Mill：一張設計一鍵轉成所有尺寸和語系，還能依 AI Config 自動調整各語系的文字排版，最後用前綴整理 frame、看執行日誌。`,
-
-  // 12 · Promotion 的 plugin 0:20
-  `【0:20】
-這是 Promotion 的 Social Banner 產圖工具：Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生全部尺寸，再自動壓縮、匯出 ZIP。`,
 
   // 13 · 最終版模組 1:15
   `【1:15】
-聊完之後，我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
+所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
 A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
