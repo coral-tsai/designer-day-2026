@@ -1877,7 +1877,7 @@ const TeamIntroCard = ({ icon, team, tool, how, hot, d }: { icon: IconName; team
 );
 
 const TeamIntro: Page = () => (
-  <LightPage chip="TEAM · 跨部門交流" title={<>同樣在做 banner，<Hi>別的部門怎麼解？</Hi></>}>
+  <LightPage chip="TEAM · 跨部門交流" title={<>跟別的部門聊完，<Hi>大家都有好做法</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, height: 430 }}>
       <TeamIntroCard d={160} icon="doc" team="Games" tool="Figma plugin · Banner Mill" how="版面固定、只換圖" />
       <TeamIntroCard d={240} icon="sheet" team="Promotion" tool="Figma plugin · Social Banner 產圖工具" how="只出 MKT 要的 Social Banner" />
@@ -2745,7 +2745,7 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 
   // 11 · 跨部門交流 0:20
   `【0:20】
-選 AI 要看任務；其實選工具也一樣——我去跟其他部門聊，發現大家需求不同，有的部門根本不用 AI，也做得很好。
+選 AI 要看任務；其實選工具也一樣。我去跟其他部門聊完，發現大家都有好做法——需求不同，有的部門根本不用 AI，也做得很好。
 Games 和 Promotion 寫成 Figma plugin，我們 Casino 用 AI 照 Skill 做。先一個一個看。`,
 
   // 12 · Games 的 plugin 0:25
