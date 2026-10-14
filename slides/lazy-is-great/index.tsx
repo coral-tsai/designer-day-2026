@@ -1467,35 +1467,6 @@ const RulePage: Page = () => {
 };
 
 // ── 8 · Demo ────────────────────────────────────────────────────────────────
-const DemoBeat = ({ n, title, time, desc }: { n: string; title: string; time?: string; desc: string }) => (
-  <div style={{ display: 'flex', gap: 24 }}>
-    <div
-      style={{
-        width: 52,
-        height: 52,
-        borderRadius: '50%',
-        border: '2px solid var(--lz-hi, var(--osd-accent))',
-        color: 'var(--lz-hi, var(--osd-accent))',
-        flexShrink: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 26,
-        fontWeight: 800,
-      }}
-    >
-      {n}
-    </div>
-    <div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
-        <span style={{ fontSize: 32, fontWeight: 800 }}>{title}</span>
-        {time && <span style={{ fontSize: 22, color: 'var(--lz-hi, var(--osd-accent))', fontWeight: 700 }}>{time}</span>}
-      </div>
-      <div style={{ fontSize: 26, lineHeight: 1.5, color: `var(--lz-muted, ${muted})`, marginTop: 8 }}>{desc}</div>
-    </div>
-  </div>
-);
-
 // Plays (muted, from the start) when the page comes on stage; pauses when it leaves.
 // Thumbnails never play — they only show the first frame.
 const DemoVideo = () => {
@@ -1524,64 +1495,91 @@ const DemoVideo = () => {
   );
 };
 
+// Compact header (title + time chip on one row) and a single row of beats under
+// the video, so the recording gets as much height as the canvas allows.
+const DemoStep = ({ n, title, desc }: { n: string; title: string; desc: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 14, whiteSpace: 'nowrap' }}>
+    <span
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: '50%',
+        border: '2px solid var(--lz-hi, var(--osd-accent))',
+        color: 'var(--lz-hi, var(--osd-accent))',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 20,
+        fontWeight: 800,
+        flexShrink: 0,
+      }}
+    >
+      {n}
+    </span>
+    <span style={{ fontSize: 26, fontWeight: 800 }}>{title}</span>
+    <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})` }}>{desc}</span>
+  </div>
+);
+
 const Demo: Page = () => (
-  <LightPage dark chip="PROOF · 實際操作" title={<>一句話，<Hi>看 AI 換好所有語系</Hi></>}>
-    <div style={{ display: 'grid', gridTemplateColumns: '1064px 1fr', gap: 48 }}>
-      <R k="lz-pop" d={180}>
-        <div
-          style={{
-            // Matches the recording's 1664×1080 frame, so no letterbox bars.
-            width: 1064,
-            height: 690,
-            borderRadius: 'var(--osd-radius)',
-            background: '#000000',
-            border: '2px solid rgba(255,255,255,0.12)',
-            boxSizing: 'border-box',
-            boxShadow: '0 40px 80px -40px rgba(0,0,0,0.7)',
-            overflow: 'hidden',
-          }}
-        >
-          <DemoVideo />
-        </div>
-      </R>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, minWidth: '0px', minHeight: '0px', maxWidth: 'none', maxHeight: 'none', flexShrink: '0', flexGrow: '0', flexBasis: 'auto', width: '382.46px', height: '491px', translate: '186px 0px' }}>
-          <R d={260}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'baseline',
-                gap: 12,
-                padding: '12px 22px',
-                borderRadius: 14,
-                background: 'rgba(79,163,247,0.14)',
-                border: '1px solid rgba(79,163,247,0.35)',
-              }}
-            >
-              <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700 }}>實際耗時</span>
-              <span style={{ ...heavy, fontSize: 40, color: 'var(--lz-hi, var(--osd-accent))' }}>約 7 分鐘</span>
-            </div>
-          </R>
-          <R d={320}>
-            <DemoBeat n="1" title="說一句話" desc="直接對 AI agent 下指令" />
-          </R>
-          <R d={420}>
-            <DemoBeat n="2" title="AI 執行中" desc="中間切到 Skill 檔內容" />
-          </R>
-          <R d={520}>
-            <DemoBeat n="3" title="成品拼貼" desc="所有版位成品＋產出清單" />
-          </R>
-        </div>
-        <R d={620}>
-          <div style={{ fontSize: 22, lineHeight: 1.6, color: `var(--lz-muted, ${muted})` }}>
-            {''}<br />{''}
-            
-            {''}
-          </div>
+  <div
+    data-lz-active={useActive()}
+    style={{ ...fill, background: darkBg, color: 'var(--osd-text)', ...darkVars, padding: '56px 120px 0', display: 'flex', flexDirection: 'column' }}
+  >
+    <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+      <div>
+        <R d={0}>
+          <Kicker>PROOF · 實際操作</Kicker>
+        </R>
+        <R d={80}>
+          <h2 style={{ ...heavy, fontSize: 56, lineHeight: 1.2, margin: '10px 0 0' }}>
+            一句話，<Hi>看 AI 換好所有語系</Hi>
+          </h2>
         </R>
       </div>
+      <R d={260}>
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'baseline',
+            gap: 12,
+            padding: '10px 22px',
+            borderRadius: 14,
+            background: 'rgba(79,163,247,0.14)',
+            border: '1px solid rgba(79,163,247,0.35)',
+          }}
+        >
+          <span style={{ fontSize: 22, color: `var(--lz-muted, ${muted})`, fontWeight: 700, whiteSpace: 'nowrap' }}>實際耗時</span>
+          <span style={{ ...heavy, fontSize: 36, color: 'var(--lz-hi, var(--osd-accent))', whiteSpace: 'nowrap' }}>約 7 分鐘</span>
+        </div>
+      </R>
     </div>
-  </LightPage>
+    <R k="lz-pop" d={180} style={{ alignSelf: 'center', marginTop: 22 }}>
+      <div
+        style={{
+          // Matches the recording's 1664×1080 frame, so no letterbox bars.
+          width: 1110,
+          height: 720,
+          borderRadius: 'var(--osd-radius)',
+          background: '#000000',
+          border: '2px solid rgba(255,255,255,0.12)',
+          boxSizing: 'border-box',
+          boxShadow: '0 40px 80px -40px rgba(0,0,0,0.7)',
+          overflow: 'hidden',
+        }}
+      >
+        <DemoVideo />
+      </div>
+    </R>
+    <R d={360} style={{ marginTop: 20 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 64 }}>
+        <DemoStep n="1" title="說一句話" desc="直接對 AI agent 下指令" />
+        <DemoStep n="2" title="AI 執行中" desc="中間切到 Skill 檔內容" />
+        <DemoStep n="3" title="成品拼貼" desc="所有版位成品＋產出清單" />
+      </div>
+    </R>
+    <Footer />
+  </div>
 );
 
 // ── 9 · Impact ──────────────────────────────────────────────────────────────
