@@ -69,6 +69,7 @@ const CSS = `
 @keyframes lzDash { to { stroke-dashoffset: -32; } }
 @keyframes lzSheen { 0%, 55% { transform: translateX(-160%) skewX(-18deg); opacity: 0; } 70% { opacity: 0.6; } 100% { transform: translateX(420%) skewX(-18deg); opacity: 0; } }
 @keyframes lzKen { from { transform: scale(1); } to { transform: scale(1.07); } }
+@keyframes lzFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes lzBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @keyframes lzGlow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: 0 0 0 12px var(--glow, rgba(8,120,229,0.18)); } }
 .lz-grow { transform-origin: 50% 100%; }
@@ -85,6 +86,7 @@ const CSS = `
 [data-lz-active="true"] .lz-sheen::after { content: ''; position: absolute; top: -20%; left: 0; width: 30%; height: 140%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent); animation: lzSheen 3.2s ease-out 800ms infinite; pointer-events: none; }
 [data-lz-active="true"] .lz-ken { animation: lzKen 14s cubic-bezier(0.23, 1, 0.32, 1) 400ms both; transform-origin: 30% 30%; }
 [data-lz-active="true"] .lz-blink { animation: lzBlink 1.6s ease-in-out infinite; }
+[data-lz-active="true"] .lz-after-morph { animation: lzFade 360ms ease-out 720ms both; }
 [data-lz-active="true"] .lz-glow { animation: lzGlow 2.4s ease-in-out 600ms infinite; }
 /* Nothing inside a hidden step animates until it is revealed (no spent or spoiled motion). */
 [data-osd-step="pending"] *, [data-osd-step="pending"] *::after { animation: none !important; }
@@ -123,7 +125,7 @@ const morphTransition: SlideTransition = {
   duration: 280,
   exit: { duration: 308, easing: 'cubic-bezier(0.4, 0, 1, 1)', keyframes: [{ opacity: 1 }, { opacity: 1 }] },
   enter: { duration: 308, easing: 'cubic-bezier(0, 0, 0.2, 1)', keyframes: [{ opacity: 0 }, { opacity: 1 }] },
-  morph: { duration: 868, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' },
+  morph: { duration: 760, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' },
 };
 
 // ── Shared building blocks ──────────────────────────────────────────────────
@@ -724,85 +726,48 @@ const Handmade: Page = () => (
 );
 
 // ── 5 · Evolution 1 ─────────────────────────────────────────────────────────
-const CheckItem = ({ text, good }: { text: string; good?: boolean }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 28, lineHeight: 1.4 }}>
-    <span
-      style={{
-        width: 34,
-        height: 34,
-        borderRadius: '50%',
-        flexShrink: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 19,
-        fontWeight: 800,
-        background: good ? 'var(--osd-accent)' : '#E9ECF1',
-        color: good ? '#FFFFFF' : muted,
-      }}
-    >
-      {good ? '✓' : '✕'}
-    </span>
-    <span style={{ color: good ? 'var(--osd-text)' : muted, fontWeight: good ? 700 : 500 }}>{text}</span>
-  </div>
-);
-
-const BeforeAfterCard = ({ tag, label, good, children }: { tag: string; label: string; good?: boolean; children: ReactNode }) => (
+const BeforeAfterLine = ({ tag, text, good }: { tag: string; text: string; good?: boolean }) => (
   <div
     style={{
-      ...card,
       height: '100%',
-      padding: '26px 40px',
-      background: good ? '#FFFFFF' : surface,
-      border: good ? '3px solid var(--osd-accent)' : `2px solid ${line}`,
-      boxShadow: good ? '0 24px 48px -28px rgba(8,120,229,0.45)' : 'none',
+      boxSizing: 'border-box',
+      borderRadius: 'var(--osd-radius)',
+      padding: '0 32px',
       display: 'flex',
       flexDirection: 'column',
-      gap: 10,
+      justifyContent: 'center',
+      gap: 8,
+      background: good ? '#FFFFFF' : surface,
+      border: good ? '2px solid var(--osd-accent)' : `2px solid ${line}`,
     }}
   >
-    <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 6 }}>
-      <span style={{ fontSize: 22, fontWeight: 800, letterSpacing: '0.16em', color: good ? 'var(--osd-accent)' : muted }}>
-        {tag}
-      </span>
-      <span style={{ fontSize: 30, fontWeight: 800 }}>{label}</span>
-    </div>
-    {children}
+    <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.16em', color: good ? 'var(--osd-accent)' : muted }}>{tag}</span>
+    <span style={{ fontSize: 28, fontWeight: 700, color: good ? 'var(--osd-text)' : ink2 }}>{text}</span>
   </div>
 );
 
 const Evolution1: Page = () => (
   <LightPage chip="HOW · 第一次偷懶" title={<>把 Google Sheet 接進流程，<Hi>文案不再手貼</Hi></>}>
-    <MiniFlow owners={{ '05': 'sheet' }} tags={{ '05': 'Sheet' }} />
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 72px 1fr', height: 300, alignItems: 'stretch' }}>
+    <MiniFlow owners={{ '05': 'sheet' }} tags={{ '05': 'Sheet' }} afterMorph />
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 64px 1fr', alignItems: 'stretch', height: 120 }}>
       <Steps>
         <R d={180} style={{ height: '100%' }}>
-          <BeforeAfterCard tag="BEFORE" label="手動複製貼上">
-            <CheckItem text="打開文案表逐格複製" />
-            <CheckItem text="切回 Figma 逐一貼上對位" />
-            <CheckItem text="多一種語言就多做一輪" />
-            <CheckItem text="改字 = 全部重貼" />
-          </BeforeAfterCard>
+          <BeforeAfterLine tag="BEFORE" text="逐格複製、切回 Figma 貼上，改一個字就全部重貼" />
         </R>
-        <Arrow color="var(--osd-accent)" size={44} />
+        <Arrow color="var(--osd-accent)" size={40} />
         <Step duration={280}>
-          <BeforeAfterCard tag="AFTER" label="Sheet 一次帶入" good>
-            <CheckItem text="文案集中在一張 Sheet" good />
-            <CheckItem text="Plugin 依語系自動填入" good />
-            <CheckItem text="改字只改一個地方" good />
-            <CheckItem text="貼錯幾乎歸零" good />
-          </BeforeAfterCard>
+          <BeforeAfterLine tag="AFTER" text="文案集中一張 Sheet，Plugin 依語系自動填入" good />
         </Step>
       </Steps>
     </div>
-    <div style={{ display: 'grid', gridTemplateColumns: '981px 1fr', gap: 40, height: 276, marginTop: 24 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1161px 1fr', gap: 36, height: 387, marginTop: 30 }}>
       {/* The plugin we used: Google Sheets Sync (Figma Community page). 1504×500 */}
       <Steps>
       <Step duration={280}>
         <div
           style={{
             position: 'relative',
-            height: 276,
+            height: 387,
             borderRadius: 'var(--osd-radius)',
             overflow: 'hidden',
             background: '#2B2B2B',
@@ -822,7 +787,7 @@ const Evolution1: Page = () => (
           <Step duration={280}>
             <div
               style={{
-                height: 160,
+                height: 200,
                 boxSizing: 'border-box',
                 background: blueSoft,
                 color: 'var(--osd-text)',
@@ -834,13 +799,13 @@ const Evolution1: Page = () => (
               }}
             >
               <span style={{ fontSize: 28, fontWeight: 700 }}>多語系貼字時間</span>
-              <span style={{ ...heavy, fontSize: 60, color: 'var(--osd-accent)', lineHeight: 1.15, marginTop: 4 }}>↓ 約 【60%】</span>
+              <span style={{ ...heavy, fontSize: 60, color: 'var(--osd-accent)', lineHeight: 1.15, marginTop: 6 }}>↓ 約 【60%】</span>
             </div>
           </Step>
           <Step duration={280}>
             <div
               style={{
-                height: 100,
+                height: 171,
                 boxSizing: 'border-box',
                 background: redSoft,
                 borderRadius: 'var(--osd-radius)',
@@ -1621,31 +1586,42 @@ const ownerLook: Record<Owner, { bg: string; fg: string; border: string }> = {
   ai: { bg: '#0878E5', fg: '#FFFFFF', border: '#0878E5' },
 };
 
-// The stage card itself is the morph node (no transform on it — R animates its wrapper).
+// Only the card's box (background, border, radius) morphs — text would squash when a
+// tall card glides into a thin chip, so it rides a separate layer and simply fades.
 const FlowStage = ({ n, name, who, d }: { n: string; name: string; who: string; d: number }) => (
   <R d={d} style={{ height: '100%' }}>
-    <MorphElement id={`flow-${n}`}>
+    <div style={{ position: 'relative', height: '100%' }}>
+      <MorphElement id={`flow-${n}`}>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            boxSizing: 'border-box',
+            borderRadius: 'var(--osd-radius)',
+            background: '#FFFFFF',
+            border: `2px solid ${line}`,
+          }}
+        />
+      </MorphElement>
       <div
         style={{
+          position: 'relative',
           height: '100%',
           boxSizing: 'border-box',
-          borderRadius: 'var(--osd-radius)',
-          background: '#FFFFFF',
-          color: 'var(--osd-text)',
-          border: `2px solid ${line}`,
           padding: '28px 12px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-between',
           textAlign: 'center',
+          color: 'var(--osd-text)',
         }}
       >
         <span style={{ fontSize: 22, fontWeight: 800, opacity: 0.55 }}>{n}</span>
         <span style={{ fontSize: 34, fontWeight: 800, lineHeight: 1.25 }}>{name}</span>
         <span style={{ fontSize: 22, fontWeight: 700, opacity: 0.7 }}>{who}</span>
       </div>
-    </MorphElement>
+    </div>
   </R>
 );
 
@@ -1659,29 +1635,50 @@ const flowSteps: [string, string][] = [
   ['05', '多語系＋幣別'],
   ['06', '檢查＋匯出'],
 ];
-const MiniFlow = ({ owners, tags }: { owners: Partial<Record<string, Owner>>; tags: Partial<Record<string, string>> }) => (
+const MiniFlow = ({
+  owners,
+  tags,
+  afterMorph,
+}: {
+  owners: Partial<Record<string, Owner>>;
+  tags: Partial<Record<string, string>>;
+  afterMorph?: boolean; // labels wait for the boxes to land (page 5, coming from page 4's cards)
+}) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
     {flowSteps.map(([n, name], i) => {
       const k = ownerLook[owners[n] ?? 'human'];
       return (
         <div key={n} style={{ display: 'contents' }}>
-          {i > 0 && <span style={{ fontSize: 20, color: muted }}>→</span>}
-          <MorphElement id={`flow-${n}`}>
+          {i > 0 && (
+            <span className={afterMorph ? 'lz-after-morph' : undefined} style={{ fontSize: 20, color: muted }}>
+              →
+            </span>
+          )}
+          <div style={{ position: 'relative', flex: 1, height: 52 }}>
+            <MorphElement id={`flow-${n}`}>
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  boxSizing: 'border-box',
+                  borderRadius: 12,
+                  background: k.bg,
+                  border: `2px solid ${k.border}`,
+                }}
+              />
+            </MorphElement>
             <div
+              className={afterMorph ? 'lz-after-morph' : undefined}
               style={{
-                flex: 1,
-                height: 52,
-                boxSizing: 'border-box',
-                borderRadius: 12,
-                background: k.bg,
-                color: k.fg,
-                border: `2px solid ${k.border}`,
+                position: 'relative',
+                height: '100%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 8,
                 fontSize: 20,
                 fontWeight: 800,
+                color: k.fg,
                 whiteSpace: 'nowrap',
               }}
             >
@@ -1689,7 +1686,7 @@ const MiniFlow = ({ owners, tags }: { owners: Partial<Record<string, Owner>>; ta
               {name}
               {tags[n] && <span style={{ fontSize: 16, opacity: 0.85 }}>· {tags[n]}</span>}
             </div>
-          </MorphElement>
+          </div>
         </div>
       );
     })}
@@ -2634,7 +2631,8 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 
   // 5 · 第一次偷懶 1:00
   `【1:00】
-（流程縮到上方，05 變成紫色）第一次偷懶：把「多語系＋幣別」這段交給 Google Sheet。以前是逐格複製、切回 Figma 貼上，改一個字就全部重貼。
+（流程縮到上方，05 變成紫色）第一次偷懶：把「多語系＋幣別」這段交給 Google Sheet。
+以前是逐格複製、切回 Figma 貼上，改一個字就全部重貼。
 （按 → AFTER）接上 Google Sheet 後，文案集中一處，Plugin 依語系自動填入。
 （按 → 截圖）用的就是 Figma 社群的 Google Sheets Sync。
 （按 → 60%）貼字時間少了大約【60%】。
