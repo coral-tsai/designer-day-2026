@@ -16,6 +16,13 @@ import robertHeinlein from './assets/robert-heinlein.png';
 import casualTop from './assets/casualtop-choice.png';
 import kratosTop from './assets/kratostop-choice.png';
 import demoVideo from './assets/banner-demo.mp4';
+import gamesCover from './assets/games-plugin-cover.webp';
+import games1 from './assets/games-plugin-1.png';
+import games2 from './assets/games-plugin-2.png';
+import games3 from './assets/games-plugin-3.png';
+import promoCover from './assets/promo-plugin-cover.webp';
+import promo1 from './assets/promo-plugin-1.png';
+import promo2 from './assets/promo-plugin-2.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#FFFFFF', text: '#101216', accent: '#0878E5' },
@@ -1919,6 +1926,93 @@ const CrossTeam: Page = () => (
   </LightPage>
 );
 
+// ── 10.5 · Other teams' plugins — screenshots ──────────────────────────────
+// Each shot is drawn at a shared height; `blur` boxes are in the screenshot's own
+// pixels and hide brand names in the plugin's help text.
+type Shot = { src: string; w: number; h: number; alt: string; blur?: [number, number, number, number][] };
+
+const ShotRow = ({ shots, height }: { shots: Shot[]; height: number }) => (
+  <div style={{ display: 'flex', justifyContent: 'center', gap: 14 }}>
+    {shots.map((sh, i) => (
+      <R key={sh.alt} k="lz-pop" d={160 + i * 80}>
+        <div
+          style={{
+            position: 'relative',
+            width: (height * sh.w) / sh.h,
+            height,
+            borderRadius: 16,
+            overflow: 'hidden',
+            border: `2px solid ${line}`,
+            boxShadow: '0 28px 56px -36px rgba(16,18,22,0.45)',
+          }}
+        >
+          <img src={sh.src} alt={sh.alt} style={{ width: '100%', height: '100%', display: 'block' }} />
+          {sh.blur?.map(([x0, y0, x1, y1]) => (
+            <div
+              key={`${x0}-${y0}`}
+              style={{
+                position: 'absolute',
+                left: `${(x0 / sh.w) * 100}%`,
+                top: `${(y0 / sh.h) * 100}%`,
+                width: `${((x1 - x0) / sh.w) * 100}%`,
+                height: `${((y1 - y0) / sh.h) * 100}%`,
+                backdropFilter: 'blur(6px)',
+                WebkitBackdropFilter: 'blur(6px)',
+                borderRadius: 4,
+              }}
+            />
+          ))}
+        </div>
+      </R>
+    ))}
+  </div>
+);
+
+const GamesPlugin: Page = () => (
+  <LightPage chip="TEAM · Games 的做法" title={<>Games 的 plugin：<Hi>Banner Mill</Hi></>}>
+    <ShotRow
+      height={590}
+      shots={[
+        { src: gamesCover, w: 1040, h: 1186, alt: 'Banner Mill plugin 介紹頁' },
+        { src: games1, w: 778, h: 1258, alt: 'Banner Auto Layout：選擇要排版的語系' },
+        { src: games2, w: 790, h: 1260, alt: '產生多語系版位、樣式同步、Frame 前綴管理' },
+        { src: games3, w: 778, h: 1256, alt: '執行日誌' },
+      ]}
+    />
+  </LightPage>
+);
+
+const PromoPlugin: Page = () => (
+  <LightPage chip="TEAM · Promotion 的做法" title={<>Promotion 的 plugin：<Hi>Social Banner 產圖工具</Hi></>}>
+    <ShotRow
+      height={590}
+      shots={[
+        { src: promoCover, w: 1036, h: 1180, alt: 'Social Banner 產圖工具 plugin 介紹頁' },
+        {
+          src: promo1,
+          w: 886,
+          h: 1432,
+          alt: '文字設定檔、背景圖、樣式與版面設定',
+          blur: [
+            [384, 966, 628, 1002],
+            [366, 1002, 472, 1038],
+          ],
+        },
+        {
+          src: promo2,
+          w: 906,
+          h: 1422,
+          alt: '顏色設定、產生／更新 banner、匯出 ZIP',
+          blur: [
+            [40, 1054, 152, 1090],
+            [268, 1054, 388, 1090],
+          ],
+        },
+      ]}
+    />
+  </LightPage>
+);
+
 // ── 12 · Modules ────────────────────────────────────────────────────────────
 const Question = ({ q, to }: { q: string; to: string }) => (
   <div
@@ -2026,7 +2120,7 @@ const Modules: Page = () => (
           <ModuleRow l="A" name="主視覺" who="設計師" />
         </R>
         <R d={460}>
-          <ModuleRow l="B" name="多尺寸" who="設計師做母版（AI resize 開發中）" from="Promotion" />
+          <ModuleRow l="B" name="多尺寸" who="設計師做母版（AI resize 開發中）" from="Promotion＋Games" />
         </R>
         <R d={520}>
           <ModuleRow l="C" name="多語系＋幣別" who="Writer 翻譯 → AI 帶入文案與幣別" from="Promotion＋Casino" />
@@ -2215,7 +2309,7 @@ const Next: Page = () => (
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>1</span>
                 <span style={{ fontSize: 30, fontWeight: 800 }}>resize 還在努力：沒辦法只用一種排版</span>
               </div>
-              <div style={{ fontSize: 22, color: muted, marginTop: 6 }}>每次主視覺不同，文字的位置也跟著不同</div>
+              <div style={{ fontSize: 22, color: muted, marginTop: 6 }}>每次主視覺不同，文字的位置也跟著不同——<b style={{ color: 'var(--osd-accent)' }}>參考 Games 的 Banner Mill</b></div>
               <div style={{ display: 'flex', gap: 24, marginTop: 18 }}>
                 <LayoutSketch text="left" label="文字靠左" />
                 <LayoutSketch text="right" label="文字靠右" />
@@ -2564,6 +2658,8 @@ export default [
   Demo,
   Impact,
   CrossTeam,
+  GamesPlugin,
+  PromoPlugin,
   Modules,
   RulePage,
   Next,
@@ -2647,15 +2743,23 @@ Games 版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」：�
 （按 →）我們 Casino 語系多、文案長短不一，所以用 AI 照 Skill 換字、對位、檢查；規則用文字寫，設計師、content writer 都能補。
 （按 →）AI 最大的改變是：規則用說的就能寫，每個人都能貢獻好做法。`,
 
-  // 11 · 最終版模組 1:15
+  // 11 · Games 的 plugin 0:20
+  `【0:20】
+這是 Games 的 Banner Mill：一張設計一鍵轉成所有尺寸和語系，還能依 AI Config 自動調整各語系的文字排版，最後用前綴整理 frame、看執行日誌。`,
+
+  // 12 · Promotion 的 plugin 0:20
+  `【0:20】
+這是 Promotion 的 Social Banner 產圖工具：Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生全部尺寸，再自動壓縮、匯出 ZIP。`,
+
+  // 13 · 最終版模組 1:15
   `【1:15】
-聊完之後，我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸和 C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
+聊完之後，我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 Games，B 多尺寸來自 Promotion 和 Games，C 多語系來自 Promotion，C 交給 AI 和 E 的檢查交付來自我們 Casino。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
 A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 還在開發；C 多語系和幣別交給 AI；D 固定範本最簡單；E 校對交付，AI 先檢查、命名、匯出壓縮，content writer 再校對。
 （按 →）週期活動用 D＋E，大型跨國活動用 A＋B＋C＋E。想試的部門，建議從 D 開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 12 · 規則先寫好 1:00
+  // 14 · 規則先寫好 1:00
   `【1:00】
 接下來的方向：把規則寫下來。左邊是 Skill 原文。
 （按 →）CasualTop 是 master，
@@ -2665,14 +2769,14 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 （按 →）subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
 而且規則不是一次寫完的——`,
 
-  // 13 · Skill 是活的 0:45
+  // 15 · Skill 是活的 0:45
   `【0:45】
 它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
-（按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中；
+（按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中——這部分可以參考 Games 的 Banner Mill，它已經能自動調整各語系的文字排版；
 （按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。`,
 
-  // 14 · 模型測試 0:45
+  // 16 · 模型測試 0:45
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
 同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
@@ -2682,11 +2786,11 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，AI resize 
 小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
 之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
-  // 15 · 帶回家 0:30
+  // 17 · 帶回家 0:30
   `【0:30】
 這套 Banner Kit 團隊都能用：做好母版後，說「多語系」就能換好所有語系；resize 還在開發中，好了會自動更新給大家。三行指令裝好就能用。`,
 
-  // 16 · 總結 0:20 + Q&A 5:00
+  // 18 · 總結 0:20 + Q&A 5:00
   `【0:20】
 偷懶不是終點，是每次都問自己：還能更懶嗎？
 還記得開頭的三個原則嗎？重複的，交給工具；會錯的，交給流程；要判斷的，才交給人。
