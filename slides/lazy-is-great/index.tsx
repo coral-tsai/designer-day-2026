@@ -2179,7 +2179,7 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
     vendor: 'OpenAI',
     flag: 'policy 限制',
     models: [
-      { name: 'GPT-6 Astra（預設）', time: '' },
+      { name: 'GPT-6 Astra（預設）', time: '約 7 分' },
       { name: 'GPT-6.1 Sol', time: '' },
       { name: 'GPT-6 Luna', time: '' },
     ],
