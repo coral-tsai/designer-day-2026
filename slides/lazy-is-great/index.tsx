@@ -2250,14 +2250,14 @@ const Next: Page = () => (
 
 // ── 13.5 · Model test — same exam, different AI ─────────────────────────────
 // Fill in as tests finish; an empty string renders as 「測試中」.
-const modelGroups: { tool: string; vendor: string; flag?: string; models: { name: string; time: string; tokens?: string; fit?: string }[] }[] = [
+const modelGroups: { tool: string; vendor: string; flag?: string; models: { name: string; time: string; tokens?: string; cost?: string; fit?: string }[] }[] = [
   {
     tool: 'Claude',
     vendor: 'Anthropic',
     models: [
-      { name: 'Opus 5.5', time: '約 7 分', tokens: '約 4.5M', fit: '長時間、多步驟的 agent 任務；複雜程式與知識工作' },
-      { name: 'Sonnet 5.5', time: '約 13 分', tokens: '約 4.2M', fit: '日常主力：寫作、程式、分析，兼顧速度與品質' },
-      { name: 'Haiku 5.5', time: '約 18 分', tokens: '約 8.8M', fit: '大量、要即時回應的小任務：分類、資料擷取、分流' },
+      { name: 'Opus 5.5', time: '約 7 分', tokens: '約 4.5M', cost: '$3.69', fit: '長時間、多步驟的 agent 任務；複雜程式與知識工作' },
+      { name: 'Sonnet 5.5', time: '約 13 分', tokens: '約 4.2M', cost: '$2.53', fit: '日常主力：寫作、程式、分析，兼顧速度與品質' },
+      { name: 'Haiku 5.5', time: '約 18 分', tokens: '約 8.8M', cost: '$1.32', fit: '大量、要即時回應的小任務：分類、資料擷取、分流' },
     ],
   },
   {
@@ -2285,7 +2285,7 @@ const ModelTest: Page = () => (
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '360px 170px 190px 1fr',
+            gridTemplateColumns: '330px 150px 170px 140px 1fr',
             alignItems: 'center',
             height: 50,
             fontSize: 22,
@@ -2298,6 +2298,7 @@ const ModelTest: Page = () => (
           <span>模型</span>
           <span>平均耗時</span>
           <span>Token 用量</span>
+          <span>費用</span>
           <span>適合做什麼</span>
         </div>
         {/* Group labels and model rows share one grid, so every line gets the same height. */}
@@ -2313,7 +2314,7 @@ const ModelTest: Page = () => (
                 key={m.name}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '360px 170px 190px 1fr',
+                  gridTemplateColumns: '330px 150px 170px 140px 1fr',
                   alignItems: 'center',
                   borderTop: `1px solid ${line}`,
                 }}
@@ -2322,6 +2323,9 @@ const ModelTest: Page = () => (
                 <Cell v={m.time} />
                 <span style={{ fontSize: 26, fontWeight: 800, color: m.tokens ? 'var(--osd-text)' : muted, opacity: m.tokens ? 1 : 0.5, fontVariantNumeric: 'tabular-nums' }}>
                   {m.tokens ?? '—'}
+                </span>
+                <span style={{ fontSize: 26, fontWeight: 800, color: m.cost ? 'var(--osd-text)' : muted, opacity: m.cost ? 1 : 0.5, fontVariantNumeric: 'tabular-nums' }}>
+                  {m.cost ?? '—'}
                 </span>
                 <span style={{ fontSize: 22, color: ink2, whiteSpace: 'nowrap' }}>{m.fit ?? ''}</span>
               </div>
@@ -2668,6 +2672,7 @@ subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有�
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
 同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
 Token 用量（含快取讀寫）：Opus 約 4.5M、Sonnet 約 4.2M、Haiku 約 8.8M——Haiku 繞的路最多，用掉將近兩倍。
+費用：Opus $3.69、Sonnet $2.53、Haiku $1.32——Haiku token 最多卻最便宜，但時間最長；Opus 最貴，但最快、最不用人顧。
 兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
 所以選模型看任務——跟開頭的原則一樣（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
 （按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
