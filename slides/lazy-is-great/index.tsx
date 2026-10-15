@@ -738,20 +738,17 @@ const Evolution1: Page = () => (
   <LightPage chip="HOW · 第一次偷懶" title={<>把 Google Sheet 接進流程，<Hi>文案不再手貼</Hi></>}>
     <MiniFlow owners={{ '05': 'sheet' }} tags={{ '05': 'Sheet' }} />
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 64px 1fr', alignItems: 'stretch', height: 120 }}>
-      <Steps>
         <R d={180} style={{ height: '100%' }}>
           <BeforeAfterLine tag="BEFORE" text="逐格複製、切回 Figma 貼上，改一個字就全部重貼" />
         </R>
         <Arrow color="var(--osd-accent)" size={40} />
-        <Step duration={280}>
+        <div className="lz-rise">
           <BeforeAfterLine tag="AFTER" text="文案集中一張 Sheet，Plugin 依語系自動填入" good />
-        </Step>
-      </Steps>
+        </div>
     </div>
     <div style={{ display: 'grid', gridTemplateColumns: '1161px 1fr', gap: 36, height: 387, marginTop: 30 }}>
       {/* The plugin we used: Google Sheets Sync (Figma Community page). 1504×500 */}
-      <Steps>
-      <Step duration={280}>
+      <div className="lz-rise">
         <div
           style={{
             position: 'relative',
@@ -768,11 +765,9 @@ const Evolution1: Page = () => (
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         </div>
-      </Step>
-      </Steps>
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16, height: '100%' }}>
-        <Steps>
-          <Step duration={280}>
+          <div className="lz-rise">
             <div
               style={{
                 height: 200,
@@ -789,8 +784,8 @@ const Evolution1: Page = () => (
               <span style={{ fontSize: 28, fontWeight: 700 }}>多語系貼字時間</span>
               <span style={{ ...heavy, fontSize: 60, color: 'var(--osd-accent)', lineHeight: 1.15, marginTop: 6 }}>↓ 約 【60%】</span>
             </div>
-          </Step>
-          <Step duration={280}>
+          </div>
+          <div className="lz-rise">
             <div
               style={{
                 height: 171,
@@ -820,8 +815,7 @@ const Evolution1: Page = () => (
                 圖層沒命名好就會漏字——同一張 banner 出現<span style={{ color: red }}>兩種語系</span>
               </span>
             </div>
-          </Step>
-        </Steps>
+          </div>
       </div>
     </div>
   </LightPage>
@@ -923,8 +917,7 @@ const Evolution2: Page = () => (
   <LightPage chip="HOW · 第二次偷懶" title={<>寫成 Skill，然後<Hi>一句話交給 AI</Hi></>}>
     <MiniFlow owners={{ '05': 'ai', '06': 'ai' }} tags={{ '05': 'AI', '06': 'AI' }} />
     <div style={{ display: 'grid', gridTemplateColumns: '420px 1fr 484px', height: 432 }}>
-      <Steps>
-        <Step duration={260}>
+        <div className="lz-rise">
           <ActCard icon="chat" n="01" title="我說一句話">
             <span
               style={{
@@ -936,8 +929,8 @@ const Evolution2: Page = () => (
               }}
             >「多語系」</span>
           </ActCard>
-        </Step>
-        <Step duration={260}>
+        </div>
+        <div className="lz-rise">
           <div style={{ display: 'flex', height: '100%' }}>
             <FlowArrow />
             <div
@@ -978,8 +971,8 @@ const Evolution2: Page = () => (
               <AIJob n="3" title="檢查並回報" desc="截圖確認每張都排好" />
             </div>
           </div>
-        </Step>
-        <Step duration={260}>
+        </div>
+        <div className="lz-rise">
           <div style={{ display: 'flex', height: '100%' }}>
             <FlowArrow />
             <div style={{ flex: 1 }}>
@@ -999,16 +992,13 @@ const Evolution2: Page = () => (
             </ActCard>
             </div>
           </div>
-        </Step>
-      </Steps>
+        </div>
     </div>
-    <Steps>
-      <Step duration={280}>
+      <div className="lz-rise">
         <h3 style={{ ...heavy, fontSize: 72, lineHeight: 1.25, margin: '36px 0 0' }}>
           從<Hi color={muted}>動手做</Hi>，變成<Hi>只出一張嘴</Hi>。
         </h3>
-      </Step>
-    </Steps>
+      </div>
   </LightPage>
 );
 
@@ -1099,7 +1089,6 @@ const PhaseArrow = () => (
 const SkillInside: Page = () => (
   <LightPage chip="HOW · Skill 長什麼樣" title={<>Skill 裡面，<Hi>寫的就是做法</Hi></>}>
     <div style={{ display: 'grid', gridTemplateColumns: '360px 328px 1fr 328px', height: 480 }}>
-      <Steps>
         <R d={160} style={{ height: '100%' }}>
           <div style={{ ...phaseCard, background: surface }}>
             <PhaseHead n="1" title="先問清楚" />
@@ -1111,7 +1100,7 @@ const SkillInside: Page = () => (
             </div>
           </div>
         </R>
-        <Step duration={260}>
+        <div className="lz-rise">
           <div style={{ display: 'flex', height: '100%' }}>
             <PhaseArrow />
             <div style={{ ...phaseCard, ...card, flex: 1 }}>
@@ -1121,8 +1110,8 @@ const SkillInside: Page = () => (
               </div>
             </div>
           </div>
-        </Step>
-        <Step duration={260}>
+        </div>
+        <div className="lz-rise">
           <div style={{ display: 'flex', height: '100%' }}>
             <PhaseArrow />
             <div
@@ -1157,8 +1146,8 @@ const SkillInside: Page = () => (
               </div>
             </div>
           </div>
-        </Step>
-        <Step duration={260}>
+        </div>
+        <div className="lz-rise">
           <div style={{ display: 'flex', height: '100%' }}>
             <PhaseArrow />
             <div style={{ ...phaseCard, ...card, flex: 1 }}>
@@ -1168,8 +1157,7 @@ const SkillInside: Page = () => (
               </div>
             </div>
           </div>
-        </Step>
-      </Steps>
+        </div>
     </div>
     <R d={260}>
       <div style={{ fontSize: 22, color: muted, marginTop: 28 }}>
@@ -1312,9 +1300,8 @@ const RulePage: Page = () => {
               <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C840' }} />
               <span style={{ marginLeft: 12 }}>resize/reference/placements.md</span>
             </div>
-            <Steps>
               <MdHead>## CasualTop — 750 × 224</MdHead>
-              <Step duration={260}>
+              <div className="lz-rise">
                 <RuleLine>常用的 master。</RuleLine>
                 <div
                   style={{
@@ -1354,24 +1341,24 @@ const RulePage: Page = () => {
                     master · CasualTop 750 × 224
                   </span>
                 </div>
-              </Step>
-              <Step duration={260}>
+              </div>
+              <div className="lz-rise">
                 <RuleLine>圖層角色（headline／subtitle／CTA／T&amp;C）以它為準。</RuleLine>
                 <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
                   <Mark at={hl} label="headline" tag={{ left: hl.left, top: BANNER.y - 50 }} />
                   <Mark at={sub} label="subtitle" tag={{ left: sub.left + sub.width + 12, top: sub.top }} />
                   <Mark at={cta} label="CTA" tag={{ left: cta.left + cta.width + 12, top: cta.top + 18 }} />
                 </div>
-              </Step>
+              </div>
               <MdHead>## 通用（所有版位）</MdHead>
-              <Step duration={260}>
+              <div className="lz-rise">
                 <RuleLine>角色的臉必須完整可見——至少整張臉要露出。</RuleLine>
                 <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
                   <Mark at={face} label="臉要完整" tag={{ left: face.left - 8, top: face.top + face.height + 12 }} />
                 </div>
-              </Step>
+              </div>
               <MdHead>## KratosTop — 1178 × 100</MdHead>
-              <Step duration={260}>
+              <div className="lz-rise">
                 <RuleLine>安全區：寬 829 px、水平置中——所有內容都留在這條帶狀範圍內。</RuleLine>
                 <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
                   
@@ -1414,16 +1401,15 @@ const RulePage: Page = () => {
                     tag={{ left: ktSafe.left + ktSafe.width / 2 - 80, top: KT.y + KT.h + 12 }}
                   />
                 </div>
-              </Step>
-              <Step duration={260}>
+              </div>
+              <div className="lz-rise">
                 <RuleLine>保留 subtitle——不要省略，縮小字級塞進 100 px 高度。</RuleLine>
                 <div style={{ position: 'absolute', left: 0, top: 0, fontFamily: 'var(--osd-font-body)' }}>
                   <Mark at={ktHl} label="headline" tag={{ left: ktHl.left - 128, top: ktHl.top - 4 }} />
                   <Mark at={ktSub} label="subtitle 保留" tag={{ left: ktSub.left, top: KT.y + KT.h + 12 }} />
                   <Mark at={ktCta} label="CTA" tag={{ left: ktCta.left + ktCta.width + 10, top: ktCta.top + 6 }} />
                 </div>
-              </Step>
-            </Steps>
+              </div>
           </div>
         </R>
       </div>
@@ -1533,8 +1519,7 @@ const Demo: Page = () => (
       </div>
     </R>
     {/* Revealed after the video: the time comparison (was its own page). */}
-    <Steps>
-      <Step duration={280}>
+      <div className="lz-rise">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 22, marginTop: 20 }}>
           <ImpactPill label="手貼" value="120" color={`var(--lz-muted, ${muted})`} />
           <span style={{ fontSize: 28, color: `var(--lz-muted, ${muted})` }}>→</span>
@@ -1545,8 +1530,7 @@ const Demo: Page = () => (
             每套製作時間 <b style={{ ...heavy, fontSize: 34, color: 'var(--lz-hi, var(--osd-accent))' }}>↓ 94%</b>
           </span>
         </div>
-      </Step>
-    </Steps>
+      </div>
     <Footer />
   </div>
 );
@@ -2183,8 +2167,7 @@ const Next: Page = () => (
         <R d={240}>
           <div style={{ fontSize: 26, fontWeight: 800, color: muted, letterSpacing: '0.08em' }}>還在調整</div>
         </R>
-        <Steps>
-          <Step duration={260}>
+          <div className="lz-rise">
             <div style={{ ...card, padding: '20px 36px', height: 262 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>1</span>
@@ -2197,8 +2180,8 @@ const Next: Page = () => (
                 <LayoutSketch text="center" label="文字置中" />
               </div>
             </div>
-          </Step>
-          <Step duration={260}>
+          </div>
+          <div className="lz-rise">
             <div style={{ ...card, padding: '20px 36px', height: 222 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
                 <span style={{ ...heavy, fontSize: 36, color: 'var(--osd-accent)' }}>2</span>
@@ -2210,12 +2193,10 @@ const Next: Page = () => (
                 <BannerType name="Promotion_Network" note="Provider 提供設計" />
               </div>
             </div>
-          </Step>
-        </Steps>
+          </div>
       </div>
     </div>
-    <Steps>
-      <Step duration={280}>
+      <div className="lz-rise">
         <div
           style={{
             marginTop: 20,
@@ -2229,8 +2210,7 @@ const Next: Page = () => (
         >
           以後可能不用自己寫 Skill——<Hi>跟 AI 說一次，它幫你寫進 Skill</Hi>
         </div>
-      </Step>
-    </Steps>
+      </div>
   </LightPage>
 );
 
@@ -2595,26 +2575,26 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
   `【1:00】
 （流程縮到上方，05 變成紫色）第一次偷懶：把「多語系＋幣別」這段交給 Google Sheet。
 以前是逐格複製、切回 Figma 貼上，改一個字就全部重貼。
-（按 → AFTER）接上 Google Sheet 後，文案集中一處，Plugin 依語系自動填入。
-（按 → 截圖）用的就是 Figma 社群的 Google Sheets Sync。
-（按 → 60%）貼字時間少了大約【60%】。
-（按 → 缺點）但它靠圖層名稱對應，只要一個圖層沒命名好就會漏字，同一張 banner 出現兩種語系。所以後來，我連這一步都交給 AI。`,
+接上 Google Sheet 後，文案集中一處，Plugin 依語系自動填入。
+用的就是 Figma 社群的 Google Sheets Sync。
+貼字時間少了大約【60%】。
+但它靠圖層名稱對應，只要一個圖層沒命名好就會漏字，同一張 banner 出現兩種語系。所以後來，我連這一步都交給 AI。`,
 
   // 6 · 第二次偷懶 1:00
   `【1:00】
 （上方流程：05、06 都變成 AI）第二次偷懶：把我的做法寫成 Skill，從多語系、幣別一路到檢查、匯出，一句話交給 AI。
-（按 →）我只要說一句，甚至只說「多語系」，
-（按 →）AI 就照 Skill 跑完：聽懂需求、帶入 content writer 斷好行的文案、換幣別、對位，再自己截圖檢查。
-（按 →）我就去做別的設計。
-（按 →）從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。
+我只要說一句，甚至只說「多語系」，
+AI 就照 Skill 跑完：聽懂需求、帶入 content writer 斷好行的文案、換幣別、對位，再自己截圖檢查。
+我就去做別的設計。
+從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。
 重複的交給 AI，要判斷的留給人。至於省了多少時間，看完 Demo 再公布。`,
 
   // 7 · Skill 長什麼樣 1:00
   `【1:00】
 Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名、Figma 檔，
-（按 →）找到我先做好的各版位母版、認出各圖層，
-（按 →）每個版位、每個語系跑一輪：填文案、換幣別、命名，最後截圖檢查，
-（按 →）回報給我哪裡要看。
+找到我先做好的各版位母版、認出各圖層，
+每個版位、每個語系跑一輪：填文案、換幣別、命名，最後截圖檢查，
+回報給我哪裡要看。
 現在用的是 multi-lang；自動 resize 版位的 skill 還在開發中。
 常有人問：為什麼不用 Figma 自己的 AI agent？因為我們的流程不只在 Figma 裡——要讀 Google Sheet、改 Figma、檢查、再匯出壓縮；而且版位、語系、幣別、T&C 這些規則是我們團隊自己的，寫成 Skill 才能共用、版控、隨時補。
 來看一條規則實際長什麼樣。`,
@@ -2622,11 +2602,11 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
   // 8 · 規則長這樣 1:00
   `【1:00】
 規則實際長這樣，左邊是 Skill 原文。
-（按 →）CasualTop 是 master，
-（按 →）圖層角色以它為準，
-（按 →）角色的臉一定要完整。
-（按 →）下一步是 resize，規則已經先寫好：像 KratosTop，安全區 829 px、置中，
-（按 →）subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
+CasualTop 是 master，
+圖層角色以它為準，
+角色的臉一定要完整。
+下一步是 resize，規則已經先寫好：像 KratosTop，安全區 829 px、置中，
+subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
 接下來，直接看它實際跑一次多語系。`,
 
   // 9 · Demo＋成效 3:00
@@ -2635,7 +2615,7 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 ① 我說一句話。
 ② AI 執行中——中間切到 Skill 檔，看它照哪些規則在做。
 ③ 成品拼貼和產出清單。
-（按 →）公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 7 分鐘——就是剛剛影片那一次。
+公布答案：手貼每套約 120 分鐘、Sheet 約 45 分鐘、交給 AI 約 7 分鐘——就是剛剛影片那一次。
 製作時間少了約 94%，校稿錯誤也大幅減少，我多出時間做真正的設計。（數據截至【X 月】，翻譯時間另計。）
 （影片無法播放：改開本機版，或口頭帶過直接公布答案。）
 錄製日期：【YYYY/MM/DD】。`,
@@ -2677,9 +2657,9 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，resize ski
   `【0:45】
 模組合好了，Skill 也要繼續長大——它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
-（按 →）resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中——這部分可以參考 InJoi 的 Banner Mill，它已經能自動調整各語系的文字排版；
-（按 →）banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
-（按 →）有人說，以後跟 AI 對話就能產所有 banner，不用寫 Skill 了。我覺得對一半：以後可能真的不用自己寫——跟 AI 說一次，它就會自己記進 Skill。但規則還是得存在：AI 再聰明，也不知道我們家的安全區、命名和字型規則；而且對話會結束，規則要留給下一個人、下一個模型用。所以不是不用寫，是改成 AI 幫我們寫，人負責判斷這條規則對不對。`,
+resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、置中——這部分可以參考 InJoi 的 Banner Mill，它已經能自動調整各語系的文字排版；
+banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
+有人說，以後跟 AI 對話就能產所有 banner，不用寫 Skill 了。我覺得對一半：以後可能真的不用自己寫——跟 AI 說一次，它就會自己記進 Skill。但規則還是得存在：AI 再聰明，也不知道我們家的安全區、命名和字型規則；而且對話會結束，規則要留給下一個人、下一個模型用。所以不是不用寫，是改成 AI 幫我們寫，人負責判斷這條規則對不對。`,
 
   // 16 · 帶回家 0:30
   `【0:30】
