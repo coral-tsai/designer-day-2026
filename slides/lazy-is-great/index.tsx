@@ -2266,7 +2266,7 @@ const modelGroups: { tool: string; vendor: string; flag?: string; models: { name
     flag: 'policy 限制',
     models: [
       { name: 'GPT-6 Astra（預設）', time: '約 8 分', fit: '需求不明確、資料互相矛盾、要權衡多條件；複雜系統與除錯' },
-      { name: 'GPT-6.1 Sol', time: '約 15 分', fit: '日常寫作、研究、程式、簡報；需要判斷、反覆修改的完整交付' },
+      { name: 'GPT-6.1 Sol', time: '約 15 分', tokens: '約 6.0M', cost: '$1.15', fit: '日常寫作、研究、程式、簡報；需要判斷、反覆修改的完整交付' },
       { name: 'GPT-6 Luna', time: '約 34 分', fit: '範圍清楚的編修、分類、資料擷取，頻繁執行的例行工作' },
     ],
   },
@@ -2672,7 +2672,7 @@ subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有�
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
 同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
 Token 用量（含快取讀寫）：Opus 約 4.5M、Sonnet 約 4.2M、Haiku 約 8.8M——Haiku 繞的路最多，用掉將近兩倍。
-費用：Opus $3.69、Sonnet $2.53、Haiku $1.32——Haiku token 最多卻最便宜，但時間最長；Opus 最貴，但最快、最不用人顧。
+費用：Opus $3.69、Sonnet $2.53、Haiku $1.32——Haiku token 最多卻最便宜，但時間最長；Opus 最貴，但最快、最不用人顧。Codex 的 GPT-6.1 Sol 約 6.0M token、換算 API 價格約 $1.15。
 兩邊結果一樣：強模型最快（Opus、Astra），輕量模型最慢（Haiku、Luna）。輕量模型每一步回應快，但整套多語系要大量判斷，走錯、重試多，總時間就拉長了。
 所以選模型看任務——跟開頭的原則一樣（依官方定位）：整套多語系這種長時間、要判斷的任務交給 Opus；日常工作用 Sonnet；大量、即時的小任務（分類、擷取資料）用 Haiku。Codex 那邊也一樣：Astra 最強、Sol 平衡、Luna 最快最省。
 （按 →）Codex 一開始因為內容政策拒絕調整 banner——博弈相關內容可能直接被擋，所以選 AI 不只看能力，也要看能不能用在我們的內容上。
