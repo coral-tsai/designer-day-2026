@@ -2379,6 +2379,13 @@ const SkillCard = ({
   </div>
 );
 
+// Hides a personal account name on screen (blurred, not selectable).
+const Masked = ({ children }: { children: ReactNode }) => (
+  <span style={{ filter: 'blur(7px)', userSelect: 'none' }} aria-hidden>
+    {children}
+  </span>
+);
+
 const Cmd = ({ n, children }: { n: string; children: ReactNode }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 20, height: 56 }}>
     <span
@@ -2431,7 +2438,7 @@ const TakeHome: Page = () => (
           <span style={{ fontSize: 22, color: 'rgba(255,255,255,0.6)' }}>在 Claude Code 裡輸入，只要做一次</span>
         </div>
         <R d={480}>
-          <Cmd n="1">/plugin marketplace add http://git.coreop.net/coral.tsai16/metamon-skill</Cmd>
+          <Cmd n="1">/plugin marketplace add http://git.coreop.net/<Masked>coral.tsai16</Masked>/metamon-skill</Cmd>
         </R>
         <R d={560}>
           <Cmd n="2">/plugin install metamon@metamon-skill</Cmd>
@@ -2450,14 +2457,9 @@ const TakeHome: Page = () => (
             color: 'rgba(255,255,255,0.65)',
           }}
         >
-          <a
-            href="http://git.coreop.net/coral.tsai16/metamon-skill"
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: '#7CB8F7', textDecoration: 'none', fontWeight: 700 }}
-          >
-            git.coreop.net/coral.tsai16/metamon-skill ↗
-          </a>
+          <span style={{ color: '#7CB8F7', fontWeight: 700 }}>
+            git.coreop.net/<Masked>coral.tsai16</Masked>/metamon-skill
+          </span>
           <span>需要這個 GitLab repo 的讀取權限 · 更新會自動同步</span>
         </div>
       </div>
