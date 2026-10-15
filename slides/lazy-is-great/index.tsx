@@ -472,6 +472,40 @@ const Cover: Page = () => (
   </div>
 );
 
+// ── Agenda ──────────────────────────────────────────────────────────────────
+const AgendaItem = ({ n, tag, title, desc, d }: { n: string; tag: string; title: string; desc: string; d: number }) => (
+  <R d={d} style={{ height: '100%' }}>
+    <div
+      style={{
+        ...card,
+        height: '100%',
+        boxSizing: 'border-box',
+        padding: '36px 30px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 14,
+      }}
+    >
+      <span style={{ ...heavy, fontSize: 56, color: 'var(--osd-accent)', lineHeight: 1 }}>{n}</span>
+      <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.16em', color: muted, marginTop: 18 }}>{tag}</span>
+      <span style={{ fontSize: 34, fontWeight: 800, lineHeight: 1.3 }}>{title}</span>
+      <span style={{ fontSize: 22, lineHeight: 1.5, color: muted, marginTop: 'auto' }}>{desc}</span>
+    </div>
+  </R>
+);
+
+const Agenda: Page = () => (
+  <LightPage chip="AGENDA" title={<>今天想聊的<Hi>五件事</Hi></>}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 24, height: 440 }}>
+      <AgendaItem d={160} n="01" tag="WHY" title="為什麼想偷懶" desc="設計結束的地方，就是重複的開始" />
+      <AgendaItem d={220} n="02" tag="HOW" title="我偷懶了兩次" desc="Google Sheet → Skill＋AI" />
+      <AgendaItem d={280} n="03" tag="PROOF" title="真的有用嗎" desc="Demo、成效，換一個 AI 也行嗎" />
+      <AgendaItem d={340} n="04" tag="TEAM" title="大家都有好做法" desc="InJoi、B2C、XitMent 合成一套模組" />
+      <AgendaItem d={400} n="05" tag="NEXT" title="接下來" desc="Skill 是活的，Banner Kit 帶回家" />
+    </div>
+  </LightPage>
+);
+
 // ── 2 · Manifesto ───────────────────────────────────────────────────────────
 // `focus` is where the face sits in the photo; `zoom` crops in so the head fills the frame.
 const Quote = ({
@@ -2527,6 +2561,7 @@ export const meta: SlideMeta = {
 
 export default [
   Cover,
+  Agenda,
   Manifesto,
   Handmade,
   FullFlow,
@@ -2551,7 +2586,11 @@ export const notes: (string | undefined)[] = [
 大家好，我是 Coral，負責 XitMent 的 banner 設計。
 今天分享我怎麼一路「偷懶」，把一檔活動的 banner 從一整個下午，變成幾分鐘。`,
 
-  // 2 · 懶惰宣言 1:00
+  // 2 · 議程 0:15
+  `【0:15】
+今天想聊五件事：為什麼想偷懶、我偷懶了哪兩次、真的有用嗎、別的部門怎麼做，最後是接下來和大家可以帶回去的東西。`,
+
+  // 3 · 懶惰宣言 1:00
   `【1:00】
 Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶人找更簡單的方法帶來的。
 我的版本是：同一件事做三次，我就想偷懶了。我有三個原則——
@@ -2559,19 +2598,19 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 （按 →）會錯的，交給流程——像圖層命名、T&C 免責文字、斷行，以前都靠人記得，現在都寫成固定的規則和檢查順序；錯了一次就補一條規則，下次就不會再錯；
 （按 →）要判斷的，才交給人。`,
 
-  // 3 · 起點 0:45
+  // 4 · 起點 0:45
   `【0:45】
 以前做一套 banner：有了主視覺之後，要手動 resize 成每個版位，再把多語系和幣別一個一個貼上去。
 （指向截圖）這是 Pragmatic Play 一檔活動的全部 banner——13 個版位乘 12 個語系，156 張圖。
 重複、容易錯、又佔掉設計的時間。設計結束的地方，就是重複的開始。`,
 
-  // 4 · 全流程 0:45
+  // 5 · 全流程 0:45
   `【0:45】
 先把一開始的整條流程攤開：收需求、主視覺（先 review 過）、各版位母版、翻譯斷行，到多語系、檢查匯出，一共六段——每一段都靠人。
 （按 →）其中最後兩段：多語系＋幣別要一張一張手貼，檢查＋匯出也是手動——最重複、也最容易錯。
 （按 →）這兩段，就是我偷懶的起點。接下來看我偷懶了兩次，流程怎麼變。`,
 
-  // 5 · 第一次偷懶 1:00
+  // 6 · 第一次偷懶 1:00
   `【1:00】
 （流程縮到上方，05 變成紫色）第一次偷懶：把「多語系＋幣別」這段交給 Google Sheet。
 以前是逐格複製、切回 Figma 貼上，改一個字就全部重貼。
@@ -2580,7 +2619,7 @@ Larry Wall 說，懶惰是程式設計師的美德；Heinlein 說，進步是懶
 貼字時間少了大約【60%】。
 但它靠圖層名稱對應，只要一個圖層沒命名好就會漏字，同一張 banner 出現兩種語系。所以後來，我連這一步都交給 AI。`,
 
-  // 6 · 第二次偷懶 1:00
+  // 7 · 第二次偷懶 1:00
   `【1:00】
 （上方流程：05、06 都變成 AI）第二次偷懶：把我的做法寫成 Skill，從多語系、幣別一路到檢查、匯出，一句話交給 AI。
 我只要說一句，甚至只說「多語系」，
@@ -2589,7 +2628,7 @@ AI 就照 Skill 跑完：聽懂需求、帶入 content writer 斷好行的文案
 從動手做，變成動口說。關鍵不是 AI 多神，而是我把做法寫成了 Skill，不用每次重講。
 重複的交給 AI，要判斷的留給人。至於省了多少時間，看完 Demo 再公布。`,
 
-  // 7 · Skill 長什麼樣 1:00
+  // 8 · Skill 長什麼樣 1:00
   `【1:00】
 Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名、Figma 檔，
 找到我先做好的各版位母版、認出各圖層，
@@ -2599,7 +2638,7 @@ Skill 裡寫的，就是我平常的做法：先問清楚版位、Sheet、命名
 常有人問：為什麼不用 Figma 自己的 AI agent？因為我們的流程不只在 Figma 裡——要讀 Google Sheet、改 Figma、檢查、再匯出壓縮；而且版位、語系、幣別、T&C 這些規則是我們團隊自己的，寫成 Skill 才能共用、版控、隨時補。
 來看一條規則實際長什麼樣。`,
 
-  // 8 · 規則長這樣 1:00
+  // 9 · 規則長這樣 1:00
   `【1:00】
 規則實際長這樣，左邊是 Skill 原文。
 CasualTop 是 master，
@@ -2609,7 +2648,7 @@ CasualTop 是 master，
 subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有依據。
 接下來，直接看它實際跑一次多語系。`,
 
-  // 9 · Demo＋成效 3:00
+  // 10 · Demo＋成效 3:00
   `【3:00】影片已 3 倍速（約 2 分 24 秒）、靜音、現場口述；實際耗時約 7 分鐘。
 這次 Demo 的活動是 13 個版位 × 10 個語系，共 130 張（一般活動是 12 個語系）。
 ① 我說一句話。
@@ -2620,7 +2659,7 @@ subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有�
 （影片無法播放：改開本機版，或口頭帶過直接公布答案。）
 錄製日期：【YYYY/MM/DD】。`,
 
-  // 10 · 模型測試 0:45
+  // 11 · 模型測試 0:45
   `【0:45】
 常被問：換一個 AI 模型，結果會一樣嗎？我用同一份 Skill、同一套題目，讓 Claude 和 Codex 的不同模型各跑兩次，比平均耗時。
 同樣 13 個版位 × 10 個語系、130 張：Claude Opus 約 7 分鐘、Sonnet 約 13 分鐘、Haiku 約 18 分鐘；Codex 的 GPT-6 Astra 約 8 分鐘（含一輪修正）、Sol 約 15 分鐘、Luna 約 34 分鐘。
@@ -2630,22 +2669,22 @@ subtitle 一定保留。resize 還在努力中，但規則先寫好，AI 就有�
 小 tips：我跟它說明這是教學用途之後，它就願意繼續調整了。
 之後換模型或改 Skill，都會先用這套題目跑一次，結果一致才放行。`,
 
-  // 11 · 跨部門交流 0:20
+  // 12 · 跨部門交流 0:20
   `【0:20】
 選 AI 要看任務；其實選工具也一樣。我去跟其他部門聊完，發現大家都有好做法——需求不同，有的部門根本不用 AI，也做得很好。
 InJoi 和 B2C 寫成 Figma plugin，我們 XitMent 用 AI 照 Skill 做。先一個一個看。`,
 
-  // 12 · InJoi 的 plugin 0:25
+  // 13 · InJoi 的 plugin 0:25
   `【0:25】
 先看 InJoi：他們版面固定、只換圖，所以寫成 Figma plugin「Banner Mill」——一張設計一鍵轉成所有尺寸和語系，連各語系的文字排版都會依設定自動調整。
 （指下方）優點是快、穩定；限制是版面一改就要改程式，需要有人維護。`,
 
-  // 13 · B2C 的 plugin 0:25
+  // 14 · B2C 的 plugin 0:25
   `【0:25】
 再來是 B2C：他們只需要出給 MKT 的 Social Banner，尺寸固定、規則清楚，所以也寫成 plugin——Excel 填好多語文案、選底圖，調好顏色和版面，一鍵產生，還會自動壓縮、匯出 ZIP。
 範圍小、規則清楚，plugin 剛好夠用；限制是綁定這組範本，新版型要再擴充。`,
 
-  // 14 · 最終版模組 1:15
+  // 15 · 最終版模組 1:15
   `【1:15】
 大家需求不同，各有適合的做法；有了 AI，規則用說的就能寫，每個人都能貢獻好做法。所以我把三個部門的做法合成一套模組，這是最終版。右邊標的是每個模組的來源：D 固定範本來自 InJoi，B 多尺寸來自 B2C 和 InJoi，C 多語系來自 B2C，C 交給 AI 和 E 的檢查交付來自我們 XitMent。
 收到需求先問四題：要新主視覺嗎？幾種尺寸？幾種語言？幾種幣別？
@@ -2653,7 +2692,7 @@ A 主視覺設計師做；B 多尺寸目前也是設計師做母版，resize ski
 想試的部門，建議從 D 固定範本開始。
 一句話總結分工：文案交給專業的人，設計留給自己，生產交給 AI。`,
 
-  // 15 · Skill 是活的 0:45
+  // 16 · Skill 是活的 0:45
   `【0:45】
 模組合好了，Skill 也要繼續長大——它是活的：出錯就補規則。像緬甸文顯示不出來，我補了「改用 Noto Sans Myanmar」，之後就沒再錯。
 還在調整的有兩個：
@@ -2661,11 +2700,11 @@ resize 還在努力：排版沒有單一範本，文字有時靠左、靠右、�
 banner 有三種，要各自整理規則。下一步，是讓它不用我開口，Sheet 一更新就自己跑。
 有人說，以後跟 AI 對話就能產所有 banner，不用寫 Skill 了。我覺得對一半：以後可能真的不用自己寫——跟 AI 說一次，它就會自己記進 Skill。但規則還是得存在：AI 再聰明，也不知道我們家的安全區、命名和字型規則；而且對話會結束，規則要留給下一個人、下一個模型用。所以不是不用寫，是改成 AI 幫我們寫，人負責判斷這條規則對不對。`,
 
-  // 16 · 帶回家 0:30
+  // 17 · 帶回家 0:30
   `【0:30】
 這套 Banner Kit 團隊都能用：做好母版後，說「多語系」就能換好所有語系；resize 還在開發中，好了會自動更新給大家。三行指令裝好就能用。`,
 
-  // 17 · 總結 0:20 + Q&A 5:00
+  // 18 · 總結 0:20 + Q&A 5:00
   `【0:20】
 偷懶不是終點，是每次都問自己：還能更懶嗎？
 還記得開頭的三個原則嗎？重複的，交給工具；會錯的，交給流程；要判斷的，才交給人。
